@@ -1,0 +1,94 @@
+@import './App.scss';
+
+/* main container */
+
+.container {
+  width: 960px;
+  height: 600px;
+  margin: 0 auto;
+  text-align: left;
+  word-break: break-all;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -480px;
+  margin-top: -300px;
+}
+
+#main {
+  background-color: #fff;
+  height: 500px;
+}
+
+#top {
+  position: relative;
+  padding: 34px 0 30px 40px;
+  background-image: url(../images/top.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#bottom {
+  text-align: center;
+  padding-top: 15px;
+}
+
+.login {
+  width: 400px;
+  min-height: 400px;
+  margin: 0 auto;
+}
+
+.logo {
+  background: url(../images/logo.png) no-repeat;
+  _background: none;
+  _filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='../images/logo.png', sizingMethod='crop');
+  width: 60%;
+  height: 80px;
+  margin: 0 auto;
+}
+
+#login .logo {
+  margin: 0 auto 30px;
+}
+
+.login_title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.login form {
+  position: relative;
+  border: 1px solid #dce6e9;
+  background: #F2F6FB;
+  padding: 20px 0 80px;
+}
+
+.login p {
+  padding: 3px 15px;
+}
+
+.login input {
+  padding: 2px 3px;
+}
+
+label {
+  display: inline-block;
+  width: 70px;
+  margin-right: 15px;
+  text-align: right;
+}
+
+.login_btn {
+  position: absolute;
+  left: 50%;
+  margin-top: 20px;
+  margin-left: -40px;
+  width: 80px;
+  min-height: 30px;
+  font: inherit;
+  border: 0;
+  cursor: pointer;
+  text-align: center;
+}

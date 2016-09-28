@@ -1,0 +1,158 @@
+@import '../variables.scss';
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-width: $content-width;
+  height: 70px;
+  background: $main-black;
+  color: #fff;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.headerMain {
+  margin: 0 auto;
+  width: $content-width;
+  padding: 20px 0;
+}
+
+.logo {
+  float: left;
+  display: block;
+  height: 40px;
+  transform: translateY(-5px);
+}
+
+.nav {
+  float: left;
+  margin-left: 10px;
+  line-height: 30px;
+  vertical-align: middle;
+  padding: 0 20px;
+}
+
+.navLink {
+  padding: 0 15px;
+  font-size: $header-tab-font-size;
+  color: $header-tab-color;
+  text-decoration: none;
+}
+
+.activeNavLink {
+  color: $header-active-tab-color;
+}
+
+/*
+.messageListBox {
+  font-size: 14px;
+}
+
+.messageItem {
+  padding: 0px 20px;
+  height: 40px;
+  line-height: 40px;
+}
+
+.messageTime {
+  display: inline-block;
+  width: 80px;
+}
+
+.messageContent {
+  display: inline-block;
+  width: 200px;
+  height: inherit;
+  line-height: inherit;
+  vertical-align: top;
+  cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.messageAction {
+  display: inline-block;
+  margin-left: 40px;
+  width: 30px;
+  text-align: right;
+  cursor: pointer;
+  transform: scale(.8);
+}
+*/
+
+.notificationPopoverHeader {
+  padding: 0px 20px;
+  padding-right: 0;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  background-color: $body-grey;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.messageListBox {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+}
+
+.messageItem {
+  padding: 0px 20px;
+  line-height: 40px;
+  height: 40px;
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.messageTime {
+  flex: 0 0 80px;
+}
+
+.messageContent {
+  flex: 1 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.messageAction {
+  margin-left: 10px;
+  flex: 0 0 30px;
+  text-align: right;
+  cursor: pointer;
+  transform: scale(.8);
+}
+
+.detailMessageHeader {
+  text-align: center;
+  line-height: 60px;
+  vertial-align: middle;
+  font-size: 1.1em;
+}
+
+.detailMessageItem {
+  padding: 0 20px;
+}
+
+.detailMessageAction {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 30px;
+  padding: 0 20px;
+}
+
+.detailMessageButton {
+  flex: 0 1 20%;
+  margin: 0 10px;
+}
+
+.detailMessageButton:nth-child(2) {
+  flex-basis: auto;
+}
