@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>rlog - test</title>
+</head>
+<body>
+<br>
+<div data-rlog="i am div">div 上的 data-rlog</div>
+<br>
+<a href="http://www.baidu.com" data-rlog="send event">点击发送时间</a>
+<br>
+<a href="http://www.baidu.com" data-rlog="send event1">点击跳转</a>
+<script>
+// -----------------------------------------------------------------------------
+// - 常规用法
+
+var _rlog = _rlog || [];
+// 设置 product id
+_rlog.push(["_setAccount" , "test_by_dev"]);
+
+// 关闭默认状态下发送 PV 请求
+_rlog.push(["_setAutoPageview" , false]);
+
+// 为 rlog 请求添加 keyfrom=123 参数，需要注意的是，_addPost 添加的参数每次请求都会带上
+// 这里设置的参数会覆盖 url 中的参数
+// 设置同名参数，后设置的生效
+_rlog.push(["_addPost" , "site" , "xue.youdao.com"]);
+_rlog.push(["_addPost" , "keyfrom" , "fixed keyfrom"]);
+
+
+// PV 发送完成后的回调，可多次使用
+_rlog.push(["_onPageViewFinished" , function(){
+    console.log("after pageview 1");
+}]);
+
+// 自定义 rlog 请求
+_rlog.push(["_trackCustom" , "custom" , "value" , function(){
+    console.log("after1 _trackCustom");
+}]);
+
+// 发送自定义 rlog 请求
+// category_name - 分类名称，如系统默认的 ['pageview', 'event', 'click']，切勿取这三个名
+// 第三个参数中，将作为 key-value 对发送到 rlog 系统，如这样： .../rlog.php?a=1&b=2...
+// 支持回调函数
+_rlog.push(["_trackCustom" , "custom2" , [
+        ['a',1], ['b',2]
+    ] , function(){
+    console.log("after2 _trackCustom");
+}]);
+
+// 可调用 _trackPageview，手动完成 PV 的发送
+// 注意同一页面，请勿重复调用次方法，悟空...别调皮...
+_rlog.push(["_trackPageview", [ ['pv1', 111], ['pv2', 222] ] ]);
+// _rlog.push(["_trackPageview"]);
+
+// 调皮的方案，可强制多次发送 PV
+// 但必须在第一次 PV 完成后才能生效
+setTimeout(function() {
+  _rlog.push(["_onPageViewFinished" , function(){
+      console.log("after pageview 2");
+  }]);
+  _rlog.push(["_trackPageview", 'ido']);
+}, 1000)
+
+
+// -----------------------------------------------------------------------------
+// - 支持多站点
+_rlog.push(['aaa._setAccount', 'test_by_dev_100'])
+_rlog.push(['aaa._addPost', 'key100', 'value100'])
+_rlog.push(['aaa._onPageViewFinished', function () {
+  console.log('test_by_dev_100 pageview finished 1')
+}])
+
+_rlog.push(['bbb._setAccount', 'test_by_dev_200']);
+_rlog.push(["aaa._setTrackVendor" , true]);
+
+</script>
+
+<script defer  src="src/rlog.js"></script>
+</body>
+</html>

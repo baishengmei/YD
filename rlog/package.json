@@ -1,0 +1,20 @@
+{
+  "name": "rlog",
+  "version": "1.2.0",
+  "description": "rlog",
+  "main": "src/rlog.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "sa_gitlab@gitlab.corp.youdao.com:webfront-public-service/rlog.git"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "grunt-contrib-connect": "^0.8.0",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-clean": "^0.6.0"
+  }
+}
