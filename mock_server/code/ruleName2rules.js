@@ -72,8 +72,8 @@ var ruleName2rules = {
 				},
 				"score": {
 					"type": "float",
-					"value": [1, 20],
-					"value1": [0, 12]
+					"value": [1, 20],//整数部分
+					"value1": [0, 12]//小数部分，若value为指定值，那么默认将value1设为“”。
 				},
 				"scorex": {
 					"type": "array",
@@ -96,21 +96,17 @@ var ruleName2rules = {
 
 		//constrRes：response中的条件与响应
 		"constrRes":[{
-			"condition":{
-				"$G1": true,
-			},
+			"condition":"$G1",
 			"response": {
 				//成绩，且整数部分取值介于60~100之间，小数部分保留小数位数介于1~2	
 				"score": {
 					"type": "float",
-					"inte": [60,100],
-					"deci": [1,2]
+					"value": [60,100],
+					"value1": [1,2]
 				},
 			}
 		}, {
-			"condition":{
-				"$G2": true
-			},
+			"condition":"$G2",
 			"response": {
 				"warning": "Sorry!It doesn't have this student!"
 			}
@@ -133,9 +129,7 @@ var ruleName2rules = {
 
 		//constrRes：response中的条件与响应
 		"constrRes":[{
-			"condition":{
-				"$G1": true,
-			},
+			"condition": "$G1",
 			"response": {
 				//姓名
 				"name": {
@@ -161,9 +155,7 @@ var ruleName2rules = {
 
 		//constrRes：response中的条件与响应
 		"constrRes":[{
-			"condition":{
-				"$G1": true,
-			},
+			"condition": "$G1",
 			"response": {
 				//成绩，且整数部分取值介于60~100之间，小数部分保留小数位数介于1~2	
 				"score": {

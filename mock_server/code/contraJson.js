@@ -1,32 +1,32 @@
 var ruleName2rules = require("./ruleName2rules");
 
-var ruleJson1 = ruleName2rules.xzxr1.paraDef.$p;
-var ruleJson2 = ruleName2rules.xzxr2.paraDef.$p;
+// var ruleJson1 = ruleName2rules.xzxr1.paraDef.$p;
+// var ruleJson2 = ruleName2rules.xzxr2.paraDef.$p;
 // console.log(ruleJson1);
-var requestJson1 = {
-	"name" : "whiodf",
-	"stuNum": "2014140011",
-	"age": 33,
-	"grade": "middle",
-	"pass": "true",
-	"start": "2014-09-01",
-	"ending": "2017-03-20",
-	"name2": 323,
-	"score": 12.4,
-	"email": "12@132.com",
-	"ip": "123.233.23.8",
-	"url": "http://xhi.ar/kwcnzm",
-	"people":{
-		"nameV": "122",
-		"ageV": 33
-	},
-	"scorex": [12, 22, 3, 1],
-	"mydate": "13:23:06"
-};
+// var requestJson1 = {
+// 	"name" : "whiodf",
+// 	"stuNum": "2014140011",
+// 	"age": 32,
+// 	"grade": "middle",
+// 	"pass": "true",
+// 	"start": "2014-09-01",
+// 	"ending": "2017-03-20",
+// 	"name2": 323,
+// 	"score": 12.4,
+// 	"email": "12@132.com",
+// 	"ip": "123.233.23.8",
+// 	"url": "http://xhi.ar/kwcnzm",
+// 	"people":{
+// 		"nameV": "122",
+// 		"ageV": 33
+// 	},
+// 	"scorex": [12, 22, 3, 1],
+// 	"mydate": "13:23:06"
+// };
 
 
-contraJson(ruleJson1, requestJson1);
-
+// contraJson(ruleJson1, requestJson1);
+module.exports = contraJson;
 //整数可以指定值，也可以设置整数的取值范围
 function contraInt(value, obj){
 	if(toString.apply(value) === '[object Array]'){
@@ -37,10 +37,6 @@ function contraInt(value, obj){
 		}catch(err){
 			console.log(new Error(err));
 		}
-
-		// if(obj<value[0] || obj>value[1]){
-		// 	console.log(new Error("The " +obj+ " isn't the type of int!"));
-		// }
 	}else if ((typeof value=='number') && (value.constructor==Number) && (value%1==0)){
 	
 		if(value !== obj){
@@ -64,7 +60,7 @@ function contraFloat(value1, value, obj){
 //可指定bool值，若置空（即：不选择）
 function contraBoolean(value, obj){
 	if(value == ""){
-		if(obj !== "true" && obj !== "false"){
+		if(obj !== true && obj !== false){
 			console.log(new Error('The '+obj+" isn't boolean!"))
 		}
 	}else if(value !== obj){
@@ -92,9 +88,9 @@ function contraArray(value, obj){
 			if(innerType == "int"){
 				contraInt(innerValue, obj[i])
 			}else if(innerType == "float"){
-				contraFloat(innerValue, obj[i]);
+				contraFloat(value.value1, innerValue, obj[i]);
 			}else if(innerType == "array"){
-				contraFloat(innerValue, obj[i]);
+				contraFloat(value.value1, innerValue, obj[i]);
 			}else if(innerType == "object"){
 				contraJson(innerValue, obj[i]);
 			}
@@ -117,15 +113,21 @@ function contraString(value, obj){
 		}
 	}
 }
+//只针对枚举一项的情况，如果是多项，可以设置成数组的情况。
 function contraEnum(value, obj){
 	if((typeof value=='string')&&(value.constructor==String)){
-		var flag = 1;
-		for(var i in value.split(',')){//replace(/(^\s*)|(\s*$)/g, "")目的是去掉枚举项前后空格
-			if(value.split(',')[i].replace(/(^\s*)|(\s*$)/g, "") == obj){
-				flag = 0;
+		var flag = 0;
+		var objArr = obj.split(',').unique();
+		for(var j in objArr){
+			for(var i in value.split(',')){//replace(/(^\s*)|(\s*$)/g, "")目的是去掉枚举项前后空格
+				if(value.split(',')[i].replace(/(^\s*)|(\s*$)/g, "") == objArr[j]){
+					flag+=1;//枚举中的重复项只比较一次
+				};
+				break;
 			}
 		}
-		if(flag == 1){
+		
+		if(flag !== obj.split(',').length){
 			console.log(new Error("The "+ obj + " don't exist!"))
 		}
 	}
@@ -174,7 +176,7 @@ function contraDate(value, obj, contentType){
 
 }
 function contraAddress(value, obj, contentType){
-	if(contentType == "regin" || contentType == "country" || contentType == "province"){
+	if(contentType == "regin" || contentType == "country" || contentType == "city" || contentType == "province"){
 		if(/^[\u4e00-\u9fa5]+$/.test(obj) == false){
 			console.log(new Error('The'+obj+"should be"+value+"!"));
 		}
@@ -250,6 +252,18 @@ function contraJson(rulJson, resJson){
 	}
 }
 
+//数组去重函数
+Array.prototype.unique = function(){
+ var res = [];
+ var json = {};
+ for(var i = 0; i < this.length; i++){
+  if(!json[this[i]]){
+   res.push(this[i]);
+   json[this[i]] = 1;
+  }
+ }
+ return res;
+}
 
 
 
