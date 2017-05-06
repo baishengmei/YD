@@ -5,6 +5,7 @@ var path = require('path');
 var url2ruleName = require('../public/javascripts/url2ruleName.js');
 var ruleName2rules = require('../public/javascripts/ruleName2rules.js');
 
+
 /* GET home page. */
 router.use(function(req, res, next) {
 
@@ -18,7 +19,7 @@ router.use(function(req, res, next) {
 	reqc = req.get('Content-Type') || req.get('Content-type');
 	reqh = req.headers;
 	reqq = req.query; //query部分
-console.log("requrl:"+requrl);
+console.log("reqBody:"+req.body);
 	if(reqm == "GET"){
 		reqp = reqq;
 	}else{
@@ -65,5 +66,6 @@ console.log("requrl:"+requrl);
 		title: 'Express'
 	});
 });
+
 
 module.exports = router;
