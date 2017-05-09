@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var url2ruleName = require('../public/javascripts/url2ruleName.js');
 var ruleName2rules = require('../public/javascripts/ruleName2rules.js');
+var contraJson = require('../public/javascripts/contraJson.js');
+var genRes = require('../public/javascripts/genRes.js');
 
 
 /* GET home page. */
@@ -18,49 +20,87 @@ router.use(function(req, res, next) {
 	reqm = req.method.toUpperCase();
 	reqc = req.get('Content-Type') || req.get('Content-type');
 	reqh = req.headers;
-	reqq = req.query; //query部分
-console.log("reqBody:"+req.body);
-	if(reqm == "GET"){
-		reqp = reqq;
-	}else{
 
-	}
+	reqq = req.query || "";
+	reqb = req.body || "";
 
-	if(url2ruleName[requ]){
+	if (url2ruleName[requ]) {
 		var rule; //url对应的mock规则
 		rule = ruleName2rules[url2ruleName[requ]];
 		//$m,$u,$b,$h,$hash,$c,$p分别指mock规则中的method，url，body，header，hash，contentT，parameters
-		function contrC() {
+		function contrC(rule) {
 			return new Promise(function(res, rej) {
-				if(rule.$c == reqc){
-					// console.log(rule.$c+"baishengmei");
+				if (rule.$c == reqc) {
 					res(rule);
-				};
+				} else {
+					rej(new Error("The content-type is wrong！"));
+				}
 			})
 		}
 		function contrM(ret) {
 			return new Promise(function(res, rej) {
-				if(ret.paraDef.$m.toUpperCase() == reqm){
-					// console.log(ret.paraDef.$m+"helloworld");
-				};
-				// res(ret.paraDef);
-			})
-		}
-		function contrP(ret) {
-			return new Promise(function(res, rej) {
-				if(true) {
-					console.log(ret.$p);//前提条件是，将request中相对应的参数保存为json格式，然后调用contrajson.js函数
+				if (ret.$m.toUpperCase() == reqm) {
+					res(ret);
+				} else {
+					rej(new Error("The method is wrong！"));
 				}
 			})
 		}
-		contrC().then(contrM).then(contrP);
 
-	}else{
+		function contrQ(ret) {
+			return new Promise(function (res, rej) {
+				if (contraJson(ret.$q, reqq)) {
+					res(ret);
+				}else{
+					rej(new Error("The body is not match!"));
+				}
+			})
+		}
+
+		function contrB(ret) {
+			return new Promise(function (res, rej) {
+				if (contraJson(ret.$b, reqb)) {
+					res(ret);				
+				} else {
+					rej(new Error("The body is not match!"));
+				}
+			})
+		}
+		function contrH(ret){
+			return new Promise(function (res, rej) {
+				if (contraJson(ret.$h, reqh)) {
+					res(ret);
+				} else {
+					rej(new Error("The header is not match!"));
+				}
+			})
+		}
+		function getRes(ret) {
+			return new Promise(function (res, rej) {
+				var constrRes = ret.constrRes;
+				// console.log(constrRes)
+				var flag = false;
+				for(var i=0,len; len=constrRes.length, i<len; i++){
+					var ruleCondition = constrRes[i].condition;
+					var condition = ruleCondition.replace(/\$G/g, 'ret\.\$G');
+					if(eval(eval(condition).replace(/\$b/g, "reqb").replace(/\$h/, "reqh").replace(/\$q/, "reqq"))){
+						var response, ruleResponse;
+						ruleResponse = constrRes[i].response;
+						response = genRes(ruleResponse);
+						flag = true;
+						break;
+					}
+				}
+				if(!flag){
+					rej(new Error("There is no response corresponding with the constraints!"))
+				}
+			})
+		}
+		contrC(rule).then(contrM).then(contrQ).then(contrB).then(contrH).then(getRes);
+
+	} else {
 		console.log("not exit!");
 	}
-
-
-	// console.log(url2ruleName);
 
 	res.render('index', {
 		title: 'Express'

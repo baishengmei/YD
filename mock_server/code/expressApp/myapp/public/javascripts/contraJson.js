@@ -1,31 +1,14 @@
-var ruleName2rules = require("./ruleName2rules");
+// var ruleName2rules = require("./ruleName2rules");
 
-// var ruleJson1 = ruleName2rules.xzxr1.paraDef.$p;
-// var ruleJson2 = ruleName2rules.xzxr2.paraDef.$p;
-// console.log(ruleJson1);
-// var requestJson1 = {
-// 	"name" : "whiodf",
-// 	"stuNum": "2014140011",
-// 	"age": 32,
-// 	"grade": "middle",
-// 	"pass": "true",
-// 	"start": "2014-09-01",
-// 	"ending": "2017-03-20",
-// 	"name2": 323,
-// 	"score": 12.4,
-// 	"email": "12@132.com",
-// 	"ip": "123.233.23.8",
-// 	"url": "http://xhi.ar/kwcnzm",
-// 	"people":{
-// 		"nameV": "122",
-// 		"ageV": 33
-// 	},
-// 	"scorex": [12, 22, 3, 1],
-// 	"mydate": "13:23:06"
+// var reqb = {
+// 	"name": "baishm",
+// 	"name2": "1234"
 // };
+// var ret = ruleName2rules.xzxr1.$b;
 
-
-// contraJson(ruleJson1, requestJson1);
+// if(contraJson(ret, reqb)){
+// 	console.log("yes");
+// }
 module.exports = contraJson;
 //整数可以指定值，也可以设置整数的取值范围
 function contraInt(value, obj){
@@ -40,7 +23,7 @@ function contraInt(value, obj){
 	}else if ((typeof value=='number') && (value.constructor==Number) && (value%1==0)){
 	
 		if(value !== obj){
-			console.log(new Error("The " + obj + " is wrong!"));
+			throw new Error("The " + obj + " is wrong!");
 		}
 	}
 }
@@ -49,11 +32,11 @@ function contraInt(value, obj){
 function contraFloat(value1, value, obj){
 	if((typeof value=='number') && (value.constructor==Number)){
 		if(value !== obj){
-			console.log(new Error("The " + obj + " is wrong!"));
+			throw new Error("The " + obj + " is wrong!");
 		}
 	}else if ((toString.apply(value) === '[object Array]') && (toString.apply(value1) === '[object Array]')){
 		if(obj<value[0] || obj>value[1] || (obj.toString().split('.')[1].length)<value1[0] || (obj.toString().split('.')[1].length)>value1[1]){
-			console.log(new Error("The " +obj+ " doesn't conform the rule!"));
+			throw new Error("The " +obj+ " doesn't conform the rule!");
 		}
 	}
 }
@@ -61,10 +44,10 @@ function contraFloat(value1, value, obj){
 function contraBoolean(value, obj){
 	if(value == ""){
 		if(obj !== true && obj !== false){
-			console.log(new Error('The '+obj+" isn't boolean!"))
+			throw new Error('The '+obj+" isn't boolean!")
 		}
 	}else if(value !== obj){
-		console.log(new Error('The '+obj+" should be"+value+"!"));
+		throw new Error('The '+obj+" should be"+value+"!");
 	}
 }
 //可以指定数组值，则对比若不完全一致则不相等。也可以指定每一项的类型(每一项的类型相同)为int、float、array、object
@@ -98,18 +81,20 @@ function contraArray(value, obj){
 	}
 }
 function contraRegex(value, obj){
+	// console.log("value:"+value);
+	// console.log("obj:"+obj);
 	if(!value.test(obj)){
-		console.log(new Error("The "+obj+ " doesn't conform the type of regex!"))
+		throw new Error("The "+obj+ " doesn't conform the type of regex!")
 	}
 }
 function contraString(value, obj){
 	if(toString.apply(value) === '[object Array]'){
 		if(eval('/^\\w\{'+ value[0]+','+value[1]+'\}$/').test(obj) == false){
-		console.log(new Error("The " +obj+ " don't conform the rule!"));
+		throw new Error("The " +obj+ " don't conform the rule!");
 		}
 	}else if ((typeof value=='string')&&(value.constructor==String)){
 		if(value !== obj){
-			console.log(new Error("The" + obj + "is wrong!"));
+			throw new Error("The" + obj + "is wrong!");
 		}
 	}
 }
@@ -128,25 +113,25 @@ function contraEnum(value, obj){
 		}
 		
 		if(flag !== obj.split(',').length){
-			console.log(new Error("The "+ obj + " don't exist!"))
+			throw new Error("The "+ obj + " don't exist!")
 		}
 	}
 }
 function contraEmail(obj){
 	if(/[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/.test(obj) == false){
-		console.log(new Error('The '+obj+" isn't qualified email"));
+		throw new Error('The '+obj+" isn't qualified email");
 	}
 }
 function contraIp(obj){
 	obj.split('.').forEach(function(item){
 		if(item<0 || item>255){
-			console.log(new Error('The '+obj+" isn't legal ip!"));
+			throw new Error('The '+obj+" isn't legal ip!");
 		}
 	})
 }
 function contraUrl(obj){
 	if(/^\w+:\/\/\w+\.\w+\/\w+/.test(obj) == false){
-		console.log(new Error('The '+obj+"isn't legal url"));
+		throw new Error('The '+obj+"isn't legal url");
 	}
 }
 function contraDate(value, obj, contentType){
@@ -156,20 +141,20 @@ function contraDate(value, obj, contentType){
 		case "date":
 		if(value !== ""){
 			if(value !== obj){
-				console.log(new Error('The'+obj+"should be"+value+"!"))
+				throw new Error('The'+obj+"should be"+value+"!")
 			}
 		}else if(/\d{4}-\d{2}-\d{2}/.test(obj) == false){
-			console.log(new Error('The'+obj+"is not the right date"));
+			throw new Error('The'+obj+"is not the right date");
 		}
 		break;
 		case "time":
 		if(/\d{2}:\d{2}:\d{2}/.test(obj) == false){
-			console.log(new Error('The'+obj+"is not the right time"));
+			throw new Error('The'+obj+"is not the right time");
 		}
 		break;
 		case "date_time":
 		if(/\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(obj) == false){
-			console.log(new Error('The'+obj+"is not the right date_time"));
+			throw new Error('The'+obj+"is not the right date_time");
 		}
 		break;
 	}
@@ -178,24 +163,28 @@ function contraDate(value, obj, contentType){
 function contraAddress(value, obj, contentType){
 	if(contentType == "regin" || contentType == "country" || contentType == "city" || contentType == "province"){
 		if(/^[\u4e00-\u9fa5]+$/.test(obj) == false){
-			console.log(new Error('The'+obj+"should be"+value+"!"));
+			throw new Error('The'+obj+"should be"+value+"!");
 		}
 	}else if(contentType == "zip"){
 		if(/^\d{6}$/.test(obj) == false){
-			console.log(new Error('The '+obj+" should be"+value+"!"));
+			throw new Error('The '+obj+" should be"+value+"!");
 		}
 	}
 }
 function contraJson(rulJson, resJson){
+	var temp, ruleJsonLength;
+	temp = 0;
+	ruleJsonLength = getJsonLength(rulJson);
+	// console.log(rulJson);
+
 	if(typeof(rulJson) == "object" && Object.prototype.toString.call(rulJson).toLowerCase() == "[object object]" && !rulJson.length){
 
 		for(var obj in rulJson){
-
 			// var isRight = true;
 
 			var type = rulJson[obj].type;
 			var value = rulJson[obj].value;
-
+			
 			// 判断rulJson中每一项的type，并根据type判断resJson中对应的obj是否符合ruleJson中的规则
 			switch(type)
 			{
@@ -244,9 +233,20 @@ function contraJson(rulJson, resJson){
 				break;
 
 				case "array": contraArray(value, resJson[obj]);
-				break;				
+				break;		
+
+				case undefined:
+				if(resJson[obj] !== rulJson[obj]){
+					throw new Error("The "+resJson[obj]+" is not match!");
+				}
+				break;
 
 			}
+			temp+=1;
+		}
+		// console.log(temp+";"+ruleJsonLength);
+		if(temp == ruleJsonLength){
+			return true; console.log("temp:"+temp)
 		}
 		
 	}
@@ -265,5 +265,13 @@ Array.prototype.unique = function(){
  return res;
 }
 
+//获取json长度
+function getJsonLength(json) {
+	var jsonLength = 0;
+	for (var i in json) {
+		jsonLength++;
+	}
+	return jsonLength;
+}
 
 
