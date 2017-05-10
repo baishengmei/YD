@@ -15,16 +15,14 @@ var ruleName2rules = {
 			},
 		},
 		"$h": {
-			"abc": "123"
+			"abc": "123",
+			"age": {
+		      "a": 2,
+		      "b": 6
+		    }
 		},
 		"$q": {},
-
-		//$G1:request参数约束
-		// "$G1": '$b.name2',
 		"$G1": "true && $b.name2 > 10",
-		// "$G2": true && '$b.name2' > 10,
-		// "$G1": 1+1,
-		// "$G2": 3+4,
 
 		//constrRes：response中的条件与响应
 		"constrRes": [{

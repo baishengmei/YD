@@ -78,7 +78,6 @@ router.use(function(req, res, next) {
 		function getRes(ret) {
 			return new Promise(function (res, rej) {
 				var constrRes = ret.constrRes;
-				// console.log(constrRes)
 				var flag = false;
 				for(var i=0,len; len=constrRes.length, i<len; i++){
 					var ruleCondition = constrRes[i].condition;
@@ -86,7 +85,7 @@ router.use(function(req, res, next) {
 					if(eval(eval(condition).replace(/\$b/g, "reqb").replace(/\$h/, "reqh").replace(/\$q/, "reqq"))){
 						var response, ruleResponse;
 						ruleResponse = constrRes[i].response;
-						response = genRes(ruleResponse);
+						response = genRes(ruleResponse);console.log(response);
 						flag = true;
 						break;
 					}

@@ -13,11 +13,12 @@ var options = {
   headers: {
     'content-type': "application/x-www-form-urlencoded",
     'content-length': Buffer.byteLength(postData),
-    "abc": "123"
+    "abc": "123",
+    "age": {
+      "a": 2,
+      "b": 6
+    }
   },
-  params: {
-    "email": '12@123.com'
-  }
 };
 
 // 处理响应的回调函数
