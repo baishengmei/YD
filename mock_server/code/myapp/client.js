@@ -8,7 +8,9 @@ var postData = qs.stringify({
       "b": 6
     }),
     "addr1": "中国",
-    "date1": "2015-05-05 12:12:01"
+    "date1": "2015-05-05 12:12:01",
+    "num1": 23,
+    "obj2":JSON.stringify({"a": 1, "b":2})
   });
 console.log(postData);
 // 用于请求的选项

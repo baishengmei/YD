@@ -5,22 +5,41 @@ var ruleName2rules = {
 		"$m": "post",
 		"$b": {
 			//英文姓名
-			"name": {
-				"type": "string",
-				"value": [5, 20]
-			},
-			"name2": {
-				"type": "regex",
-				"value": /^\d{2,4}$/
-			},
-			"addr1": {
-				"type": "address",
-				"contentType": "region",
-			},
-			"date1": {
-				"type": "date",
-				"contentType": "date_time",
+			// "name": {
+			// 	"type": "string",
+			// 	"value": [5, 20]
+			// },
+			// "name2": {
+			// 	"type": "regex",
+			// 	"value": /^\d{2,4}$/
+			// },
+			// "addr1": {
+			// 	"type": "address",
+			// 	"contentType": "region",
+			// },
+			// "date1": {
+			// 	"type": "date",
+			// 	"contentType": "date_time",
+			// },
+			// "num1": 23,
+			// "obj1":{
+			// 	"type": "object",
+			// 	"value": {"a": 1, "b":2}
+			// },
+			"obj2": {
+				"type": "object",
+				"value": {
+					"a":{
+						"type": "int",
+						"value": [0, 50]
+					},
+					"b":{
+						"type": "int",
+						"value":[0, 50]
+					}
+				}
 			}
+
 		},
 		"$h": {
 			// "abc": "123",
@@ -35,14 +54,14 @@ var ruleName2rules = {
 		 //    	"type": "enum",
 		 //    	"value": "apple, red, blue, yes"
 		 //    },
-		    "arr1": {
-		    	"type": "array",
-		    	"value": {
-		    		"type": "float",
-		    		"value": [0, 50],
-		    		"value1":[0, 3]
-		    	}
-		    },
+		 //    "arr1": {
+		 //    	"type": "array",
+		 //    	"value": {
+		 //    		"type": "float",
+		 //    		"value": [0, 50],
+		 //    		"value1":[0, 3]
+		 //    	}
+		 //    },
 		    // "arr2":[1,2,4,6]
 		},
 		"$q": {},
