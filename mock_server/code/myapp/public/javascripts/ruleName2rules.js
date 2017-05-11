@@ -53,54 +53,54 @@ var ruleName2rules = {
 			"condition": "$G1",
 			"response": {
 				//成绩，且整数部分取值介于60~100之间，小数部分保留小数位数介于1~2	
-				// "score": {
-				// 	"type": "float",
-				// 	"value": [60, 100],
-				// 	"value1": [1, 2]
-				// },
-				// "name": {
-				// 	"type": "string",
-				// 	"value": [5, 20]
-				// },
-				// "name2": {
-				// 	"type": "regex",
-				// 	"value": /^\d{2,4}$/
-				// },
-				// "name3": "this is just a str",
-				// "name4": [1,2,4,5],
-				// "name5": "",
-				// "name6":{
-				// 	"type": "int",
-				// 	"value":[2, 100]
-				// },
-				// "name7":{
-				// 	"type":"array",
-				// 	"value":{
-				// 		"type": "object",
-				// 		"value":{
-				// 			"aaaa":{
-				// 				"type":"int",
-				// 				"value": [7, 20]
-				// 			}
-				// 		}
-				// 	},
-				// 	"itemNum":[0,7]
-				// },
-				// "name8":{
-				// 	"type":"object",
-				// 	"value":{"a":1, "b":2}
-				// },
-				// "name9":{
-				// 	"type":"object",
-				// 	"value":{
-				// 		"name":"object",
-				// 		"name2":{
-				// 			"type": "float",
-				// 			"value":[3, 10],
-				// 			"value1": [0, 2]
-				// 		}
-				// 	}
-				// },
+				"score": {
+					"type": "float",
+					"value": [60, 100],
+					"value1": [1, 2]
+				},
+				"name": {
+					"type": "string",
+					"value": [5, 20]
+				},
+				"name2": {
+					"type": "regex",
+					"value": /^\d{2,4}$/
+				},
+				"name3": "this is just a str",
+				"name4": [1,2,4,5],
+				"name5": "",
+				"name6":{
+					"type": "int",
+					"value":[2, 100]
+				},
+				"name7":{
+					"type":"array",
+					"value":{
+						"type": "object",
+						"value":{
+							"aaaa":{
+								"type":"int",
+								"value": [7, 20]
+							}
+						}
+					},
+					"itemNum":[0,7]
+				},
+				"name8":{
+					"type":"object",
+					"value":{"a":1, "b":2}
+				},
+				"name9":{
+					"type":"object",
+					"value":{
+						"name":"object",
+						"name2":{
+							"type": "float",
+							"value":[3, 10],
+							"value1": [0, 2]
+						}
+					}
+				},
 
 			}
 		}, 

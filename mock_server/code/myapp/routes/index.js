@@ -95,10 +95,10 @@ router.use(function(req, res, next) {
 				}
 			})
 		}
-		// contrC(rule).then(contrM).then(contrQ).then(contrB).then(contrH).then(getRes).catch(function(){
-		// 	throw new Error("The rule isn't match!");
-		// });
-		contrC(rule).then(contrM).then(contrQ).then(contrB).then(contrH).then(getRes);
+		contrC(rule).then(contrM).then(contrQ).then(contrB).then(contrH).then(getRes).catch(function(){
+			throw new Error("The rule isn't match!");
+		});
+		// contrC(rule).then(contrM).then(contrQ).then(contrB).then(contrH).then(getRes);
 
 	} else {
 		console.log("not exit!");
