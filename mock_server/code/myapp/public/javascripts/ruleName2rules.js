@@ -13,13 +13,37 @@ var ruleName2rules = {
 				"type": "regex",
 				"value": /^\d{2,4}$/
 			},
+			"addr1": {
+				"type": "address",
+				"contentType": "region",
+			},
+			"date1": {
+				"type": "date",
+				"contentType": "date_time",
+			}
 		},
 		"$h": {
-			"abc": "123",
-			"age": {
-		      "a": 2,
-		      "b": 6
-		    }
+			// "abc": "123",
+			// "age": {
+		 //      "a": 2,
+		 //      "b": 6
+		 //    },
+		 //    "email1":{
+		 //    	"type":"email"
+		 //    },
+		 //    'enum1': {
+		 //    	"type": "enum",
+		 //    	"value": "apple, red, blue, yes"
+		 //    },
+		    "arr1": {
+		    	"type": "array",
+		    	"value": {
+		    		"type": "float",
+		    		"value": [0, 50],
+		    		"value1":[0, 3]
+		    	}
+		    },
+		    // "arr2":[1,2,4,6]
 		},
 		"$q": {},
 		"$G1": "true && $b.name2 > 10",
@@ -34,21 +58,60 @@ var ruleName2rules = {
 				// 	"value": [60, 100],
 				// 	"value1": [1, 2]
 				// },
-				"name": {
-				"type": "string",
-				"value": [5, 20]
-			},
-			"name2": {
-				"type": "regex",
-				"value": /^\d{2,4}$/
-			}
+				// "name": {
+				// 	"type": "string",
+				// 	"value": [5, 20]
+				// },
+				// "name2": {
+				// 	"type": "regex",
+				// 	"value": /^\d{2,4}$/
+				// },
+				// "name3": "this is just a str",
+				// "name4": [1,2,4,5],
+				// "name5": "",
+				// "name6":{
+				// 	"type": "int",
+				// 	"value":[2, 100]
+				// },
+				// "name7":{
+				// 	"type":"array",
+				// 	"value":{
+				// 		"type": "object",
+				// 		"value":{
+				// 			"aaaa":{
+				// 				"type":"int",
+				// 				"value": [7, 20]
+				// 			}
+				// 		}
+				// 	},
+				// 	"itemNum":[0,7]
+				// },
+				// "name8":{
+				// 	"type":"object",
+				// 	"value":{"a":1, "b":2}
+				// },
+				// "name9":{
+				// 	"type":"object",
+				// 	"value":{
+				// 		"name":"object",
+				// 		"name2":{
+				// 			"type": "float",
+				// 			"value":[3, 10],
+				// 			"value1": [0, 2]
+				// 		}
+				// 	}
+				// },
+
 			}
 		}, 
 		{
-			// "condition": "$G2",
-			// "response": {
-			// 	"warning": "Sorry!It doesn't have this student!"
-			// }
+			"condition": "$G2",
+			"response": {
+				"score": {
+					"type": "string",
+					"value": "wsbaishengm"
+				}
+			}
 		}]
 	},
 	"xzxr2": {

@@ -2,8 +2,15 @@ var http = require('http');
 var qs = require('querystring');
 var postData = qs.stringify({
     "name": "baishm",
-    "name2": "124"
+    "name2": "124",
+    "age": JSON.stringify({
+      "a": 2,
+      "b": 6
+    }),
+    "addr1": "中国",
+    "date1": "2015-05-05 12:12:01"
   });
+console.log(postData);
 // 用于请求的选项
 var options = {
   host: 'localhost',
@@ -14,10 +21,14 @@ var options = {
     'content-type': "application/x-www-form-urlencoded",
     'content-length': Buffer.byteLength(postData),
     "abc": "123",
-    "age": {
-      "a": 2,
-      "b": 6
-    }
+    // "age": JSON.stringify({
+    //   "a": 2,
+    //   "b": 6
+    // }),
+    // "email1":"123@164.com",
+    // 'enum1': "apple, blue",
+    "arr1": [0, 32, 5, 2],
+    // "arr2":[1, 2, 4, 6]
   },
 };
 
@@ -31,7 +42,7 @@ var callback = function(response) {
 
     response.on('end', function() {
       // 数据接收完成
-      console.log(body);
+      console.log("succeed!");
     });
   }
   // 向服务端发送请求

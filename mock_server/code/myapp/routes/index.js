@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser');
 var path = require('path');
 var url2ruleName = require('../public/javascripts/url2ruleName.js');
 var ruleName2rules = require('../public/javascripts/ruleName2rules.js');
@@ -85,7 +84,8 @@ router.use(function(req, res, next) {
 					if(eval(eval(condition).replace(/\$b/g, "reqb").replace(/\$h/, "reqh").replace(/\$q/, "reqq"))){
 						var response, ruleResponse;
 						ruleResponse = constrRes[i].response;
-						response = genRes(ruleResponse);console.log(response);
+						response = genRes(ruleResponse);
+						console.log(response);
 						flag = true;
 						break;
 					}
@@ -95,6 +95,9 @@ router.use(function(req, res, next) {
 				}
 			})
 		}
+		// contrC(rule).then(contrM).then(contrQ).then(contrB).then(contrH).then(getRes).catch(function(){
+		// 	throw new Error("The rule isn't match!");
+		// });
 		contrC(rule).then(contrM).then(contrQ).then(contrB).then(contrH).then(getRes);
 
 	} else {
