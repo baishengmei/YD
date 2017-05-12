@@ -38,6 +38,12 @@ var ruleName2rules = {
 						"value":[0, 50]
 					}
 				}
+			},
+			"name11":{
+				"type":"url"
+			},
+			"name12":{
+				"type": "ip"
 			}
 
 		},
@@ -120,6 +126,16 @@ var ruleName2rules = {
 						}
 					}
 				},
+				"name10":{
+					"type": "date",
+					"contentType": "time"
+				},
+				"name11":{
+					"type":"url"
+				},
+				"name12":{
+					"type": "ip"
+				}
 
 			}
 		}, 

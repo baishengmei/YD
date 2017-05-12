@@ -219,9 +219,9 @@ function contraEmail(obj){
 	}
 }
 function contraIp(obj){
-	if(obj.split('.').lenght == 4){
+	if(obj.split('.').length == 4){
 		obj.split('.').forEach(function(item){
-			if((typeof item !== "number") || item<0 || item>255){
+			if(!(/^\d+$/.test(item)) || parseInt(item)<0 || parseInt(item)>255){
 				throw new Error("The req-param " +obj+ " isn't legal Ip type!");
 			}
 		})
