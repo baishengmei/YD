@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import AppBar from 'material-ui/AppBar';
+// import AppBar from 'material-ui/AppBar';
 
-class mockHeader extends React.Component {
-
+class mockHeader extends Component {
+	constructor(props){
+		super(props)
+	}
   	render() {
 	  	return (
 	  		<div>
@@ -12,4 +14,5 @@ class mockHeader extends React.Component {
   		)
   	}
 }
-export default mockHeader;
+
+export { mockHeader };
