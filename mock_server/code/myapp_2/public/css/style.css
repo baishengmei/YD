@@ -1,0 +1,42 @@
+body {
+  	font-size: 14px;
+  	padding: 0;
+  	margin: 0;
+  	font-family: 'comic sans';
+  	background-color: #F5F5F5;
+}
+.nav_bar{
+  height: 55px;
+  width: 100%;
+  position: fixed;
+  background-color: #505050;
+}
+.navbar_logo {
+  width: 120px;
+  height: 31px;
+  float: left;
+  font-size: 20px;
+  color: #fff;
+  padding-top: 12px;
+  padding-left: 55px;
+}
+.navbar_icon {
+  width: 260px;
+  height: 31px;
+  float: right;
+  padding-top: 15px;
+  padding-right: 50px;
+  color: white;
+  font-size: 16px;
+  text-align: right;
+}
+.content{
+  margin-left: 50px;
+  margin-right: 50px;
+  height: 100%;
+  padding-top: 80px;
+}
+
+.content .content_name {
+  padding-bottom: 8px;
+}
