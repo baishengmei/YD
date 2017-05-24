@@ -6,29 +6,46 @@ const option = Select.Option;
 
 class ContentNameform extends React.Component {
 
+	constructor(props) {
+	    super(props);
+	     
+	}
+
+    componentDidMount () {
+    	const { setFieldsValue } = this.props.form;
+    	const mockNames = this.props.mockNames;
+    	setFieldsValue({
+	    	rulename: mockNames.ruleName,
+	    });
+    }
+
+    onchan (value) {
+	    	console.log("real value:"+value);
+	    }
 
 	render() {
 
-		const { getFieldDecorator } = this.props.form;
+		const { getFieldDecorator, getFieldProps } = this.props.form;
+		const changeRulename = this.props.changeRulename;
 		const formItemLayout = {
-	    	labelCol: { span: 4 },
-	    	wrapperCol: { span: 14 },
-	    };
-		//获取从父组件传递过来的 mockName，即规则名/项目名
-		const mockNames = this.props.mockNames;
+	    	labelCol: { span: 6 },
+	    	wrapperCol: { span: 16 },
+	    }
+
 		return (
 			<Form>
 				<Row>
-					<Col span={8}>
-						<FormItem label="规则名" {...formItemLayout}>
+					<Col span={7}>
+						<FormItem label="规则名" {...formItemLayout} {...this.props}>
 							{getFieldDecorator('rulename', {
-								rules: [{ required: true, message: 'Please input the rule name!' }]
+								rules: [{ required: true, message: 'Please input the rule name!' }],
+								onChange: changeRulename
 							})(
 								<Input />
 							)}
 						</FormItem>
 					</Col>
-					<Col span={8} offset={8}>
+					<Col span={7} offset={10}>
 						<FormItem label="项目名" {...formItemLayout}>
 							{getFieldDecorator('projname', {
 								rules: [{required: true, message: 'Please input the project name!' }]

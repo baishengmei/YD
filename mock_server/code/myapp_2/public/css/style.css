@@ -5,7 +5,7 @@ body {
   	font-family: 'comic sans';
   	background-color: #F5F5F5;
 }
-.nav_bar{
+.nav_bar {
   height: 55px;
   width: 100%;
   position: fixed;
@@ -18,25 +18,63 @@ body {
   font-size: 20px;
   color: #fff;
   padding-top: 12px;
-  padding-left: 55px;
+  padding-left: 142px;
 }
 .navbar_icon {
-  width: 260px;
+  width: 360px;
   height: 31px;
   float: right;
   padding-top: 15px;
-  padding-right: 50px;
+  padding-right: 142px;
   color: white;
   font-size: 16px;
   text-align: right;
 }
-.content{
-  margin-left: 50px;
-  margin-right: 50px;
+.content {
+  margin-left: 142px;
+  margin-right: 142px;
   height: 100%;
   padding-top: 80px;
 }
-
 .content .content_name {
   padding-bottom: 8px;
+}
+.layout {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  top: 0px;
+}
+ .contentRe {
+  background-color: #fff;
+  min-height: 400px;
+  /*border: 1px solid #ccc;*/
+  box-shadow: 0 3px 5px #e8e9e9 inset, 1px 3px 3px rgba(150,152,153,0.3);
+  background:
+        linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,.4) 0) 100% 0 no-repeat,
+        linear-gradient(-135deg, transparent 1.5em, #fff 0);
+  background-size: 2em 2em, auto;
+} 
+.conreq-hd {
+  position: relative;
+  zoom: 1;
+  height:  42px;
+}
+.conreq-ti {
+  position: absolute;
+  /*top: -4px;*/
+  left: -1px;
+  height: 46px;
+  line-height: 46px;
+  text-align: center;
+}
+.conreq-ti h3 {
+  padding: 0 60px 0 60px;
+  height: auto;
+  line-height: 46px;
+  background: #555b65;
+  color: #fff;
+  font-size: 16px;
+  font-family: "Microsoft YaHei";
 }
