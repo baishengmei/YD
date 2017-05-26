@@ -19,10 +19,6 @@ class ContentNameform extends React.Component {
 	    });
     }
 
-    onchan (value) {
-	    	console.log("real value:"+value);
-	    }
-
 	render() {
 
 		const { getFieldDecorator, getFieldProps } = this.props.form;

@@ -1,16 +1,15 @@
 import React from "react"
-import FormX from "./formx"
+import FormInput from './forminput'
+import FormSelect from './formselect'
 
 class ReqContent extends React.Component {
 
 	render() {
 		return ( 
-			// < div > {
-			// 	this.props.mockNames_req.ruleName
-			// } < /div>
-			<div>
-				<FormX type="input" name="Url" tag="$U" />
-				<FormX type="select" name="Method" tag="$M" values="GET, PUT, POST, DELETE"
+			
+			<div className="reqContent">
+				<FormInput name="Url" tag="$U" />
+				<FormSelect name="Method" tag="$M" optval="GET,DELETE,POST,PUT,OPTIONS" />				
 			</div>
 		);
 	}
