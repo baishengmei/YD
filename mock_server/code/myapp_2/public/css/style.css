@@ -6,6 +6,7 @@ body {
   	background-color: #F5F5F5;
 }
 .nav_bar {
+  z-index: 999;
   height: 55px;
   width: 100%;
   position: fixed;
@@ -93,20 +94,20 @@ body {
 .paramsInput {
   border-radius: 0 !important;
   border: none !important;
-  border-bottom: 1px solid rgba(80, 80, 80, 1) !important;
+  border-bottom: 1px solid #DADADA !important;
   /*box-shadow: 0px 2px 4px #888888 !important;*/
   text-align: center;
 }
-.paramsInput:focus {
+/*.paramsInput:focus {
   border: none !important;
   border-bottom: 1px solid rgba(80, 80, 80, 1) !important;
   /*box-shadow: 0px 2px 4px #888888 !important;*/
-  text-align: center;
-}
+  /*text-align: center;
+}*/
 .paramsInputShort{
   border-radius: 0 !important;
   border: none !important;
-  border-bottom: 1px solid rgba(80, 80, 80, 1) !important;
+  border-bottom: 1px solid #DADADA !important;
   text-align: center;
 }
 .paramsInputShort::-webkit-input-placeholder, .paramsInputShort::-ms-input-placeholder, .paramsInputShort::-moz-placeholder{
@@ -117,6 +118,7 @@ body {
   border-bottom: 1px solid rgba(80, 80, 80, 1) !important;
   box-shadow: 0px 2px 4px #888888 !important;
   text-align: center;
+  bottom: -1px;
 }
 
 .dynamic-delete-button {

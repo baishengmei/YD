@@ -48,36 +48,42 @@ class inputComponent extends React.Component {
     const formItems = keys.map((k, index) => {
       
       return (
-        <FormItem key={k}>
-        <Row type="flex" justify="start">
-          <Col span={18}>
-            {getFieldDecorator(`input-${k}`, {
-              validateTrigger: ['onChange', 'onBlur'],
-              rules: [{
-                required: true,
-                whitespace: true,
-                message: `Please input the legal ${name.toLowerCase()} or delete this field.`,
-              }],
-            })(
-              <Input onChange={this.changeBorder} placeholder={name} className="paramsInput" />
-            )}
-          </Col>
-          <Col span={1} offset={1}>
-          <Icon
-            className="dynamic-delete-button"
-            type="minus-circle-o"
-            disabled={keys.length === 1}
-            onClick={() => this.remove(k)}
-          />
+        <Col span={24} key={k}>
+          <Col span={22}>
+              <Form>
+                <FormItem key={k}>
+                  <Row type="flex" justify="start">
+                    <Col span={18}>
+                      {getFieldDecorator(`input-${k}`, {
+                        validateTrigger: ['onChange', 'onBlur'],
+                        rules: [{
+                          required: true,
+                          whitespace: true,
+                          message: `Please input the legal ${name.toLowerCase()} or delete this field.`,
+                       }],
+                      })(
+                        <Input onChange={this.changeBorder} placeholder={name} className="paramsInput" />
+                      )}
+                    </Col>                  
+                  </Row>
+                </FormItem>
+              </Form>
           </Col>
           <Col span={1}>
-          <Icon className="dynamic-plus-button"
-            type="plus-circle-o"
-            onClick={this.add.bind(this)}
-          />
+            <Icon
+              className="dynamic-delete-button"
+              type="minus-circle-o"
+              disabled={keys.length === 1}
+              onClick={() => this.remove(k)}
+            />
           </Col>
-          </Row>
-        </FormItem>
+          <Col span={1}>
+            <Icon className="dynamic-plus-button"
+              type="plus-circle-o"
+              onClick={this.add.bind(this)}
+            />
+          </Col>
+        </Col>
       );
     });
     return (
@@ -87,10 +93,8 @@ class inputComponent extends React.Component {
           <Col span={4}>
             <p className="paramsLabel">{`${name} ( ${tag} ):`}</p>
           </Col>
-          <Col span={18} offset={2}>
-            <Form>
-              {formItems}
-            </Form>
+          <Col span={17} offset={1}>
+            {formItems}
           </Col>
         </Row>
       </div>

@@ -11,7 +11,7 @@ class footer extends React.Component {
 					textAlign: 'center'
 				}
 			} >
-			Ant Design© 2016 Created by Ant UED < /Footer>
+			Mock Server© 2017 Created by baishm < /Footer>
 		);
 	}
 }

@@ -15,9 +15,9 @@ class formselect extends React.Component {
 		const { name, tag, optval } = this.props;
 		const { getFieldDecorator } = this.props.form;
 
-		var formOptions = optval.split(",").map((val, i) => {
+		const formOptions = optval.split(",").map((val, i) => {
         	return (
-        		<Option key={i} value={val}>{val.toUpperCase()}</Option>
+        		<Option key={val} value={val.toUpperCase()}>{val.toUpperCase()}</Option>
         	)
       	})
 
@@ -27,7 +27,7 @@ class formselect extends React.Component {
 					<Col span={4}>
 						<p className="paramsLabel">{`${name} ( ${tag} ):`}</p>
 					</Col>
-					<Col span={14} offset={2}>
+					<Col span={12} offset={1}>
 						<Form>
 					        <FormItem>
 					          {getFieldDecorator(name.toLowerCase(), {
@@ -40,7 +40,6 @@ class formselect extends React.Component {
 					        </FormItem>
 					    </Form>
 					</Col>
-
 				</Row>
 			</div>
 		)
