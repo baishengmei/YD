@@ -5,15 +5,15 @@ var WebpackDevServer = require('webpack-dev-server');
 module.exports = {
     // 项目入口
     entry: [
-        // 'webpack-dev-server/client?http://0.0.0.0:3000',//资源服务器地址
+        'webpack-dev-server/client?http://0.0.0.0:3000',//资源服务器地址
         'webpack/hot/only-dev-server',
         './src/pages/app.js'
     ],
     // entry: "./src/pages/app.js",
     // 打包文件输出路径
     output: {
-        // publicPath: "http://127.0.0.1:3000/public/js/",
-        path: path.join(__dirname, './public/js/'),
+        publicPath: "http://127.0.0.1:3000/public/js/",
+        path: path.join(__dirname, './public/js'),
         filename: "bundle.js"
     },
     // output: {
@@ -34,11 +34,12 @@ module.exports = {
             exclude:path.resolve(__dirname,'node_modules')
         }, {
             test: /\.jsx$/,
-            loader: 'babel-loader',
+            loader: ['react-hot', 'jsx?harmony', 'babel-loader'],
             query: {
                 presets: ['react', 'es2015']
             },
-            exclude:path.resolve(__dirname,'node_modules')
+            exclude:path.resolve(__dirname,'node_modules'),
+            include: path.join(__dirname, 'src')
         },  {
             test: /\.css$/,
             loader: ["style-loader","css-loader"],
@@ -60,13 +61,6 @@ module.exports = {
             'process.env.NODE_ENV': '"development"'
         }),
         new webpack.HotModuleReplacementPlugin()
-    ],
-    devServer: {
-        // host: "127.0.0.1",
-        // port: 3000,
-        // contentBase: 'public/',
-        // historyApiFallback: true,
-        hot: true
-    },
+    ]
         
 };

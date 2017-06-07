@@ -1,12 +1,15 @@
-import React from "react"
+import React, { PropTypes, Component } from 'react';
 import { Row, Col } from "antd"
 import { Form, Input, Icon, Button, Select, Cascader } from 'antd'
 const FormItem = Form.Item
 const Option = Select.Option
  
 let uuid = 1;
-class paramsComponent extends React.Component {
-  remove (k)  {
+class paramsComponent extends Component {
+  constructor() {
+    super();
+  }
+  remove (k) {
     const { form } = this.props;
     // can use data-binding to get
     const keys = form.getFieldValue('keys');
@@ -52,7 +55,7 @@ class paramsComponent extends React.Component {
 
   dynamicParamDef () {
     return (
-      <span>hello</span>
+      <span>hellohellohello</span>
     )
   }
 
