@@ -32,8 +32,11 @@
   border-radius: 0 !important;
   border: none !important;
   border-bottom: 1px solid #DADADA !important;
-  /*box-shadow: 0px 2px 4px #888888 !important;*/
   text-align: center;
+}
+
+.paramsInput:focus {
+  box-shadow: 0 0 0 0 !important;
 }
 
 .paramsInputShort{
@@ -41,6 +44,9 @@
   border: none !important;
   border-bottom: 1px solid #DADADA !important;
   text-align: center;
+}
+.paramsInputShort:focus{
+  box-shadow: 0 0 0 0 !important;
 }
 
 .paramsInputShort::-webkit-input-placeholder, .paramsInputShort::-ms-input-placeholder, .paramsInputShort::-moz-placeholder{
