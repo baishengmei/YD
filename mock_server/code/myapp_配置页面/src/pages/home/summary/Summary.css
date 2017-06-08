@@ -1,0 +1,142 @@
+@import '../../../components/variables.css';
+
+.summaryContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 32px 0;
+  width: 100%;
+}
+
+.summaryInfo {
+  flex: auto;
+
+  & > .info__title {
+    font-family: var(--font-family-bold);
+    font-size: var(--font-big);
+    line-height: var(--line-height-chinese);
+    color: var(--color-black);
+  }
+
+  & > .info__card {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 24px;
+    width: 100%;
+    height: 160px;
+    background-color: var(--color-white);
+
+    & > .card__item {
+      flex: none;
+
+      .item__title {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        line-height: var(--line-height-chinese);
+
+        & > .title__text {
+          flex: none;
+          font-size: var(--font-size-base);
+          color: var(--color-weak-black);
+        }
+      }
+
+      .item__content {
+        margin-top: 8px;
+        font-family: var(--font-family-bold);
+        font-size: var(--font-lg);
+        line-height: var(--line-height-english);
+        color: var(--color-black);
+        text-align: center;
+      }
+
+    }
+
+    & > .splitter {
+      flex: 0 0 1px;
+      width: 1px;
+      height: 56px;
+      background-color: var(--color-grey);
+    }
+  }
+}
+
+.summaryInfo.account {
+  flex: 1 1 694px;
+
+  & > .info__card {
+
+    & > .card__item {
+      flex: 1 1 50%;
+      display: flex;
+      justify-content: center;
+
+      & > .item__wrapper {
+        flex: none;
+        width: auto;
+        text-align: left;
+
+        & > .item__title {
+          transform: translateX(-32px);
+
+          & > .subLogo {
+            width: 16px;
+            height: 16px;
+          }
+
+          & > .title__text {
+            margin-left: 16px;
+            font-weight: 500;
+          }
+        }
+
+        & > .item__content {
+          font-size: var(--font-lg2x);
+          font-weight: var(--font-weight-bold);
+          text-align: left;
+
+          &:after {
+            content: '元';
+            margin-left: 8px;
+            font-size: var(--font-size-base);
+            color: var(--color-weak-black);
+          }
+        }
+      }
+    }
+
+    & > .splitter {
+      position: absolute;
+    }
+
+  }
+}
+
+.space {
+  flex: 0 0 24px;
+}
+
+.summaryInfo.ad {
+  flex: 1 1 482px;
+
+  & > .info__card {
+
+    & > .card__item {
+      flex: 1 1 30%;
+
+      & > .item__title {
+        justify-content: center;
+
+        & > .title__text {
+          font-size: var(--font-small);
+          color: var(--color-weak-black);
+        }
+      }
+
+      & > .item__content {
+        font-weight: var(--font-weight-bolder);
+      }
+    }
+  }
+}

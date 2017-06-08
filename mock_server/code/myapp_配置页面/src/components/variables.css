@@ -1,0 +1,55 @@
+:root {
+  /*
+   * Typography
+   * ======================================================================== */
+
+  --font-family-base: 'Helvetica Neue', 'PingFang SC', 'Microsoft Yahei', Arial, sans-serif;
+  --font-family-bold: 'Helvetica Neue', '.PingFangSC-Medium', 'Microsoft Yahei', sans-serif;
+
+  /**
+   * Layout
+   */
+
+  --min-content-width: 1200px;
+  --padding-lr: 142px; /* screen padding left and right */
+
+  /**
+   * media queries breakpoints
+   */
+  --screen-min-width: 1296px; /* screen min width */
+
+  /**
+   * font size
+   */
+  --font-lg2x: 32px;
+  --font-lg: 24px;
+  --font-big: 16px;
+  --font-size-base: 16px;
+  --font-small: 14px;
+  --font-smallest: 12px;
+
+  --border-radius-base: 2px;
+
+  --font-weight-lightest: 100;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-bolder: 500;
+  --font-weight-bold: 700;
+
+  --line-height-chinese: 1.5;
+  --line-height-english: 1.25;
+
+  /**
+   * various color
+   */
+  --color-black: #333;
+  --color-light-black: #666;
+  --color-weak-black: #8c8c8c;
+  --color-disabled: #b8b8b8;
+  --color-grey: #e6e6e6;
+  --color-white: #fff;
+  --color-bg: #f3f3f3;
+  --color-red: #d74c3f;
+  --color-blue: #5a9ee2;
+  --color-deep-grey: #505050;
+}

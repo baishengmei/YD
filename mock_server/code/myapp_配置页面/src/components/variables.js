@@ -1,0 +1,11 @@
+export const screenMdMin = 1280; /* middle screen min width */
+export const screenLgMin = 1440; /* large screen min width */
+export const minContentWidth = 1200;
+export const paddingLrSm = 40;
+export const paddingLrLg = 120;
+export const colorRed = '#d74c3f';
+export const colorBlue = '#5a9ee2';
+export const colorGrey = '#e6e6e6';
+export const colorWeakBlack = '#8c8c8c';
+export const fontWeightLight = 300;
+export const fontSmallest = 12;

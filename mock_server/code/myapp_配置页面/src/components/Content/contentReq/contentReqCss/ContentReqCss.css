@@ -1,0 +1,97 @@
+.conreq_hd {
+  position: relative;
+  zoom: 1;
+  height:  42px;
+}
+
+.conreq_ti {
+  position: absolute;
+  left: -1px;
+  height: 46px;
+  line-height: 46px;
+  text-align: center;
+}
+
+.conreq_ti_h {
+  width: 200%;
+  text-align: center;
+  height: auto;
+  line-height: 46px;
+  background: #555b65;
+  color: #fff;
+  font-size: 16px;
+  font-family: "Microsoft YaHei";
+}
+
+.reqContent {
+  margin: 0 auto;
+  padding-top: 18px;
+}
+
+.paramsInput {
+  border-radius: 0 !important;
+  border: none !important;
+  border-bottom: 1px solid #DADADA !important;
+  /*box-shadow: 0px 2px 4px #888888 !important;*/
+  text-align: center;
+}
+
+.paramsInputShort{
+  border-radius: 0 !important;
+  border: none !important;
+  border-bottom: 1px solid #DADADA !important;
+  text-align: center;
+}
+
+.paramsInputShort::-webkit-input-placeholder, .paramsInputShort::-ms-input-placeholder, .paramsInputShort::-moz-placeholder{
+  font-style: oblique;
+}
+
+.dynamic_delete_button {
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 20px;
+  color: #999;
+  transition: all .3s;
+}
+
+.dynamic_delete_button:hover {
+  color: #777;
+}
+
+.dynamic_delete_button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.dynamic_plus_button {
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 20px;
+  color: #999;
+  transition: all .3s;
+  left: 5px;
+}
+
+.dynamic_plus_button:hover {
+    color: #777;
+}
+
+.paramsLabel {
+  text-align: right;
+  font-weight: 600;
+  font-size: 12px;
+  color: #666666;
+  margin-top: 10px;
+  font-famliy: tahoma;
+}
+
+.paramsSelect {
+  border: none !important;
+  border-bottom: 1px solid rgba(80, 80, 80, 1) !important;
+  box-shadow: 0px 2px 4px #888888 !important;
+  text-align: center;
+  bottom: -1px;
+}

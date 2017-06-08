@@ -1,0 +1,10 @@
+build/
+coverage/
+docs/
+logs/
+mochawesome-reports/
+node_modules/
+src/api/download.js
+src/images
+src/logs
+src/pages/home/data/statisticsGraph/biLineChart

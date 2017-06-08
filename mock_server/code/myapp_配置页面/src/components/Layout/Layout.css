@@ -1,0 +1,110 @@
+@import '../variables.css';
+
+/**
+ * 基础样式，默认是 > 1440px 的大屏的样式，各个组件和页面的最外层设置也是
+ */
+body {
+  width: 100%;
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-base);
+  background-color: var(--color-bg);
+  color: var(--color-light-black);
+  line-height: var(--line-height-chinese);
+}
+
+:global(body .root) {
+  padding-left: var(--padding-lr);
+  padding-right: var(--padding-lr);
+  width: 100%;
+  min-width: var(--screen-min-width);
+}
+
+/**
+ * 全局 antd 组件圆角设置
+ */
+:global(.ant-select .ant-select-selection),
+:global(.ant-input),
+:global(.ant-btn) {
+  border-radius: var(--border-radius-base);
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+  resize: vertical;
+}
+
+/*
+ * Browser upgrade prompt
+ * ========================================================================== */
+
+:global(.browserupgrade) {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}

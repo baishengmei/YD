@@ -1,0 +1,6 @@
+{
+  "name": "StatisticsGraph",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./StatisticsGraph.js"
+}
