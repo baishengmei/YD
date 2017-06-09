@@ -19,6 +19,6 @@
   box-shadow: 0 3px 5px #e8e9e9 inset, 1px 3px 3px rgba(150,152,153,0.3);
   background:
         linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,.4) 0) 100% 0 no-repeat,
-        linear-gradient(-135deg, transparent 1.5em, #fff 0);
+        linear-gradient(-135deg, transparent 1.5em, #EEEEEE 0);
   background-size: 2em 2em, auto;
-} 
+}

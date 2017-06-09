@@ -33,6 +33,8 @@
   border: none !important;
   border-bottom: 1px solid #DADADA !important;
   text-align: center;
+  background-color: transparent;
+  font-style: italic;
 }
 
 .paramsInput:focus {
@@ -44,6 +46,7 @@
   border: none !important;
   border-bottom: 1px solid #DADADA !important;
   text-align: center;
+  background-color: transparent;
 }
 .paramsInputShort:focus{
   box-shadow: 0 0 0 0 !important;
@@ -92,12 +95,122 @@
   color: #666666;
   margin-top: 10px;
   font-famliy: tahoma;
+  overflow: hidden;
 }
 
 .paramsSelect {
   border: none !important;
-  border-bottom: 1px solid rgba(80, 80, 80, 1) !important;
-  box-shadow: 0px 2px 4px #888888 !important;
+  /*border-bottom: 1px solid rgba(80, 80, 80, 1) !important;*/
+  /*box-shadow: 0px 2px 4px #888888 !important;*/
   text-align: center;
   bottom: -1px;
+  /*background-color: #EEEEEE;*/
+}
+
+.divLine {
+  overflow: hidden;
+  zoom: 1;
+}
+
+.divLineb {
+  background: #ddd;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  float: left;
+  width: 100%;
+  height: 1px;
+  overflow: hidden;
+}
+
+.constraintLabel {
+  text-align: right;
+  font-weight: 600;
+  color: #666666;
+  margin-top: 10px;
+  /*font-family: serif;*/
+  font-size: 16px;
+}
+
+.constraintTipsT {
+  font-size: 8px;
+  text-align: right;
+  font-weight: 700;
+  margin-top: 8px;
+  margin-left: 1%;
+  margin-bottom: 10px;
+}
+
+.constraintTips {
+  font-size: 8px;
+  margin-top: 16px;
+  margin-bottom: 13px;
+}
+
+.group {
+  width: 100%;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  /*min-height: 80px;*/
+}
+
+.groupIf {
+  width: 100%;
+  height: 36px;
+  line-height: 36px;
+  border-bottom: 1px solid #ddd;
+}
+
+.g {
+  font-size: 14px;
+  float: left;
+  /*font-weight: bolder;*/
+  color: #000/*;*/
+}
+
+.gDel {
+  float: right;
+}
+
+.gDel p {
+  font-size: 14px;
+  color: #3B87CC;
+}
+
+.groupIfT {
+  text-align: right;
+  font-size: 13px;
+  font-weight: 800;
+  font-family: "微软雅黑";
+}
+
+.groupIfInput {
+  height: 100%;
+  font-size: 13px;
+  width: 100%;
+  text-align: center;
+  border: none !important;
+}
+
+.groupIfInput:focus {
+  height: 100%;
+  font-size: 13px;
+  width: 100%;
+  text-align: center;
+  border: none !important;
+}
+
+.groupExpT {
+  text-align: right;
+  font-size: 13px;
+  font-weight: 800;
+  font-family: "微软雅黑";
+  margin-top: 6px;
+}
+
+.groupExp {
+  height: 100%;
+  font-size: 13px;
+  width: 100%;
+  text-align: center;
+  border: none !important;
 }
