@@ -5,7 +5,7 @@ const FormItem = Form.Item
 const Option = Select.Option
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
 import s from './contentReqCss/ContentReqCss.css'
-import { options, allOptionItems } from './Utilsvari'
+import ParamComp from './Formparams/ParamComp'
 
 
 let uuid = 1;
@@ -35,29 +35,6 @@ class paramsComponent extends Component {
     console.log("keys:", keys);
   }
 
-  changeBorder = (e) => {
-    e.preventDefault();
-    console.log("preventDefault");
-  }
-
-  firstSelChange = (value) => {
-    console.log(value);
-  }
-
-  onChangeParaDef = (value) => {
-    console.log(value[1]);
-  }
-
-  dynamicParamDef = () => {
-    return (
-      <span></span>
-    )
-  }
-
-  // componentDidMount () {
-    
-  // }
-
   render() {
 
     const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -66,45 +43,19 @@ class paramsComponent extends Component {
     const keys = getFieldValue('keys');
     const { name, tag } = this.props;
     const optionItems2 = ["等于", "范围"]
-    const paramOptions = allOptionItems.map((val, i)=>{
-        return (
-          <Option key={val}>{val}</Option>
-        )
-      })
+    // const paramOptions = allOptionItems.map((val, i)=>{
+    //   return (
+    //     <Option key={val}>{val}</Option>
+    //   )
+    // })
     
     const formItems = keys.map((k, index) => { 
 
       return (
         <Form key={k}>
           <Row>
-            <Col span={3}>
-              <FormItem key={k}>
-                {getFieldDecorator(`input-${k}`, {
-                  rules: [{
-                    required: true,
-                    whitespace: true,
-                    message: `Please input the key name.`,
-                  }],
-                })(
-                  <Input placeholder="key" className={s.paramsInputShort} />
-                )}
-              </FormItem>
-            </Col>
-            <Col span={19}>
-                <Col span={5}>                  
-                  <FormItem>
-                    <Cascader
-                      options={options}
-                      expandTrigger="hover"
-                      onChange={this.onChangeParaDef}
-                      className={s.paramsSelect}
-                      placeholder="Regex"
-                    />
-                  </FormItem>
-                </Col>
-                <Col span={17}>
-                  { this.dynamicParamDef() }
-                </Col>                  
+            <Col span={22}>
+              <ParamComp />
             </Col>
             <Col span={1}>
               <Icon
