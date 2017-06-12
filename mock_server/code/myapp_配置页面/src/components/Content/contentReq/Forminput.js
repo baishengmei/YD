@@ -7,7 +7,7 @@ import s from './contentReqCss/ContentReqCss.css'
  
 let uuid = 1;
 class inputComponent extends Component {
-  remove (k)  {
+  remove = (k) => {
     const { form } = this.props;
     // can use data-binding to get
     const keys = form.getFieldValue('keys');
@@ -22,7 +22,7 @@ class inputComponent extends Component {
     });
   }
 
-  add () {
+  add = () => {
     uuid++;
     const { form } = this.props;
     // can use data-binding to get
@@ -36,7 +36,7 @@ class inputComponent extends Component {
     console.log("keys:", keys);
   }
 
-  changeBorder (e) {
+  changeBorder = (e) => {
     e.preventDefault();
     console.log("preventDefault");
   }
@@ -82,7 +82,7 @@ class inputComponent extends Component {
           <Col span={1}>
             <Icon className={s.dynamic_plus_button}
               type="plus-circle-o"
-              onClick={this.add.bind(this)}
+              onClick={() => this.add()}
             />
           </Col>
         </Col>

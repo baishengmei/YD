@@ -171,9 +171,11 @@
   float: right;
 }
 
-.gDel p {
+.gDel Button {
   font-size: 14px;
   color: #3B87CC;
+  background: none !important;
+  border: none !important;
 }
 
 .groupIfT {
@@ -192,6 +194,11 @@
 }
 
 .groupIfInput:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.groupIfInput:focus {
   height: 100%;
   font-size: 13px;
   width: 100%;
@@ -204,7 +211,9 @@
   font-size: 13px;
   font-weight: 800;
   font-family: "微软雅黑";
-  margin-top: 6px;
+  height: 64px;
+  line-height: 64px;
+  background-color: #fff;
 }
 
 .groupExp {
@@ -214,3 +223,9 @@
   text-align: center;
   border: none !important;
 }
+
+.groupExp:focus {
+  box-shadow: none;
+  outline: none;
+}
+
