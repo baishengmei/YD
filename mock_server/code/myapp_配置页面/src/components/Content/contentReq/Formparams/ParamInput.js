@@ -10,6 +10,7 @@ class paramInput extends Component {
 	render() {
 
 		const { getFieldDecorator, getFieldValue } = this.props.form;
+		const placevalue = this.props.placevalue;
 
 		return (
 			<FormItem>
@@ -17,10 +18,10 @@ class paramInput extends Component {
 	              	rules: [{
 		                required: true,
 		                whitespace: true,
-		                message: `Please input the key name.`,
+		                message: `Please input the ${placevalue}.`,
 		            }],
 	            })(
-	              	<Input placeholder="key" className={s.paramsInputShort} />
+	              	<Input placeholder={placevalue} className={s.paramsInputShort} />
 	            )}
 	        </FormItem>
 		)

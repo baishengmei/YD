@@ -9,8 +9,8 @@ import { options, allOptionItems } from '../Utilsvari'
 class paramSel extends Component {
 
 	onChangeParaDef = (value) => {
-	    console.log("value:",value[1]);
-	    this.props.onChangeSel(value[1]);
+	    console.log("value:",value);
+	    this.props.onChangeSel(value);
 	}
 
 	render() {

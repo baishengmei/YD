@@ -229,3 +229,14 @@
   outline: none;
 }
 
+.noteTips {
+  color: grey !important;
+  font-size: 13px !important;
+  margin-top: 10px;
+}
+
+.arrLabel {
+  font-size: 12px !important;
+  margin-top: 10px;
+}
+
