@@ -38,7 +38,6 @@ class inputComponent extends Component {
 
   changeBorder = (e) => {
     e.preventDefault();
-    console.log("preventDefault");
   }
 
   render() {

@@ -7,31 +7,45 @@ import ContentRes from "../Content/ContentRes"
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
 import s from './MockContent.css';
 
+let ruleName2rules = {};
+let rule2ruleName = {};
+
 class MockContent extends Component {
 
   constructor(props) {
       super(props);
       this.state = {
-        mockNames: {
-          ruleName: "test1",//规则名
-          projName: "yadk1" //项目名
-        }
+        rulename: "",
+        projname: ""
       }       
   }
+  //点击request中的保存按钮，调用的函数
+  reqSave = () => {
+    console.log("this.rulename and projname----reqsave", this.state.rulename, this.state.projname)
+  }
 
-  handleChange = () => {
-    // this.props.onChangeRulename();
-    console.log("yes")
+  //将规则名/项目组名传给该组件，并将值更新到state中。
+  submitSave = (rulename, projname) => {
+    this.setState({
+      rulename: rulename,
+      projname: projname
+    })
   }
 
   render() {
     return (
       <div className={s.content}>
         <ContentName 
+          onsave={this.state.onsave}
+          onSubmitSave={this.submitSave}
           className={s.content_name} 
         />
+
         <div className={s.contentRe}>
-          <ContentReq />
+          <ContentReq onReqSave={this.reqSave}/>
+        </div>
+
+        <div className={s.contentRe}>
           <ContentRes />
         </div>
       </div>

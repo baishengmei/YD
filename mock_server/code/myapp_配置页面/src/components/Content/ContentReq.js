@@ -1,14 +1,20 @@
 import React from 'react'
-import ReqHeader from "./contentReq/ReqHeader"
+import ReHeader from "./contentReq/ReHeader"
 import ReqContent from './contentReq/ReqContent'
+import ReqSave from './contentReq/ReqSave'
 
 class ContentReq extends React.Component {
 
+	ContentReqSave = () => {
+		console.log("ContentReq=>ReqSave:");
+		this.props.onReqSave();
+	}
 	render() {
 		return ( 
 			<div>
-				<ReqHeader />
+				<ReHeader title="Request"/>
 				<ReqContent />
+				<ReqSave onReqSave={this.ContentReqSave}/>
 			</div>
 		);
 	}

@@ -30,7 +30,7 @@ class paramComp extends Component {
 	    const indexTemp = this.state.indexTemp;
 	    if (indexTemp.length === 1) {
 	      return;
-	    };console.log("indexTemp:",indexTemp);
+	    };
 	    const arrindexTemp = [];
 	    for(let temp=1; temp<=indexTemp.length-1; temp++){
 	      arrindexTemp.push(temp);
@@ -48,9 +48,10 @@ class paramComp extends Component {
 	    this.setState({
 	      indexTemp: nextindexTemp
 	    });
-		console.log("indexTemp:", indexTemp);
+
 	}
 
+// 第一级参数定义为数组/对象范围时，对应的value布局
 	DynamicFormArrObj = (k) => {
 		switch(k){
 			case "arrBe":
@@ -141,8 +142,9 @@ class paramComp extends Component {
 			return;
 		}
 	}
-
+// 为了避免出现死循环，当第二级参数定义框内容为数组/对象时，value的布局
 	DynamicFormArrObj2 = (k) => {
+
 		switch(k){
 			case "arrBe":
 			return (
@@ -194,15 +196,15 @@ class paramComp extends Component {
 						<Col span={18}>
 							<Row>
 				                <Col span={5}>
-				                  	<ParamSel onChangeSel={this.changeSel3}/>		                  
+				                  	<ParamSel onChangeSel={window["changeSel2"+k]}/>		                  
 				                </Col>
 				                <Col span={19}>
-				                  <div>{this.DynamicFormSome(this.state.datatype3)}</div>
+				                  <div>{this.DynamicFormSome(this.state.window["datatype2_"+k])}</div>
 				                </Col>
 			               	</Row>
 			               	<Row>
 				               	<Col span={19}>
-				               		{this.DynamicFormArrObj2(this.state.datatype3)}
+				               		
 				               	</Col>
 			               	</Row>
 						</Col>
@@ -219,8 +221,7 @@ class paramComp extends Component {
 			                	onClick={this.add.bind(this)}
 			              	/>
 			            </Col>
-					</Row>
-					
+					</Row>					
 				</div>
 		      )
 		    })
@@ -232,8 +233,9 @@ class paramComp extends Component {
 			return;
 		}
 	}
-
+// 第一级参数定义为除了数组/对象外的其他数据类型时，如regex、float、int、日期、时间等，对应的value布局
 	DynamicFormSome = (k) => {
+
 		switch(k){
 			case "Eq":
 			return (<Col span={5}><ParamInput placevalue="value"/></Col>)
@@ -297,25 +299,26 @@ class paramComp extends Component {
 		}
 	}
 
+//第一级参数定义变化时，设置this.state.datatype。
 	changeSel = (k) => {
-		console.log("select.value", k[1]);
+
 		if(/\w+Eq$/.test(k[1])){
-			console.log("等於");
+			console.log("changeSel:等於");
 			this.setState({
 				datatype: "Eq"
 			})
 		}else if(/^intBe$|^strBe$|^chineseBe$/.test(k[1])){
-			console.log("整數、str和中文的范围");
+			console.log("changeSel:整數、str和中文的范围");
 			this.setState({
 				datatype: "iscBe"
 			})
 		}else if(/^floatBe$/.test(k[1])){
-			console.log("小数范围");
+			console.log("changeSel:小数范围");
 			this.setState({
 				datatype: "flBe"
 			})
 		}else if(/^arrBe$/.test(k[1])){
-			console.log("数组范围");
+			console.log("changeSel:数组范围");
 			this.setState({
 				datatype: "arrBe"
 			})
@@ -324,7 +327,7 @@ class paramComp extends Component {
 				datatype: "non"
 			})
 		}else if(/^objBe$/.test(k[1])){
-			console.log("对象范围");
+			console.log("changeSel:对象范围");
 			this.setState({
 				datatype: "objBe"
 			})
@@ -332,34 +335,23 @@ class paramComp extends Component {
 	}
 
 	changeSel2 = (k) => {
-		console.log("select.value", k[1]);
 		if(/\w+Eq$/.test(k[1])){
-			console.log("等於");
+			console.log("changeSel2:等於");
 			this.setState({
 				datatype2: "Eq",
-				datatype2_1: "Eq",
-				datatype2_2: "Eq",
-				datatype2_3: "Eq",
-				datatype2_4: "Eq",
-				datatype2_5: "Eq",
 			})
 		}else if(/^intBe$|^strBe$|^chineseBe$/.test(k[1])){
-			console.log("整數、str和中文的范围");
+			console.log("changeSel2:整數、str和中文的范围");
 			this.setState({
 				datatype2: "iscBe",
-				datatype2_1: "iscBe",
-				datatype2_2: "iscBe",
-				datatype2_3: "iscBe",
-				datatype2_4: "iscBe",
-				datatype2_5: "iscBe",
 			})
 		}else if(/^floatBe$/.test(k[1])){
-			console.log("小数范围");
+			console.log("changeSel2:小数范围");
 			this.setState({
 				datatype2: "flBe"
 			})
 		}else if(/^arrBe$/.test(k[1])){
-			console.log("数组范围");
+			console.log("changeSel2:数组范围");
 			this.setState({
 				datatype2: "arrBe"
 			})
@@ -368,31 +360,97 @@ class paramComp extends Component {
 				datatype2: "non"
 			})
 		}else if(/^objBe$/.test(k[1])){
+			console.log("changeSel2:对象范围");
 			this.setState({
 				datatype2: "objBe"
 			})
 		}
 	}
+
+	changeSel21 = (k) => {
+		console.log("changeSel21:select.value", k[1]);
+		if(/\w+Eq$/.test(k[1])){
+			console.log("changeSel21:等於");
+			this.setState({
+				datatype2_1: "Eq"
+			})
+		}else if(/^intBe$|^strBe$|^chineseBe$/.test(k[1])){
+			console.log("changeSel21:整數、str和中文的范围");
+			this.setState({
+				datatype2_1: "iscBe"
+			})
+		}else if(/^floatBe$/.test(k[1])){
+			console.log("changeSel21:小数范围");
+			this.setState({
+				datatype2_1: "flBe"
+			})
+		}else if(/^arrBe$/.test(k[1])){
+			console.log("changeSel21:数组范围");
+			this.setState({
+				datatype2_1: "arrBe"
+			})
+		}else if(/^bool$|^email$|^ip$|^url$|^address$|^thedate$/.test(k[0])){
+			this.setState({
+				datatype2_1: "non"
+			})
+		}else if(/^objBe$/.test(k[1])){
+			console.log("changeSel21:对象范围");
+			this.setState({
+				datatype2_1: "objBe"
+			})
+		}
+	}
+
+	changeSel22 = (k) => {
+		if(/\w+Eq$/.test(k[1])){
+			console.log("changeSel22:等於");
+			this.setState({
+				datatype2_2: "Eq",
+			})
+		}else if(/^intBe$|^strBe$|^chineseBe$/.test(k[1])){
+			console.log("changeSel22:整數、str和中文的范围");
+			this.setState({
+				datatype2_2: "iscBe",
+			})
+		}else if(/^floatBe$/.test(k[1])){
+			console.log("changeSel22:小数范围");
+			this.setState({
+				datatype2_2: "flBe"
+			})
+		}else if(/^arrBe$/.test(k[1])){
+			console.log("changeSel22:数组范围");
+			this.setState({
+				datatype2_2: "arrBe"
+			})
+		}else if(/^bool$|^email$|^ip$|^url$|^address$|^thedate$/.test(k[0])){
+			this.setState({
+				datatype2_2: "non"
+			})
+		}else if(/^objBe$/.test(k[1])){
+			this.setState({
+				datatype2_2: "objBe"
+			})
+		}
+	}
 	
 	changeSel3 = (k) => {
-		console.log("select.value", k[1]);
 		if(/\w+Eq$/.test(k[1])){
-			console.log("等於");
+			console.log("changeSel3:等於");
 			this.setState({
 				datatype3: "Eq"
 			})
 		}else if(/^intBe$|^strBe$|^chineseBe$/.test(k[1])){
-			console.log("整數、str和中文的范围");
+			console.log("changeSel3:整數、str和中文的范围");
 			this.setState({
 				datatype3: "iscBe"
 			})
 		}else if(/^floatBe$/.test(k[1])){
-			console.log("小数范围");
+			console.log("changeSel3:小数范围");
 			this.setState({
 				datatype3: "flBe"
 			})
 		}else if(/^arrBe$/.test(k[1])){
-			console.log("数组范围");
+			console.log("changeSel3:数组范围");
 			this.setState({
 				datatype3: "arrBe"
 			})

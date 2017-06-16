@@ -32,7 +32,6 @@ class paramsComponent extends Component {
     form.setFieldsValue({
       keys: nextKeys,
     });
-    console.log("keys:", keys);
   }
 
   render() {

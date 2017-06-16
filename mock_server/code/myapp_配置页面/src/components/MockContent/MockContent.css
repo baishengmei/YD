@@ -16,9 +16,10 @@
   min-height: 480px;
   /*border: 1px solid #ccc;*/
   width: 100%;
-  box-shadow: 0 3px 5px #e8e9e9 inset, 1px 3px 3px rgba(150,152,153,0.3);
+  box-shadow: 0 -3px 1px #e8e9e9 inset, -1px 3px 3px rgba(150,152,153,0.3);
   background:
         linear-gradient(to left bottom, transparent 50%, rgba(0,0,0,.4) 0) 100% 0 no-repeat,
         linear-gradient(-135deg, transparent 1.5em, #EEEEEE 0);
   background-size: 2em 2em, auto;
+  margin-bottom: 26px;
 }

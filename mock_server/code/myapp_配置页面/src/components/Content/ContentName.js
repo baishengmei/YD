@@ -8,10 +8,33 @@ import s from './ContentName.css'
 
 class ContentNameform extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      contentnameInput: "",
+      contentnameSel: ""
+    }
+  }
+
+  getInput = (event) => {
+    this.setState({
+      contentnameInput: event.target.value
+    }, () => {
+      this.props.onSubmitSave(this.state.contentnameInput, this.state.contentnameSel);
+    })
+  }
+
+  getSel = (value) => {
+    this.setState({
+      contentnameSel: value,
+    }, () => {
+      this.props.onSubmitSave(this.state.contentnameInput, this.state.contentnameSel);
+    })   
+  }
+
   render() {
 
     const { getFieldDecorator, getFieldProps } = this.props.form;
-    // const changeRulename = this.props.changeRulename;
     const formItemLayout = {
         labelCol: { span: 6 },
         wrapperCol: { span: 16 },
@@ -24,7 +47,7 @@ class ContentNameform extends Component {
             <FormItem label="规则名" {...formItemLayout} {...this.props}>
               {getFieldDecorator('rulename', {
                 rules: [{ required: true, message: 'Please input the rule name!' }],
-                // onChange: changeRulename
+                onChange: this.getInput
               })(
                 <Input />
               )}
@@ -33,7 +56,8 @@ class ContentNameform extends Component {
           <Col span={7} offset={10}>
             <FormItem label="项目名" {...formItemLayout}>
               {getFieldDecorator('projname', {
-                rules: [{required: true, message: 'Please input the project name!' }]
+                rules: [{required: true, message: 'Please input the project name!' }],
+                onChange: this.getSel
               })(
                 <Select placeholder="Project name">
                   <Option value="xinzhixuan">xinzhixuan</Option>

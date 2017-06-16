@@ -8,7 +8,7 @@ class ReqHeader extends Component {
 		return (
 		<div className={s.conreq_hd}>
 				<div className={s.conreq_ti}>
-					<h3 className={s.conreq_ti_h}>Request</h3>
+					<h3 className={s.conreq_ti_h}>{this.props.title}</h3>
 				</div>
 			</div>
 		)
