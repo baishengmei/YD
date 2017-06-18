@@ -7,12 +7,33 @@ class Formgroup extends Component {
 
 	constructor(props) {
 		super(props);
-		
+		this.state = {
+			consIf: "",
+			consExp: ""
+		}
 	}
 
 	handleTagRemove = () => {
 		const k = this.props.keyindex;
 		this.props.tapRemove(k);
+	}
+
+	getIf = (e) => {
+		const k = this.props.keyindex;
+		this.setState({
+			consIf: e.target.value
+		}, () => {
+			this.props.onConstraintChange(k, this.state.consIf, this.state.consExp);
+		})
+	}
+
+	getExp = (e) => {
+		const k = this.props.keyindex;
+		this.setState({
+			consExp: e.target.value
+		}, () => {
+			this.props.onConstraintChange(k, this.state.consIf, this.state.consExp);
+		})
 	}
 
 	render() {
@@ -42,7 +63,7 @@ class Formgroup extends Component {
 		                    		<p className={s.groupIfT}>约束条件:</p>
 		                  		</Col>
 		                  		<Col span={19} offset={1}>
-		                    		<input className={s.groupIfInput} placeholder="type = type1" />
+		                    		<input className={s.groupIfInput} placeholder="type = type1" onChange={this.getIf}/>
 		                  		</Col>
 		                	</div>
 		                	<div>
@@ -50,7 +71,7 @@ class Formgroup extends Component {
 				                    <p className={s.groupExpT}>约束表达式:</p>
 				                </Col>
 				                <Col span={21}>
-				                   	<Input className={s.groupExp} type="textarea" placeholder="例：( $h.name=”Join”&& $h.email=”Join@163.com”)&& ($p.name=”*” & $p.email=”*@a.netease.com”)" autosize={{ minRows: 3, maxRows: 3 }} />
+				                   	<Input className={s.groupExp} type="textarea" placeholder="例：( $h.name=”Join”&& $h.email=”Join@163.com”)&& ($p.name=”*” & $p.email=”*@a.netease.com”)" autosize={{ minRows: 3, maxRows: 3 }} onChange={this.getExp}/>
 				                </Col>
 			            	</div>
 		            	</div>

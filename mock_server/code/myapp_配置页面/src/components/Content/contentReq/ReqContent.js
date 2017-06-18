@@ -12,25 +12,48 @@ class ReqContent extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			$u: "",
-			$c: "",
-			$m: "",
-			$h: {},
-			$q: {},
-			$b: {}
+			$u: "",//url
+			$c: "",//contentType
+			$m: "",//method
+			$h: {},//header
+			$q: {},//query
+			$b: {},//body
+			$G: {}//constraint
 		}
+	}
+
+	getUrl = (value) => {
+		this.setState({
+			$u: value
+		})
+	}
+	getM = (value) => {
+		this.setState({
+			$m: value
+		})
+	}
+	getC = (value) => {
+		this.setState({
+			$c: value
+		})
+	}
+	getConstrain = (value) => {
+		this.setState({
+			$G: value
+		})
+		console.log("value:::::::",this.state.$G)
 	}
 
 	render() {
 		return ( 			
 			<div className={s.reqContent}>
-				<FormInputOnly name="Url" tag="$U" placeval="Url"/>
-				<FormSelect name="Method" tag="$M" optval="GET,DELETE,Post,PUT,OPTIONS" />	
+				<FormInputOnly name="Url" tag="$U" ref="aaaaaa" placeval="Url" formInputOnlyVal={this.getUrl} />
+				<FormSelect name="Method" tag="$M" optval="GET,DELETE,Post,PUT,OPTIONS" formSelectVal={this.getM} />	
 				<FormParams name="Header" tag="$h" />
 				<FormParams name="Query" tag="$q" />
-				<FormSelect name="ContentType" tag="$c" optval="application/json, application/xxx-w/text" />
+				<FormSelect name="ContentType" tag="$c" optval="application/json, application/xxx-w/text"  formSelectVal={this.getC} />
 				<FormParams name="Body" tag="$b" />	
-				<Constraint />		
+				<Constraint constraintVal={this.getConstrain} />		
 			</div>
 		);
 	}

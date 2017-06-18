@@ -12,6 +12,12 @@ class formselect extends React.Component {
 		super(props);
 	}
 
+	getSelVal = (value) => {
+		console.log(value);
+		const { formSelectVal } = this.props;
+    	formSelectVal(value);
+	}
+
 	render() {
 
 		const { name, tag, optval } = this.props;
@@ -33,9 +39,11 @@ class formselect extends React.Component {
 						<Form>
 					        <FormItem>
 					          {getFieldDecorator(name.toLowerCase(), {
+					          	validateTrigger: ['onChange', 'onBlur'],
 					            rules: [{ required: true, message: `Please input the legal ${name.toLowerCase()}!` }],
+					            
 					          })(
-					            <Select placeholder={name} className={s.paramsSelect}> 
+					            <Select placeholder={name} className={s.paramsSelect} onChange={this.getSelVal}> 
 					            	{ formOptions }
 					            </Select>
 					          )}

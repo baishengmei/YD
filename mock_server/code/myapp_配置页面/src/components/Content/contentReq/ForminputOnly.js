@@ -10,6 +10,7 @@ class inputComponentOnly extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      aaa: "aa",
       tag: "",
       placeholder: ""
     }
@@ -43,8 +44,8 @@ class inputComponentOnly extends Component {
   }
 
   changeBorder = (e) => {
-    e.preventDefault();
-    console.log("forminputonly",e.target.value);
+    const { formInputOnlyVal } = this.props;
+    formInputOnlyVal(e.target.value);
   }
 
   render() {

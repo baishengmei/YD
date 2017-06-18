@@ -5,12 +5,15 @@ import s from './contentReqCss/ContentReqCss.css'
 import Formgroup from './Formgroup'
 
 let uuid = 1;
+let constraintObj = {};
 class Constraint extends Component {
 
   constructor(props) {
     super(props);
+    //将约束保存到对象constraint中，{"$G1":"blablabla", "$G2":"blablabla"}
     this.state = {
       keys: [1],
+      constraint: {}
     }
   }
 
@@ -18,10 +21,7 @@ class Constraint extends Component {
     const keys = this.state.keys;
     if (keys.length === 1) {
       return;
-    };console.log(keys);
-    // if(k !== Math.max.apply(null, keys)){
-    //   return;
-    // }
+    };
     const arrkeys = [];
     for(let temp=1; temp<=keys.length-1; temp++){
       arrkeys.push(temp);
@@ -29,37 +29,58 @@ class Constraint extends Component {
     this.setState({
       keys: arrkeys,
     });
-    // this.setState({
-    //   keys: keys.filter(key => key !== k),
-    // });
   }
 
   add = () => {
-    // uuid++;
     const keys = this.state.keys;
     uuid = keys.length +1;
     const nextKeys = keys.concat(uuid);
     this.setState({
       keys: nextKeys
     });
-    console.log("keys:", keys);
+  }
+
+  contains = (arr, obj) => {  
+    let i = arr.length;  
+    while (i--) {  
+        if (arr[i] === obj) {  
+            return true;  
+        }  
+    }  
+    return false;  
+  } 
+
+  componentDidUpdate() {
+    for(let i in constraintObj){
+      if(this.contains(this.state.keys, parseInt(i.substring(2))) == false){
+        delete constraintObj["$G"+i.substring(2)];
+      }
+    }
+  }
+
+  constraintChange = (k, consif, consexp) => {
+    constraintObj["$G"+k] = "("+consif+")"+"&("+consexp+")";
+    this.setState({
+      constraint: constraintObj
+    }, () => {
+      this.props.constraintVal(this.state.constraint);
+    })
   }
 
   render() {
 
     const keys = this.state.keys;
-
     const formgroup = keys.map((k, index) => {
       return (
-        <Formgroup key={k} tapRemove={()=>this.remove(k)} keyindex={k} />
+        <Formgroup ref="formgroup" key={k} tapRemove={()=>this.remove(k)} keyindex={k} onConstraintChange={this.constraintChange} />
       )
     })
 
     return (     
-      <div ref="constraint">  
+      <div ref="constraint">
         <Row className={s.divLine}>
           <b className={s.divLineb}></b>
-        </Row>      
+        </Row>
         <Row type="flex" justify="start">
           <Col span={3}>
             <p className={s.constraintLabel}>
