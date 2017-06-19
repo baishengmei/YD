@@ -58,6 +58,7 @@ const options = [{
 }, {
   value: 'chinese',
   label: '中文',
+  disabled: true,
   children: [{
     value: 'chineseEq',
     label: '等于'

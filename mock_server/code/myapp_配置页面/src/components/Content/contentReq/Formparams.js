@@ -5,8 +5,8 @@ const FormItem = Form.Item
 const Option = Select.Option
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
 import s from './contentReqCss/ContentReqCss.css'
-import ParamComp from './Formparams/ParamComp'
-
+// import ParamComp from './Formparams/ParamComp'
+import ParamComp from './Formparams/Example'
 
 let uuid = 1;
 class paramsComponent extends Component {
@@ -35,7 +35,7 @@ class paramsComponent extends Component {
   }
 //将k值传进来，以及paramform的值
   paramCompChange = (k, paramform) => {
-    
+
   }
 
   render() {
