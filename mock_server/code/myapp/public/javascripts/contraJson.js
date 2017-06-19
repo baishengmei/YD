@@ -100,6 +100,7 @@ function contraJson(rulJson, resJson){
 	}
 	
 }
+//输入value为规则中的value值，是一个范围数组或者指定值。。obj为前端发送过来的实际请求值
 function contraInt(value, obj){
 	obj = decQuotation(12, obj);
 	if(toString.apply(value) === '[object Array]'){

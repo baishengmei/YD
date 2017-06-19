@@ -13,7 +13,6 @@ class formselect extends React.Component {
 	}
 
 	getSelVal = (value) => {
-		console.log(value);
 		const { formSelectVal } = this.props;
     	formSelectVal(value);
 	}

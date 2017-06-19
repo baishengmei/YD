@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Row, Col, Icon } from "antd"
+import { Row, Col, Icon, Modal } from "antd"
 import { Form, Input, Cascader } from 'antd'
 const FormItem = Form.Item
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
@@ -9,19 +9,13 @@ import ParamInput from './ParamInput'
 import ParamSel from './ParamSel'
 
 let uuid = 1;
+let paramObj = {};
 class paramComp extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			datatype: 0,
-			datatype2: 0,
-			datatype2_1: 0,
-			datatype2_2: 0,
-			datatype2_3: 0,
-			datatype2_4: 0,
-			datatype2_5: 0,
-			datatype3: 0,
 			indexTemp: [1]
 		}
 	}
@@ -50,6 +44,7 @@ class paramComp extends Component {
 	    });
 
 	}
+
 
 // 第一级参数定义为数组/对象范围时，对应的value布局
 	DynamicFormArrObj = (k) => {
@@ -302,6 +297,13 @@ class paramComp extends Component {
 //第一级参数定义变化时，设置this.state.datatype。
 	changeSel = (k) => {
 
+		// console.log(this.isEmptyObject(paramObj), "ddddddddddddd")
+		// if(this.isEmptyObject(paramObj) == true){
+		// 	this.error();
+		// 	console.log("modal is succeed!");
+		// 	return false;
+		// }
+
 		if(/\w+Eq$/.test(k[1])){
 			console.log("changeSel:等於");
 			this.setState({
@@ -461,17 +463,26 @@ class paramComp extends Component {
 		}
 	}
 
+	changeInput = (val)=>{
+		for(var key in paramObj){
+			delete paramObj[key];
+		}
+		//val为相应的key值
+		paramObj[val] = {};
+		// console.log("key值：",val)
+	}
+
 	render() {
 		const { getFieldDecorator, getFieldValue } = this.props.form;
 		return (
 			<div>
 				<Col span={3}>
-	            	<ParamInput placevalue="key" />
+	            	<ParamInput placevalue="key" onChangeInput={this.changeInput}/>
 	            </Col>
 	            <Col span={19}>
 	            	<Row>
 		                <Col span={5}>
-		                  	<ParamSel onChangeSel={this.changeSel}/>		                  
+		                  	<ParamSel keyval={paramObj} onChangeSel={this.changeSel}/>		                  
 		                </Col>
 		                <Col span={17}>
 		                  <div>{this.DynamicFormSome(this.state.datatype)}</div>

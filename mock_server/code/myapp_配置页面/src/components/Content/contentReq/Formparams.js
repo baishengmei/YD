@@ -33,6 +33,10 @@ class paramsComponent extends Component {
       keys: nextKeys,
     });
   }
+//将k值传进来，以及paramform的值
+  paramCompChange = (k, paramform) => {
+    
+  }
 
   render() {
 
@@ -42,11 +46,6 @@ class paramsComponent extends Component {
     const keys = getFieldValue('keys');
     const { name, tag } = this.props;
     const optionItems2 = ["等于", "范围"]
-    // const paramOptions = allOptionItems.map((val, i)=>{
-    //   return (
-    //     <Option key={val}>{val}</Option>
-    //   )
-    // })
     
     const formItems = keys.map((k, index) => { 
 
@@ -54,7 +53,7 @@ class paramsComponent extends Component {
         <Form key={k}>
           <Row>
             <Col span={22}>
-              <ParamComp />
+              <ParamComp onParamCompChange={this.paramCompChange}/>
             </Col>
             <Col span={1}>
               <Icon

@@ -89,7 +89,7 @@ class inputselectComponent extends React.Component {
           })(
             (type.toLowerCase()==="input" ? 
               <Input placeholder={name} className="paramsInput" /> : 
-              <Select placeholder={optval.split(",")[0]} className="paramSelect">
+              <Select placeholder={optval.split(",")[0]}>
                 {formOptions}
               </Select>
             )
@@ -97,14 +97,16 @@ class inputselectComponent extends React.Component {
           </Col>
           <Col span={1} offset={2}>
           <Icon
-            className="dynamic-delete-button"
+            
+
             type="minus-circle-o"
             disabled={keys.length === 1}
             onClick={() => this.remove(k)}
           />
           </Col>
           <Col span={1}>
-          <Icon className="dynamic-plus-button"
+          <Icon 
+
             type="plus-circle-o"
             onClick={this.add.bind(this)}
           />
@@ -118,7 +120,7 @@ class inputselectComponent extends React.Component {
       <div>        
         <Row type="flex" justify="start">
           <Col span={4}>
-            <p className="paramsLabel">{`${name} ( ${tag} ):`}</p>
+            <p>{`${name} ( ${tag} ):`}</p>
           </Col>
           <Col span={18} offset={2}>
             <Form>

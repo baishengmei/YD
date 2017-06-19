@@ -48,27 +48,27 @@ var ruleName2rules = {
 
 		},
 		"$h": {
-			// "abc": "123",
-			// "age": {
-		 //      "a": 2,
-		 //      "b": 6
-		 //    },
-		 //    "email1":{
-		 //    	"type":"email"
-		 //    },
-		 //    'enum1': {
-		 //    	"type": "enum",
-		 //    	"value": "apple, red, blue, yes"
-		 //    },
-		 //    "arr1": {
-		 //    	"type": "array",
-		 //    	"value": {
-		 //    		"type": "float",
-		 //    		"value": [0, 50],
-		 //    		"value1":[0, 3]
-		 //    	}
-		 //    },
-		    // "arr2":[1,2,4,6]
+			"abc": "123",
+			"age": {
+		      "a": 2,
+		      "b": 6
+		    },
+		    "email1":{
+		    	"type":"email"
+		    },
+		    'enum1': {
+		    	"type": "enum",
+		    	"value": "apple, red, blue, yes"
+		    },
+		    "arr1": {
+		    	"type": "array",
+		    	"value": {
+		    		"type": "float",
+		    		"value": [0, 50],
+		    		"value1":[0, 3]
+		    	}
+		    },
+		    "arr2":[1,2,4,6]
 		},
 		"$q": {},
 		"$G1": "true && $b.name2 > 10",

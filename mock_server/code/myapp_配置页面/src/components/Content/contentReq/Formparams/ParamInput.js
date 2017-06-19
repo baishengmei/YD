@@ -7,6 +7,10 @@ import s from '../contentReqCss/ContentReqCss.css'
 
 class paramInput extends Component {
 
+	onChangeInput = (e) => {
+		this.props.onChangeInput(e.target.value);
+	}
+
 	render() {
 
 		const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -21,7 +25,7 @@ class paramInput extends Component {
 		                message: `Please input the ${placevalue}.`,
 		            }],
 	            })(
-	              	<Input placeholder={placevalue} className={s.paramsInputShort} />
+	              	<Input onChange={this.onChangeInput} placeholder={placevalue} className={s.paramsInputShort} />
 	            )}
 	        </FormItem>
 		)
