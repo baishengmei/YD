@@ -18,7 +18,7 @@ var ruleName2rules = {
 			// 	"contentType": "region",
 			// },
 			// "date1": {
-			// 	"type": "date",
+			// 	"type": "thedate",
 			// 	"contentType": "date_time",
 			// },
 			// "num1": 23,
@@ -127,7 +127,7 @@ var ruleName2rules = {
 					}
 				},
 				"name10":{
-					"type": "date",
+					"type": "thedate",
 					"contentType": "time"
 				},
 				"name11":{

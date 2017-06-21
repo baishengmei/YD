@@ -66,7 +66,7 @@ function genJson(res) {
 							retRes[obj] = genUrl(value);
 							break;
 
-						case "date":
+						case "thedate":
 							retRes[obj] = genDate(res[obj].contentType, value);
 							break;
 

@@ -85,7 +85,7 @@ const options = [{
     value: "time",
     label: "Time"
   }, {
-    value: "datetime",
+    value: "date_time",
     label: "Datetime"
   }]
 }, {
@@ -115,7 +115,7 @@ const options = [{
     label: "等于"
   }, {
     value: "objBe",
-    label: "范围"
+    label: "自定义"
   }]
 }, {
   value: "arr",
@@ -125,7 +125,7 @@ const options = [{
     label: "等于"
   }, {
     value: "arrBe",
-    label: "范围"
+    label: "自定义"
   }]
 }];
 

@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import { Row, Col } from "antd"
 import { Form, Input } from 'antd'
 const FormItem = Form.Item
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
@@ -7,8 +6,20 @@ import s from '../contentReqCss/ContentReqCss.css'
 
 class paramInput extends Component {
 
+	// static propTypes = {
+	// 	onChangeInput: React.PropTypes.fun,
+	// 	placevalue: React.PropTypes.isRequired,
+	// };
+
 	onChangeInput = (e) => {
-		this.props.onChangeInput(e.target.value);
+		const { clearState } = this.props;
+		if(clearState == true){
+			// console.log("输入错误格式数据")
+		}else{
+			
+			// console.log(clearState, "clearState状态")
+			this.props.onChangeInput(e.target.value);
+		}		
 	}
 
 	render() {

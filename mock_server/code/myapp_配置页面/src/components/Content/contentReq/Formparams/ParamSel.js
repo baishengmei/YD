@@ -1,13 +1,14 @@
-import React, { PropTypes, Component } from 'react';
-import { Row, Col, Form, Cascader, Modal } from 'antd'
-const FormItem = Form.Item
+import React from 'react'
+import { PropTypes, Component } from 'react';
+import { Cascader } from 'antd'
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
 import s from '../contentReqCss/ContentReqCss.css'
 import { options, allOptionItems } from '../Utilsvari'
 
-class paramSel extends Component {
+class ParamSel extends Component {
 	static propTypes = {
-		paramseldisabled: PropTypes.bool.isRequired,
+		paramseldisabled: PropTypes.bool,
+		// paramseldisabled: PropTypes.bool.isRequired,
 	};
 
 	onChangeParaDef = (value) => {
@@ -15,10 +16,9 @@ class paramSel extends Component {
 	}
 
 	render() {
-		const { getFieldDecorator, getFieldValue } = this.props.form;
+		const { paramseldisabled } = this.props;
 
 		return (
-			<FormItem>
                 <Cascader
                 	ref="sel1"
                   	options={options}
@@ -26,13 +26,11 @@ class paramSel extends Component {
                   	onChange={this.onChangeParaDef}
                   	className={s.paramsSelect}
                   	placeholder="Regex"
-                  	disabled={this.props.paramseldisabled}
+                  	disabled={paramseldisabled}
                 />
-            </FormItem>
 		)
 	}
 }
 
 
-const ParamSel = Form.create()(paramSel);
 export default withStyles(s)(ParamSel);

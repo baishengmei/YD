@@ -72,7 +72,7 @@ function contraJson(rulJson, resJson){
 						case "url": contraUrl(resJson[obj]);
 						break;
 						////一级选择date类型，二级选择time/date/date-time类型，三级指定值或留空
-						case "date": contraDate(value, resJson[obj], rulJson[obj].contentType);
+						case "thedate": contraDate(value, resJson[obj], rulJson[obj].contentType);
 						break;
 
 						case "address": contraAddress(value, resJson[obj], rulJson[obj].contentType);

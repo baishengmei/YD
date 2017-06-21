@@ -12,3 +12,4 @@
 	9. type为string时，可指定值，也可以设置范围。
 	10. type为array时，包含itemNum项，表示数组的项数，表现形式为数组，如果指定某一个值，则可以设置为[3,3]
 	11. type为object时，value值为key-value形式，key-value中的value又可以定义其他type类型或者指定值
+	12. type为bool时，value为空，或者true、false
