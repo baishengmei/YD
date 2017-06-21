@@ -5,33 +5,47 @@ import ParamInput from './ParamInput'
 import { Row, Col, Modal } from 'antd'
 import IscBe from './IscBe'
 import ParamSel from './ParamSel'
+import FlBe from './FlBe'
 
+let arrBe = {};//value所对应的对象
 class ArrBe extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			datatype: "",
-			//用于存放数组的value值
-			// arrBe: {}
 		}
 	}
-//传入三个参数，分别是value值(val)，存值对象(obj)，key值(tag)
+	//传入三个参数，分别是value值(val)，存值对象(obj)，key值(tag)
 	arrtoVal2Obj = (val, obj, tag) => {
 		this.props.toVal2Obj(val, obj, tag)
 	}
 
 	changeSel = (k) => {
+		this.transType(k, arrBe)		
+	}
+
+	valEq = ( val) => {
+		const tag = "value";
 		const paramObj = this.props.paramObj;
-		for(let i in paramObj){
-			// paramObj[i].value = "aaaa";
-			this.transType(k, paramObj[i].value)
-		}
-		
+		arrBe.value = val;
+		this.val2obj(arrBe, paramObj, tag);
+	}
+
+	val2objBe = (val, obj, tagg) => {
+		const tag = "value";
+		const paramObj = this.props.paramObj;
+		obj[tagg] = val;
+		this.val2obj(arrBe, paramObj, tag)
+	}
+
+	val2obj = (val, obj, tag) => {
+		this.props.toVal2Obj(val, obj, tag);
 	}
 
 	// 第一级参数定义为除了数组/对象外的其他数据类型时，如regex、float、int、日期、时间等，对应的value布局
 	DynamicFormSome = (k) => {
+
 		switch(k){
 			case "Eq":
 			return (<Col span={5}><ParamInput placevalue="value" onChangeInput={this.valEq} /></Col>)
@@ -39,14 +53,14 @@ class ArrBe extends Component {
 			case "iscBe":
 			return (
 				<div>
-					<IscBe tips="默认:-10^6 ~ 10^6" toVal2Obj={this.val2obj} paramObj={paramObj} tag="value" />
+					<IscBe tips="默认:-10^6 ~ 10^6" toVal2Obj={this.val2objBe} paramObj={arrBe} tag="value" />
 				</div>
 			)
 			break;
 			case "flBe":
 			return (
 				<div>
-					<FlBe toVal2Obj={this.val2obj} toVal12Obj={this.val12obj} paramObj={paramObj} />
+					<FlBe toVal2Obj={this.val2obj} toVal2Obj={this.val2objBe} paramObj={arrBe} />
 				</div>
 			)
 			break;

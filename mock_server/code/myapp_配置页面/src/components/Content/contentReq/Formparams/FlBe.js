@@ -41,9 +41,10 @@ class FlBe extends Component {
 				clearInput: false,
 				flBeInte: [val, this.state.flBeInte[1]],
 			}, () => {
-				for(let i in paramObj){
-					this.val2obj(this.state.flBeInte, paramObj[i], tag);
-				}
+				// for(let i in paramObj){
+				// 	this.val2obj(this.state.flBeInte, paramObj[i], tag);
+				// }
+				this.val2obj(this.state.flBeInte, paramObj, tag);
 			})
 		}		
 	}
@@ -63,9 +64,10 @@ class FlBe extends Component {
 				clearInput: false,
 				flBeInte: [this.state.flBeInte[0], val],
 			}, () => {
-				for(let i in paramObj){
-					this.val2obj(this.state.flBeInte, paramObj[i], tag);
-				}
+				// for(let i in paramObj){
+				// 	this.val2obj(this.state.flBeInte, paramObj[i], tag);
+				// }
+				this.val2obj(this.state.flBeInte, paramObj, tag);
 			})
 		}		
 	}
@@ -85,9 +87,10 @@ class FlBe extends Component {
 				clearInput: false,
 				flBeDeci: [val, this.state.flBeDeci[1]],
 			}, () => {
-				for(let i in paramObj){
-					this.val2obj(this.state.flBeDeci, paramObj[i], tag);
-				}
+				// for(let i in paramObj){
+				// 	this.val2obj(this.state.flBeDeci, paramObj[i], tag);
+				// }
+				this.val2obj(this.state.flBeDeci, paramObj, tag);
 			})
 		}	
 	}
@@ -107,9 +110,10 @@ class FlBe extends Component {
 				clearInput: false,
 				flBeDeci: [this.state.flBeDeci[1], val],
 			}, () => {
-				for(let i in paramObj){
-					this.val2obj(this.state.flBeDeci, paramObj[i], tag);
-				}
+				// for(let i in paramObj){
+				// 	this.val2obj(this.state.flBeDeci, paramObj[i], tag);
+				// }
+				this.val2obj(this.state.flBeDeci, paramObj, tag);
 			})
 		}	
 	}

@@ -10,12 +10,12 @@ import ParamSel from './ParamSel'
 import IscBe from './IscBe'
 import FlBe from './FlBe'
 import ArrBe from './ArrBe'
+import ObjBe from './ObjBe'
 
-let uuid = 1;
 //paramObj对象的key有type、value、value1、itemNum、contentType
 let paramObj = {};
+let paramKey2ValObj = {};//paramObj对象的key所对应的value对象
 class paramComp extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -23,30 +23,6 @@ class paramComp extends Component {
 			datatype: "",
 			indexTemp: [1],
 		}
-	}
-
-	remove = (k) => {
-	    const indexTemp = this.state.indexTemp;
-	    if (indexTemp.length === 1) {
-	      return;
-	    };
-	    const arrindexTemp = [];
-	    for(let temp=1; temp<=indexTemp.length-1; temp++){
-	      arrindexTemp.push(temp);
-	    }
-	    this.setState({
-	      indexTemp: arrindexTemp,
-	    });
-  	}
-
-	add = () => {
-	    // uuid++;
-	    const indexTemp = this.state.indexTemp;
-	    uuid = indexTemp.length +1;
-	    const nextindexTemp = indexTemp.concat(uuid);
-	    this.setState({
-	      indexTemp: nextindexTemp
-	    });
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -57,74 +33,41 @@ class paramComp extends Component {
 	//当第一级参数定义为“等于”类型时，value组件的传值函数
 	valEq = (val) => {
 		const tag = "value";
-		for(let i in paramObj){
-			this.val2obj(val, paramObj[i], tag);
-		}
+		// console.log(paramKey2ValObj,"xxxxxxxxxxxx")
+		// for(let i in paramObj){
+		// 	this.val2obj(val, paramKey2ValObj);
+		// }
+		this.val2obj(val, paramKey2ValObj, tag);
 	}
+
 	//将value组件值，保存到对象中
 	val2obj = (val, obj, tag)=> {
 		obj[tag] = val;
 	}
-// 第一级参数定义为数组/对象范围时，对应的value布局
+
+	// 第一级参数定义为数组/对象范围时，对应的value布局
 	DynamicFormArrObj = (k) => {
 		switch(k){
 			case "arrBe":
 			return (
 				<div>
-					<ArrBe DynamicFormSome={this.DynamicFormSome} toVal2Obj={this.val2obj} paramObj={paramObj}  onChangeSel={this.changeSel}/>
+					<ArrBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} onChangeSel={this.changeSel}/>
 				</div>
 			)
 			break;
-			case "objBe":
-			{const indexTemp = this.state.indexTemp;
-		    const inFormParam = indexTemp.map((k, index) => {
-		      return (
-		        <div key={k}>
-					<Row>
-						<Col span={3} offset={1}>
-							<ParamInput placevalue="key"/>
-						</Col>
-						<Col span={18}>
-							<Row>
-				                <Col span={5}>
-				                  	<ParamSel onChangeSel={this.changeSel2}/>		                  
-				                </Col>
-				                <Col span={19}>
-				                  <div>{this.DynamicFormSome(this.state.datatype2)}</div>
-				                </Col>
-			               	</Row>
-			               	<Row>
-				               	<Col span={19}>
-				               	</Col>
-			               	</Row>
-						</Col>
-						<Col span={1}>
-				            <Icon
-				                className={s.dynamic_delete_button}
-				                type="minus-circle-o"
-				                onClick={() => this.remove(k)}
-				              />
-			            	</Col>
-			            <Col span={1}>
-			            	<Icon className={s.dynamic_plus_button}
-			                	type="plus-circle-o"
-			                	onClick={this.add.bind(this)}
-			              	/>
-			            </Col>
-					</Row>
-					
-				</div>
-		      )
-		    })
+			case "objBe":			
 			return (
-				<div>{inFormParam}</div>
-			)}
+				<div>
+					<ObjBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} onChangeSel={this.changeSel} />
+				</div>
+			)
 			break;
 			default:
 			return;
 		}
 	}
-// 第一级参数定义为除了数组/对象外的其他数据类型时，如regex、float、int、日期、时间等，对应的value布局
+
+	// 第一级参数定义为除了数组/对象外的其他数据类型时，如regex、float、int、日期、时间等，对应的value布局
 	DynamicFormSome = (k) => {
 
 		switch(k){
@@ -134,14 +77,14 @@ class paramComp extends Component {
 			case "iscBe":
 			return (
 				<div>
-					<IscBe tips="默认:-10^6 ~ 10^6" toVal2Obj={this.val2obj} paramObj={paramObj} tag="value" />
+					<IscBe tips="默认:-10^6 ~ 10^6" toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} tag="value" />
 				</div>
 			)
 			break;
 			case "flBe":
 			return (
 				<div>
-					<FlBe toVal2Obj={this.val2obj} toVal2Obj={this.val2obj} paramObj={paramObj} />
+					<FlBe toVal2Obj={this.val2obj} toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} />
 				</div>
 			)
 			break;
@@ -163,11 +106,12 @@ class paramComp extends Component {
 		}
 	}
 
-//第一级参数定义变化时，设置this.state.datatype。
+	//第一级参数定义变化时，设置this.state.datatype。
 	changeSel = (k) => {
-		for(let i in paramObj){
-			this.transType(k, paramObj[i])
-		}
+		// for(let i in paramObj){
+		// 	this.transType(k, paramObj[i])
+		// }
+		this.transType(k, paramKey2ValObj);
 	}
 
 	transType = (k, paramKeyObj) => {
@@ -253,6 +197,7 @@ class paramComp extends Component {
 		}
 		//val为相应的key值
 		paramObj[val] = {};
+		paramKey2ValObj = paramObj[val];
 		if(this.isEmptyObject(paramObj) == true){
 			this.setState({
 				disabled: true
@@ -269,7 +214,7 @@ class paramComp extends Component {
 		return (
 			<div>
 				<Col span={3}>
-	            	<ParamInput placevalue="key" onChangeInput={this.changeInput}/>
+	            	<ParamInput placevalue="key" onChangeInput={this.changeInput} />
 	            </Col>
 	            <Col span={19}>
 	            	<Row>
