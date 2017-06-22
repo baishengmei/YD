@@ -16,11 +16,13 @@ class MockContent extends Component {
       super(props);
       this.state = {
         rulename: "",
-        projname: ""
+        projname: "",
+        reqVal: ""
       }       
   }
   //点击request中的保存按钮，调用的函数
   reqSave = () => {
+    console.log("点击保存按钮后，发送ajax传送的数据", this.state.reqVal)
     console.log("this.rulename and projname----reqsave", this.state.rulename, this.state.projname)
   }
 
@@ -30,6 +32,13 @@ class MockContent extends Component {
       rulename: rulename,
       projname: projname
     })
+  }
+
+  contentReqVal = (value) => {
+    this.setState({
+      reqVal: value
+    })
+    console.log(value, "value in MockContent.js")
   }
 
   render() {
@@ -42,7 +51,7 @@ class MockContent extends Component {
         />
 
         <div className={s.contentRe}>
-          <ContentReq onReqSave={this.reqSave}/>
+          <ContentReq onReqSave={this.reqSave} onContentReq={this.contentReqVal}/>
         </div>
 
         <div className={s.contentRe}>

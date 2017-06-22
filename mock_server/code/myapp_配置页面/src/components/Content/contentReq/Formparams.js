@@ -9,6 +9,13 @@ import s from './contentReqCss/ContentReqCss.css'
 import ParamComp from './Formparams/Example'
 
 let uuid = 1;
+let outKeyVals = {};
+outKeyVals.$h = {};
+outKeyVals.$b = {};
+outKeyVals.$q = {};
+outKeyVals.$p = {};
+outKeyVals.$in = {};
+let keyVals = {}; 
 class paramsComponent extends Component {
   constructor() {
     super();
@@ -33,9 +40,22 @@ class paramsComponent extends Component {
       keys: nextKeys,
     });
   }
-//将k值传进来，以及paramform的值
-  paramCompChange = (k, paramform) => {
 
+//将k值传进来，以及paramform的值
+  paramCompChange = (paramform) => {
+    const tagsign = this.props.tagsign;
+    if(tagsign == "$h"){
+      outKeyVals.$h = Object.assign(outKeyVals.$h, paramform);
+    }else if(tagsign == "$q"){
+      outKeyVals.$q = Object.assign(outKeyVals.$q, paramform);
+    }else if(tagsign == "$b"){
+      outKeyVals.$b = Object.assign(outKeyVals.$b, paramform);
+    }else if(tagsign == "$p"){
+      outKeyVals.$p = Object.assign(outKeyVals.$p, paramform);
+    }else if(tagsign == "$in"){
+      outKeyVals.$in = Object.assign(outKeyVals.$in, paramform);
+    }
+    this.props.formParamsVal(outKeyVals);    
   }
 
   render() {
@@ -50,7 +70,7 @@ class paramsComponent extends Component {
     const formItems = keys.map((k, index) => { 
 
       return (
-        <Form key={k}>
+        <div key={k}>
           <Row>
             <Col span={22}>
               <ParamComp onParamCompChange={this.paramCompChange}/>
@@ -70,22 +90,32 @@ class paramsComponent extends Component {
               />
             </Col>
           </Row> 
-        </Form>      
+        </div>      
       )
     });
 
-    return (     
-      <div>        
-        <Row type="flex" justify="start">
-          <Col span={3}>
-            <p className={s.paramsLabel}>{`${name} ( ${tag} ):`}</p>
+    if(tag == "" && name == ""){
+      return (
+        <div>
+          <Col span={24}>
+            {formItems}
           </Col>
-          <Col span={19} offset={1}>
-              {formItems}
-          </Col>
-        </Row>
-      </div>
-    );
+        </div>
+      )
+    }else{
+      return (     
+        <div>        
+          <Row type="flex" justify="start">
+            <Col span={3}>
+              <p className={s.paramsLabel}>{`${name} ( ${tag} ):`}</p>
+            </Col>
+            <Col span={19} offset={1}>
+                {formItems}
+            </Col>
+          </Row>
+        </div>
+      );
+    }    
   }
 }
 

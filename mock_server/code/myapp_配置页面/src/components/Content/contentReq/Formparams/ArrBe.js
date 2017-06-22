@@ -6,8 +6,9 @@ import { Row, Col, Modal } from 'antd'
 import IscBe from './IscBe'
 import ParamSel from './ParamSel'
 import FlBe from './FlBe'
+import ObjBe from './objBe'
 
-let arrBe = {};//value所对应的对象
+let arrBe = {};//当type为arr时，和type处于同一级的value所对应的对象
 class ArrBe extends Component {
 
 	constructor(props) {
@@ -19,10 +20,6 @@ class ArrBe extends Component {
 	//传入三个参数，分别是value值(val)，存值对象(obj)，key值(tag)
 	arrtoVal2Obj = (val, obj, tag) => {
 		this.props.toVal2Obj(val, obj, tag)
-	}
-
-	changeSel = (k) => {
-		this.transType(k, arrBe)		
 	}
 
 	valEq = ( val) => {
@@ -37,6 +34,7 @@ class ArrBe extends Component {
 		const paramObj = this.props.paramObj;
 		obj[tagg] = val;
 		this.val2obj(arrBe, paramObj, tag)
+		console.log(arrBe, "ddddddxxxxxxxxxazzzzzzzzz")
 	}
 
 	val2obj = (val, obj, tag) => {
@@ -45,7 +43,6 @@ class ArrBe extends Component {
 
 	// 第一级参数定义为除了数组/对象外的其他数据类型时，如regex、float、int、日期、时间等，对应的value布局
 	DynamicFormSome = (k) => {
-
 		switch(k){
 			case "Eq":
 			return (<Col span={5}><ParamInput placevalue="value" onChangeInput={this.valEq} /></Col>)
@@ -65,21 +62,38 @@ class ArrBe extends Component {
 			)
 			break;
 			case "arrBe":
-			return (
-				<div></div>
-			)
-			break;
 			case "non":
-			return (
-				<div></div>
-			)
-			break;
 			case "objBe":
 			return (
 				<Col></Col>
 			)
 			break;
 		}
+	}
+
+	DynamicFormArrObj = (k) => {
+		switch(k){
+			case "arrBe":
+			return (
+				<div>
+					<ArrBe toVal2Obj={this.val2objBe} paramObj={arrBe} />
+				</div>
+			)
+			break;
+			case "objBe":			
+			return (
+				<div>
+					<ObjBe toVal2Obj={this.val2objBe} paramObj={arrBe} />
+				</div>
+			)
+			break;
+			default:
+			return;
+		}
+	}
+
+	changeSel = (k) => {
+		this.transType(k, arrBe)		
 	}
 
 	transType = (k, paramKeyObj) => {
@@ -185,7 +199,8 @@ class ArrBe extends Component {
 		                </Col>
 	                </Row>
 	                <Row>
-	                	<Col span={19} offset={4}>
+	                	<Col span={22} offset={2}>
+	                		{this.DynamicFormArrObj(this.state.datatype)}
 	               		</Col>
 	                </Row>
 				</Row>

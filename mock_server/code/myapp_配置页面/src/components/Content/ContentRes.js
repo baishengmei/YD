@@ -20,9 +20,9 @@ class ContentRes extends React.Component {
 					<FormInputOnly name="响应条件:" placeval="例：$G1 && $G2" tip="注：若无约束条件，默认为true" />
 					<FormInputOnly name="Status Code" thevalue="200" />
 					<FormSelect name="ContentType" tag="$c" optval="application/json, application/xxx-w/text" />
-					<FormParams name="Parameters" tag="$p" />
-					<FormParams name="Headers" tag="$h" />
-					<FormParams name="Body" tag="$b" />			
+					// <FormParams name="Parameters" tag="$p" />
+					// <FormParams name="Headers" tag="$h" />
+					// <FormParams name="Body" tag="$b" />			
 				</div>
 				<ReqSave />
 	    	</div>

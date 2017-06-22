@@ -40,9 +40,6 @@ class IscBe extends Component {
 				clearInput: false,
 				iscBe: [val, this.state.iscBe[1]],
 			}, () => {
-				// for(let i in paramObj){
-				// 	this.val2obj(this.state.iscBe, paramObj[i], tag);
-				// }
 				this.val2obj(this.state.iscBe, paramObj, tag);
 			})
 		}		
@@ -60,9 +57,6 @@ class IscBe extends Component {
 			this.setState({
 				iscBe: [this.state.iscBe[0], val],
 			}, () => {
-				// for(let i in paramObj){
-				// 	this.val2obj(this.state.iscBe, paramObj[i], tag);
-				// }
 				this.val2obj(this.state.iscBe, paramObj, tag);
 			})
 		}

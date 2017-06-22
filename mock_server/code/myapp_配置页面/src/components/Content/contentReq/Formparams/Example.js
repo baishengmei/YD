@@ -26,23 +26,20 @@ class paramComp extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		//组件刷新后，执行的代码部分，在此将最终的paramObj函数传入父组件
-		console.log(paramObj, "组件刷新后显示componentDidUpdate")
+		// console.log(paramObj, "组件刷新后显示componentDidUpdate")
 	}
 
 	//当第一级参数定义为“等于”类型时，value组件的传值函数
 	valEq = (val) => {
 		const tag = "value";
-		// console.log(paramKey2ValObj,"xxxxxxxxxxxx")
-		// for(let i in paramObj){
-		// 	this.val2obj(val, paramKey2ValObj);
-		// }
 		this.val2obj(val, paramKey2ValObj, tag);
+		this.props.onParamCompChange(paramObj);
 	}
 
 	//将value组件值，保存到对象中
 	val2obj = (val, obj, tag)=> {
 		obj[tag] = val;
+		this.props.onParamCompChange(paramObj);
 	}
 
 	// 第一级参数定义为数组/对象范围时，对应的value布局
@@ -51,14 +48,14 @@ class paramComp extends Component {
 			case "arrBe":
 			return (
 				<div>
-					<ArrBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} onChangeSel={this.changeSel}/>
+					<ArrBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} />
 				</div>
 			)
 			break;
 			case "objBe":			
 			return (
 				<div>
-					<ObjBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} onChangeSel={this.changeSel} />
+					<ObjBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} />
 				</div>
 			)
 			break;
@@ -69,7 +66,6 @@ class paramComp extends Component {
 
 	// 第一级参数定义为除了数组/对象外的其他数据类型时，如regex、float、int、日期、时间等，对应的value布局
 	DynamicFormSome = (k) => {
-
 		switch(k){
 			case "Eq":
 			return (<Col span={5}><ParamInput placevalue="value" onChangeInput={this.valEq} /></Col>)
@@ -89,15 +85,7 @@ class paramComp extends Component {
 			)
 			break;
 			case "arrBe":
-			return (
-				<div></div>
-			)
-			break;
 			case "non":
-			return (
-				<div></div>
-			)
-			break;
 			case "objBe":
 			return (
 				<Col></Col>
@@ -108,9 +96,6 @@ class paramComp extends Component {
 
 	//第一级参数定义变化时，设置this.state.datatype。
 	changeSel = (k) => {
-		// for(let i in paramObj){
-		// 	this.transType(k, paramObj[i])
-		// }
 		this.transType(k, paramKey2ValObj);
 	}
 
@@ -179,6 +164,7 @@ class paramComp extends Component {
 			}
 			delete paramKeyObj.value1;
 			delete paramKeyObj.itemNum;
+			this.props.onParamCompChange(paramObj);
 		}else if(/^objBe$/.test(k[1])){
 			console.log("changeSel:对象自定义", k);
 			this.setState({
@@ -226,7 +212,7 @@ class paramComp extends Component {
 		                </Col>
 	               	</Row>
 	               	<Row>
-		               	<Col span={19}>
+		               	<Col span={24}>
 		               		{this.DynamicFormArrObj(this.state.datatype)}
 		               	</Col>
 	               	</Row>

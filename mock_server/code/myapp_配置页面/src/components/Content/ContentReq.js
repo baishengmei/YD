@@ -9,12 +9,17 @@ class ContentReq extends React.Component {
 		console.log("ContentReq=>ReqSave:");
 		this.props.onReqSave();
 	}
+
+	reqContentData = (value) => {
+		// console.log(value, "value i ContentReq");
+		this.props.onContentReq(value);
+	}
 	render() {
 		return ( 
 			<div>
-				<ReHeader title="Request"/>
-				<ReqContent />
-				<ReqSave onReqSave={this.ContentReqSave}/>
+				<ReHeader title="Request" />
+				<ReqContent onReqContent={this.reqContentData} />
+				<ReqSave onReqSave={this.ContentReqSave} />
 			</div>
 		);
 	}
