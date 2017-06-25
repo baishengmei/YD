@@ -32,6 +32,12 @@ class ContentNameform extends Component {
     })   
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.clearTag) {
+      this.props.form.resetFields();
+    }
+  }
+
   render() {
 
     const { getFieldDecorator, getFieldProps } = this.props.form;

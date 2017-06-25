@@ -62,15 +62,16 @@ class ReqContent extends Component {
 	}
 
 	render() {
+		const clearTag = this.props.clearTag;
 		return ( 			
 			<div className={s.reqContent}>
-				<FormInputOnly name="Url" tag="$U" ref="aaaaaa" placeval="Url" formInputOnlyVal={this.getUrl} />
-				<FormSelect name="Method" tag="$m" optval="GET,DELETE,Post,PUT,OPTIONS" formSelectVal={this.getM} />	
-				<FormParams name="Header" tagsign="$h" tag="$h" formParamsVal={this.getP} />
-				<FormParams name="Query" tagsign="$q" tag="$q" formParamsVal={this.getP} />
-				<FormSelect name="ContentType" tag="$c" optval="application/json, application/xxx-w/text"  formSelectVal={this.getC} />
-				<FormParams name="Body" tagsign="$b" tag="$b" formParamsVal={this.getP} />	
-				<Constraint constraintVal={this.getConstrain} />		
+				<FormInputOnly clearTag={this.props.clearTag} name="Url" tag="$U" ref="aaaaaa" placeval="Url" formInputOnlyVal={this.getUrl} />
+				<FormSelect clearTag={this.props.clearTag} name="Method" tag="$m" optval="GET,DELETE,Post,PUT,OPTIONS" formSelectVal={this.getM} />	
+				<FormParams clearTag={this.props.clearTag} name="Header" tagsign="$h" tag="$h" formParamsVal={this.getP} />
+				<FormParams clearTag={this.props.clearTag} name="Query" tagsign="$q" tag="$q" formParamsVal={this.getP} />
+				<FormSelect clearTag={this.props.clearTag} name="ContentType" tag="$c" optval="application/json, application/xxx-w/text"  formSelectVal={this.getC} />
+				<FormParams clearTag={this.props.clearTag} name="Body" tagsign="$b" tag="$b" formParamsVal={this.getP} />	
+				<Constraint clearTag={this.props.clearTag} constraintVal={this.getConstrain} />		
 			</div>
 		);
 	}

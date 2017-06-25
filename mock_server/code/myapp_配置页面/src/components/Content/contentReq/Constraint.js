@@ -72,7 +72,7 @@ class Constraint extends Component {
     const keys = this.state.keys;
     const formgroup = keys.map((k, index) => {
       return (
-        <Formgroup ref="formgroup" key={k} tapRemove={()=>this.remove(k)} keyindex={k} onConstraintChange={this.constraintChange} />
+        <Formgroup clearTag={this.props.clearTag} ref="formgroup" key={k} tapRemove={()=>this.remove(k)} keyindex={k} onConstraintChange={this.constraintChange} />
       )
     })
 

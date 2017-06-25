@@ -12,7 +12,7 @@ class inputComponentOnly extends Component {
     this.state = {
       aaa: "aa",
       tag: "",
-      placeholder: ""
+      placeholder: "",
     }
   }
 
@@ -43,6 +43,12 @@ class inputComponentOnly extends Component {
     }
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.clearTag) {
+      this.props.form.resetFields();
+    }
+  }
+
   changeBorder = (e) => {
     const { formInputOnlyVal } = this.props;
     formInputOnlyVal(e.target.value);
@@ -51,7 +57,7 @@ class inputComponentOnly extends Component {
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const { name, tag, placeval, tip, thevalue } = this.props;
-    
+  
     return (     
       <div>        
         <Row type="flex" justify="start">
@@ -74,7 +80,7 @@ class inputComponentOnly extends Component {
                       })(
                         <Input placeholder={placeval} onChange={this.changeBorder} className={s.paramsInput} />
                       )}
-                    </Col>                  
+                    </Col>
                   </Row>
                   <Row>{tip}</Row>
                 </FormItem>

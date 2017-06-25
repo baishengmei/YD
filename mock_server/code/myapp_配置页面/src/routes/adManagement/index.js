@@ -18,7 +18,7 @@ export default {
     }
 
     // Provide default values for title, description etc.
-    route.title = `${route.title} - 推广管理`;
+    route.title = `${route.title} - 首页--MockServer--保存`;
     route.description = route.description || '';
 
     return route;

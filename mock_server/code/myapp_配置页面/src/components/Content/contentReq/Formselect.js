@@ -17,6 +17,12 @@ class formselect extends React.Component {
     	formSelectVal(value);
 	}
 
+	componentWillReceiveProps (nextProps) {
+	    if (nextProps.clearTag) {
+	      this.props.form.resetFields();
+	    }
+    }
+
 	render() {
 
 		const { name, tag, optval } = this.props;

@@ -6,7 +6,7 @@ const Option = Select.Option
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
 import s from './contentReqCss/ContentReqCss.css'
 // import ParamComp from './Formparams/ParamComp'
-import ParamComp from './Formparams/Example'
+import ParamComp from './Formparam/Example'
 
 let uuid = 1;
 let outKeyVals = {};
@@ -73,7 +73,7 @@ class paramsComponent extends Component {
         <div key={k}>
           <Row>
             <Col span={22}>
-              <ParamComp onParamCompChange={this.paramCompChange}/>
+              <ParamComp clearTag={this.props.clearTag} onParamCompChange={this.paramCompChange}/>
             </Col>
             <Col span={1}>
               <Icon

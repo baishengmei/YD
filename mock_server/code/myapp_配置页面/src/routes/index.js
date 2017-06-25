@@ -3,8 +3,6 @@ import Layout from '../components/Layout';
 import home from './home';
 import adManagement from './adManagement';
 import notFound from './notFound';
-import AdManagementList from '../containers/AdManagementList';
-import { resetAdListQueryCondition } from '../actions/AdManagementList';
 
 let prevRouteName = '';
 
@@ -22,7 +20,7 @@ export default {
       })
     },
     home,
-    adManagement,
+    // adManagement,
     notFound
   ],
 
@@ -33,21 +31,11 @@ export default {
     if (route.redirect) {
       return route;
     }
+    //console.log(route, "object，其中title为首页--MockServerr")
 
     // Provide default values for title, description etc.
     route.title = `${route.title || '无标题页'} - MockServer`;
-    route.description = route.description || '';
-
-    const curRouteName = route.component.type.displayName;
-
-    if (prevRouteName !== '' && prevRouteName !== curRouteName && curRouteName === AdManagementList.displayName) {
-      route.beforeEnter = [
-        () => {
-          store.dispatch(resetAdListQueryCondition());
-        }
-      ].concat(route.beforeEnter || []);
-    }
-    prevRouteName = curRouteName;
+    route.description = route.description || 'MockServer中规则创建页面';
 
     return {
       ...route,

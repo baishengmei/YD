@@ -13,6 +13,15 @@ class Formgroup extends Component {
 		}
 	}
 
+	componentWillReceiveProps (nextProps) {
+	    if (nextProps.clearTag) {
+	      this.setState({
+	      	consIf: "",
+	      	consExp: "",
+	      })
+	    }
+	}
+
 	handleTagRemove = () => {
 		const k = this.props.keyindex;
 		this.props.tapRemove(k);
@@ -23,7 +32,12 @@ class Formgroup extends Component {
 		this.setState({
 			consIf: e.target.value
 		}, () => {
-			this.props.onConstraintChange(k, this.state.consIf, this.state.consExp);
+			if(this.state.consExp == ""){
+				this.props.onConstraintChange(k, this.state.consIf, true);
+			}else{
+				this.props.onConstraintChange(k, this.state.consIf, this.state.consExp);
+			}
+			
 		})
 	}
 
@@ -32,7 +46,11 @@ class Formgroup extends Component {
 		this.setState({
 			consExp: e.target.value
 		}, () => {
-			this.props.onConstraintChange(k, this.state.consIf, this.state.consExp);
+			if(this.state.consIf == ""){
+				this.props.onConstraintChange(k, true, this.state.consExp);
+			}else{
+				this.props.onConstraintChange(k, this.state.consIf, this.state.consExp);
+			}			
 		})
 	}
 
@@ -63,7 +81,7 @@ class Formgroup extends Component {
 		                    		<p className={s.groupIfT}>约束条件:</p>
 		                  		</Col>
 		                  		<Col span={19} offset={1}>
-		                    		<input className={s.groupIfInput} placeholder="type = type1" onChange={this.getIf}/>
+		                    		<input className={s.groupIfInput} placeholder="type = type1" onChange={this.getIf} value={this.state.consIf} />
 		                  		</Col>
 		                	</div>
 		                	<div>
@@ -71,7 +89,7 @@ class Formgroup extends Component {
 				                    <p className={s.groupExpT}>约束表达式:</p>
 				                </Col>
 				                <Col span={21}>
-				                   	<Input className={s.groupExp} type="textarea" placeholder="例：( $h.name=”Join”&& $h.email=”Join@163.com”)&& ($p.name=”*” & $p.email=”*@a.netease.com”)" autosize={{ minRows: 3, maxRows: 3 }} onChange={this.getExp}/>
+				                   	<Input className={s.groupExp} type="textarea" placeholder="例：( $h.name=”Join”&& $h.email=”Join@163.com”)&& ($p.name=”*” & $p.email=”*@a.netease.com”)" autosize={{ minRows: 3, maxRows: 3 }} onChange={this.getExp} value={this.state.consExp} />
 				                </Col>
 			            	</div>
 		            	</div>

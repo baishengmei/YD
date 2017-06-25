@@ -22,6 +22,12 @@ class paramInput extends Component {
 		}		
 	}
 
+	componentWillReceiveProps (nextProps) {
+    	if (nextProps.clearTag) {
+    	  	this.props.form.resetFields();
+    	}
+  	}
+
 	render() {
 
 		const { getFieldDecorator, getFieldValue } = this.props.form;

@@ -6,7 +6,7 @@ import { Row, Col, Modal } from 'antd'
 import IscBe from './IscBe'
 import ParamSel from './ParamSel'
 import FlBe from './FlBe'
-import ObjBe from './objBe'
+// import ObjBe from './objBe'
 
 let arrBe = {};//当type为arr时，和type处于同一级的value所对应的对象
 class ArrBe extends Component {

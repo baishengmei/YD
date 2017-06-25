@@ -9,6 +9,7 @@ import { access, response } from './middlewares/log';
 import errorHandler from './middlewares/errorHandler';
 // import loginHandler from './middlewares/loginHandler';
 import logoutHandler from './middlewares/logoutHandler';
+import saveRules from './middlewares/saveRules';
 import serverRender from './middlewares/serverRender';
 import routes from './routes';
 import apiHandler from './api';
@@ -107,6 +108,7 @@ app.use('/api', auth.api, apiHandler);
  */
 // app.use('/login', loginHandler);
 app.get('/logout', logoutHandler);
+app.use('/saverules', saveRules);
 
 /**
  * Register server-side rendering middleware

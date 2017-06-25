@@ -13,7 +13,7 @@ import AdManagementList from '../../containers/AdManagementList';
 const { adCampaign, adGroup, adContent } = AdHierarchy;
 
 const titles = {
-  [adCampaign]: '推广系列',
+  [adCampaign]: '推广系列aaa',
   [adGroup]: '推广组',
   [adContent]: '创意',
 };

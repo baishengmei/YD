@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
 import s from '../contentReqCss/ContentReqCss.css'
 import { Row, Col, Icon } from 'antd'
-import FormParams from '../FormParams'
+// import FormParams from '../FormParams'
 
 let uuid = 1;
 let objBe = {};//value所对应的对象
@@ -23,7 +23,7 @@ class ObjBe extends Component {
 	render() {
 	    return (
 	    	<div>
-	    		<FormParams tag="" name="" formParamsVal={this.getO} tagsign="$in"/>
+	    		// <FormParams tag="" name="" formParamsVal={this.getO} tagsign="$in"/>
 	    	</div>
 	    )
 	}

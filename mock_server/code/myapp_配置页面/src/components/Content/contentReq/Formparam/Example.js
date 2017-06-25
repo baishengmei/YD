@@ -117,8 +117,10 @@ class paramComp extends Component {
 			})
 			if(k[0]=="str"){
 				paramKeyObj.type = "string"
+				console.log("strrrrrrrrrrrrrrrrrrrrrrrrrr")
 			}else{
 				paramKeyObj.type = k[0];
+				console.log("not not not not strttttttttttttttt")
 			}
 			delete paramKeyObj.value1;
 			delete paramKeyObj.itemNum;
@@ -195,17 +197,26 @@ class paramComp extends Component {
 		}
 	}
 
+	componentWillReceiveProps (nextProps) {
+    	if (nextProps.clearTag) {
+    	  this.setState({
+    	  	disabled: true,
+    	  	datatype: ""
+    	  })
+    	}
+  	}
+
 	render() {
 		const { getFieldDecorator, getFieldValue } = this.props.form;
 		return (
 			<div>
 				<Col span={3}>
-	            	<ParamInput placevalue="key" onChangeInput={this.changeInput} />
+	            	<ParamInput clearTag={this.props.clearTag} placevalue="key" onChangeInput={this.changeInput} />
 	            </Col>
 	            <Col span={19}>
 	            	<Row>
 		                <Col span={5}>
-		                  	<ParamSel paramseldisabled={this.state.disabled} onChangeSel={this.changeSel}/>		                  
+		                  	<ParamSel clearTag={this.props.clearTag} paramseldisabled={this.state.disabled} onChangeSel={this.changeSel}/>		                  
 		                </Col>
 		                <Col span={17}>
 		                  <div>{this.DynamicFormSome(this.state.datatype)}</div>

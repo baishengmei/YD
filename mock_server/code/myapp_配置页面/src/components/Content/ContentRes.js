@@ -3,7 +3,7 @@ import ReHeader from "./contentReq/ReHeader"
 import FormInput from './contentReq/Forminput'
 import FormInputOnly from './contentReq/ForminputOnly'
 import FormSelect from './contentReq/Formselect'
-import FormParams from './contentReq/Formparams'
+import FormParams from './contentReq/Formparams.js'
 import Constraint from './contentReq/Constraint'
 import ReqSave from './contentReq/ReqSave'
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
