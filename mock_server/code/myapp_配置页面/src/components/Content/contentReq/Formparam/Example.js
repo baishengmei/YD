@@ -22,6 +22,7 @@ class paramComp extends Component {
 			disabled: true,
 			datatype: "",
 			indexTemp: [1],
+			clearTag: false,
 		}
 	}
 
@@ -117,10 +118,8 @@ class paramComp extends Component {
 			})
 			if(k[0]=="str"){
 				paramKeyObj.type = "string"
-				console.log("strrrrrrrrrrrrrrrrrrrrrrrrrr")
 			}else{
 				paramKeyObj.type = k[0];
-				console.log("not not not not strttttttttttttttt")
 			}
 			delete paramKeyObj.value1;
 			delete paramKeyObj.itemNum;
@@ -188,11 +187,14 @@ class paramComp extends Component {
 		paramKey2ValObj = paramObj[val];
 		if(this.isEmptyObject(paramObj) == true){
 			this.setState({
-				disabled: true
+				disabled: true,
+				datatype: "",
+				clearTag: true
 			})
 		}else{
 			this.setState({
-				disabled: false
+				disabled: false,
+				clearTag: false,
 			})
 		}
 	}
@@ -216,7 +218,7 @@ class paramComp extends Component {
 	            <Col span={19}>
 	            	<Row>
 		                <Col span={5}>
-		                  	<ParamSel clearTag={this.props.clearTag} paramseldisabled={this.state.disabled} onChangeSel={this.changeSel}/>		                  
+		                  	<ParamSel clearTag={this.props.clearTag || this.state.clearTag} paramseldisabled={this.state.disabled} onChangeSel={this.changeSel}/>		                  
 		                </Col>
 		                <Col span={17}>
 		                  <div>{this.DynamicFormSome(this.state.datatype)}</div>

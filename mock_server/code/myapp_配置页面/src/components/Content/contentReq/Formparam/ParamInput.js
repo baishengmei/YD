@@ -37,9 +37,7 @@ class paramInput extends Component {
 			<FormItem>
 	            {getFieldDecorator(`input`, {
 	              	rules: [{
-		                required: true,
 		                whitespace: true,
-		                message: `Please input the ${placevalue}.`,
 		            }],
 	            })(
 	              	<Input onChange={this.onChangeInput} placeholder={placevalue} className={s.paramsInputShort} />

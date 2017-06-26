@@ -9,7 +9,7 @@ class ParamSel extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			dyanmicVal: ""
+			dyanmicVal: []
 		}
 	}
 
@@ -23,14 +23,15 @@ class ParamSel extends Component {
 			dyanmicVal: value,
 		}, () => {
 			this.props.onChangeSel(this.state.dyanmicVal);
-		})	    
+		})   ;console.log(value)
 	}
 
 	componentWillReceiveProps (nextProps) {
     	if (nextProps.clearTag) {
     	  this.setState({
-    	  	dyanmicVal: ""
+    	  	dyanmicVal: ["请选择"]
     	  });
+    	  
     	}
   	}
 
@@ -44,9 +45,10 @@ class ParamSel extends Component {
                  	expandTrigger="hover"
                   	onChange={this.onChangeParaDef}
                   	className={s.paramsSelect}
-                  	placeholder="Regex"
+                  	placeholder="请选择"
                   	disabled={paramseldisabled}
                   	value={this.state.dyanmicVal}
+                  	allowClear
                 />
 		)
 	}

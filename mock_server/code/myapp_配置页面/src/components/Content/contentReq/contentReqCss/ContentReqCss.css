@@ -2,6 +2,7 @@
   position: relative;
   zoom: 1;
   height:  42px;
+  pointer-events: none;
 }
 
 .conreq_ti {
@@ -256,13 +257,26 @@
   width: 10%;
 }
 
+.resStyle {
+  position: relative;
+}
+
 .addRes {
     float: right;
     margin-right: 12%;
-    border: 1px dotted #000;
     margin-top: 1%;
+    border: 1px dotted #000;
     width: 10%;
     letter-spacing: 3px;
     text-align: center;
     background-color: #fff;
+}
+
+.cutoff {
+  height: 1px;
+  width: 90%;
+  background-color: rgb(119, 119, 119);
+  margin: 0 auto 46px auto;
+  background-color: #C1D5EB;
+  border-bottom: 1px dashed;
 }
