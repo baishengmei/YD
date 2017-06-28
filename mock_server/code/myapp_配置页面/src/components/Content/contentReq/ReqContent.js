@@ -25,8 +25,9 @@ class ReqContent extends Component {
 	getUrl = (value) => {
 		this.setState({
 			$u: value
-		})
-		this.props.onReqContent(this.state);
+		}, () => {
+			this.props.onReqContent(this.state);
+		})		
 	}
 	getM = (value) => {
 		this.setState({

@@ -123,6 +123,8 @@ class MockContent extends Component {
   contentResVal = (value) => {
     this.setState({
       resVal: value
+    }, () => {
+      console.log(this.state.resVal," dddddddddddddddd")
     })
   }
 
@@ -141,8 +143,9 @@ class MockContent extends Component {
         </div>
 
         <div className={s.contentRe}>
-          <ContentRes onResSave={this.resSave} onContentRes={this.contentResVal} clearTag={this.state.clearForm} />
+          <ContentRes onContentRes={this.contentResVal} clearTag={this.state.clearForm} />
         </div>
+
       </div>
     );
   }

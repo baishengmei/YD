@@ -15,6 +15,7 @@ outKeyVals.$b = {};
 outKeyVals.$q = {};
 outKeyVals.$p = {};
 outKeyVals.$in = {};
+outKeyVals.$resB = {};
 let keyVals = {}; 
 class paramsComponent extends Component {
   constructor() {
@@ -54,6 +55,8 @@ class paramsComponent extends Component {
       outKeyVals.$p = Object.assign(outKeyVals.$p, paramform);
     }else if(tagsign == "$in"){
       outKeyVals.$in = Object.assign(outKeyVals.$in, paramform);
+    }else if(tagsign == "$resB"){
+      outKeyVals.$resB = Object.assign(outKeyVals.$resB, paramform);
     }
     this.props.formParamsVal(outKeyVals);    
   }

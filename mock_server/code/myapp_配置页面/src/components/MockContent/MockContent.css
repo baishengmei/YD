@@ -13,7 +13,7 @@
 
 .contentRe {
   background-color: var(--color-white);
-  min-height: 480px;
+  min-height: 280px;
   /*border: 1px solid #ccc;*/
   width: 100%;
   box-shadow: 0 -3px 1px #e8e9e9 inset, -1px 3px 3px rgba(150,152,153,0.3);
@@ -22,4 +22,5 @@
         linear-gradient(-135deg, transparent 1.5em, #EEEEEE 0);
   background-size: 2em 2em, auto;
   margin-bottom: 26px;
+  padding-bottom: 2px;
 }

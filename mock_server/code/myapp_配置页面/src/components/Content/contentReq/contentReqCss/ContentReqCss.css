@@ -280,3 +280,13 @@
   background-color: #C1D5EB;
   border-bottom: 1px dashed;
 }
+
+.resDel {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.resDel Button {
+  font-size: 14px;
+  color: #FFF;
+}
