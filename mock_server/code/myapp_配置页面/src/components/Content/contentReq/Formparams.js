@@ -15,7 +15,18 @@ outKeyVals.$b = {};
 outKeyVals.$q = {};
 outKeyVals.$p = {};
 outKeyVals.$in = {};
-outKeyVals.$resB = {};
+// outKeyVals.$resB = {};
+outKeyVals.$resB1 = {};
+outKeyVals.$resB2 = {};
+outKeyVals.$resB3 = {};
+outKeyVals.$resB4 = {};
+outKeyVals.$resB5 = {};
+outKeyVals.$resB6 = {};
+outKeyVals.$resB7 = {};
+outKeyVals.$resB8 = {};
+outKeyVals.$resB9 = {};
+outKeyVals.$resB10 = {};
+
 let keyVals = {}; 
 class paramsComponent extends Component {
   constructor() {
@@ -55,8 +66,29 @@ class paramsComponent extends Component {
       outKeyVals.$p = Object.assign(outKeyVals.$p, paramform);
     }else if(tagsign == "$in"){
       outKeyVals.$in = Object.assign(outKeyVals.$in, paramform);
-    }else if(tagsign == "$resB"){
-      outKeyVals.$resB = Object.assign(outKeyVals.$resB, paramform);
+    }else if(tagsign == "$resB" && this.props.thekey !== undefined){
+      // outKeyVals.$resB = Object.assign(outKeyVals.$resB, paramform);
+      if(this.props.thekey == 1){
+        outKeyVals.$resB1 = Object.assign(outKeyVals.$resB1, paramform)
+      }else if(this.props.thekey == 2){        
+        outKeyVals.$resB2 = Object.assign(outKeyVals.$resB2, paramform);
+      }else if(this.props.thekey == 3){        
+        outKeyVals.$resB3 = Object.assign(outKeyVals.$resB3, paramform);
+      }else if(this.props.thekey == 4){        
+        outKeyVals.$resB4 = Object.assign(outKeyVals.$resB4, paramform);
+      }else if(this.props.thekey == 5){        
+        outKeyVals.$resB5 = Object.assign(outKeyVals.$resB5, paramform);
+      }else if(this.props.thekey == 6){        
+        outKeyVals.$resB6 = Object.assign(outKeyVals.$resB6, paramform);
+      }else if(this.props.thekey == 7){        
+        outKeyVals.$resB7 = Object.assign(outKeyVals.$resB7, paramform);
+      }else if(this.props.thekey == 8){        
+        outKeyVals.$resB8 = Object.assign(outKeyVals.$resB8, paramform);
+      }else if(this.props.thekey == 9){        
+        outKeyVals.$resB9 = Object.assign(outKeyVals.$resB9, paramform);
+      }else if(this.props.thekey == 10){        
+        outKeyVals.$resB10 = Object.assign(outKeyVals.$resB10, paramform);
+      }
     }
     this.props.formParamsVal(outKeyVals);    
   }
