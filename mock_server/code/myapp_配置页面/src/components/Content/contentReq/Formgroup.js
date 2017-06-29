@@ -59,7 +59,7 @@ class Formgroup extends Component {
 		const {k} = this.props.keyindex;
 
 		return (
-			<Row>
+			<Row className={s.constraintD}>
 	          	<Col span={18} offset={3}>
 		            <Row>
 		              	<div className={s.g}>

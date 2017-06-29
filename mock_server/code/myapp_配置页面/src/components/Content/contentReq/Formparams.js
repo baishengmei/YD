@@ -70,38 +70,38 @@ class paramsComponent extends Component {
 
     if(tagsign == "$h"){
       console.log(tagsign, "当tagsign为$q时，是否也执行")
-      outKeyVals.$h[parseInt(keyindex)] = this.deepCopy(paramform);
+      outKeyVals.$h[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
       console.log(outKeyVals.$h, "Formparams里$h的值");
     }else if(tagsign == "$q"){
-      outKeyVals.$q[parseInt(keyindex)] = this.deepCopy(paramform);
+      outKeyVals.$q[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
     }else if(tagsign == "$b"){
-      outKeyVals.$b[parseInt(keyindex)] = this.deepCopy(paramform);
+      outKeyVals.$b[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
     }else if(tagsign == "$p"){
-      outKeyVals.$p[parseInt(keyindex)] = this.deepCopy(paramform);
+      outKeyVals.$p[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
     }else if(tagsign == "$in"){
-      outKeyVals.$in[parseInt(keyindex)] = this.deepCopy(paramform);
+      outKeyVals.$in[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
     }else if(tagsign == "$resB" && this.props.thekey !== undefined){
       // outKeyVals.$resB = Object.assign(outKeyVals.$resB, paramform);
       if(this.props.thekey == 1){
-       outKeyVals.$resB1[parseInt(keyindex)] = this.deepCopy(paramform);
+       outKeyVals.$resB1[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 2){        
-        outKeyVals.$resB2[parseInt(keyindex)] = this.deepCopy(paramform);
+        outKeyVals.$resB2[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 3){        
-        outKeyVals.$resB3[parseInt(keyindex)] = this.deepCopy(paramform);
+        outKeyVals.$resB3[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 4){        
-        outKeyVals.$resB4[parseInt(keyindex)] = this.deepCopy(paramform);
+        outKeyVals.$resB4[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 5){        
-        outKeyVals.$resB5[parseInt(keyindex)] = this.deepCopy(paramform);
+        outKeyVals.$resB5[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 6){        
-        outKeyVals.$resB6[parseInt(keyindex)] = this.deepCopy(paramform);
+        outKeyVals.$resB6[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 7){        
-        outKeyVals.$resB7[parseInt(keyindex)] = this.deepCopy(paramform);
+        outKeyVals.$resB7[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 8){        
-        outKeyVals.$resB8[parseInt(keyindex)] = this.deepCopy(paramform);
+        outKeyVals.$resB8[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 9){        
-        outKeyVals.$resB9[parseInt(keyindex)] = this.deepCopy(paramform);
+        outKeyVals.$resB9[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 10){        
-        outKeyVals.$resB10[parseInt(keyindex)] = this.deepCopy(paramform);
+        outKeyVals.$resB10[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
       }
     }
     this.props.formParamsVal(outKeyVals);    

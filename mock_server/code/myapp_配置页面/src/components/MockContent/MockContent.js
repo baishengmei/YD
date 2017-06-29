@@ -7,9 +7,11 @@ import ContentRes from "../Content/ContentRes"
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
 import s from './MockContent.css';
 import $ from 'jquery'
+import ReSave from '../Content/contentReq/ReSave'
 
 let ruleName2rules = {};
 let rule2ruleName = {};
+let main = {};//用于存放带发送到后端的所有数据
 
 class MockContent extends Component {
 
@@ -33,7 +35,7 @@ class MockContent extends Component {
   }
 
   //点击request中的保存按钮，调用的函数
-  reqSave = () => {
+  reSave = () => {
     //判断提交的表单是否有必填项未填写
     if(this.state.rulename == ""){
       this.error("Rule Name");
@@ -50,16 +52,6 @@ class MockContent extends Component {
       this.setState({
         sendAjax: false
       })
-    }else if(this.state.reqVal.$m == undefined || this.state.reqVal.$m == ""){
-      this.error("Method");
-      this.setState({
-        sendAjax: false
-      })
-    }else if(this.state.reqVal.$c == undefined || this.state.reqVal.$c == ""){
-      this.error('ContentType');
-      this.setState({
-        sendAjax: false
-      })
     }else{
       this.setState({
         sendAjax: true
@@ -70,11 +62,18 @@ class MockContent extends Component {
             clearForm: true
           })
 
+          const params = {
+            ruleName: this.state.rulename,
+            projectName: this.state.projname,
+            request: this.state.reqVal,
+            response: this.state.resVal
+          }
+
           $.ajax({
             url: '/saverules',
             type: 'POST',
             dataType: 'json',
-            data: Object.assign({}, {ruleName:this.state.rulename}, {projectName:this.state.projname}, this.state.reqVal),
+            data: Object.assign({}, params),
             success: data => {
               console.log(data);
               console.log("succeed!")
@@ -100,10 +99,7 @@ class MockContent extends Component {
         }    
       })
     }  
-  }
-
-  resSave = () => {
-
+    console.log("req的值：", this.state.reqVal, "res的值:", this.state.resVal,)
   }
 
   //将规则名/项目组名传给该组件，并将值更新到state中。
@@ -118,7 +114,7 @@ class MockContent extends Component {
     this.setState({
       reqVal: value
     }, () => {
-      console.log(this.state.reqVal, "请求数据")
+      // console.log(this.state.reqVal, "请求数据")
     })
   }
 
@@ -126,7 +122,7 @@ class MockContent extends Component {
     this.setState({
       resVal: value
     }, () => {
-      console.log(this.state.resVal," dddddddddddddddd")
+      // console.log(this.state.resVal,"响应数据")
     })
   }
 
@@ -141,13 +137,12 @@ class MockContent extends Component {
         />
 
         <div className={s.contentRe}>
-          <ContentReq onReqSave={this.reqSave} onContentReq={this.contentReqVal} clearTag={this.state.clearForm}/>
+          <ContentReq onContentReq={this.contentReqVal} clearTag={this.state.clearForm}/>
         </div>
-
         <div className={s.contentRe}>
           <ContentRes onContentRes={this.contentResVal} clearTag={this.state.clearForm} />
         </div>
-
+        <ReSave onReSave={this.reSave}/>
       </div>
     );
   }

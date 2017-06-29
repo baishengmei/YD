@@ -66,7 +66,7 @@ class ReqContent extends Component {
 		const clearTag = this.props.clearTag;
 		return ( 			
 			<div className={s.reqContent}>
-				<FormInputOnly clearTag={this.props.clearTag} name="Url" tag="$U" ref="aaaaaa" placeval="Url" formInputOnlyVal={this.getUrl} />
+				<FormInputOnly clearTag={this.props.clearTag} name="Url" tag="$U" ref="aaaaaa" placeval="Url" formInputOnlyVal={this.getUrl} redtag="true"/>
 				<FormSelect clearTag={this.props.clearTag} name="Method" tag="$m" optval="GET,DELETE,Post,PUT,OPTIONS" formSelectVal={this.getM} />	
 				<FormParams clearTag={this.props.clearTag} name="Header" tagsign="$h" tag="$h" formParamsVal={this.getP} />
 				<FormParams clearTag={this.props.clearTag} name="Query" tagsign="$q" tag="$q" formParamsVal={this.getP} />
