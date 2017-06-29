@@ -9,23 +9,23 @@ import s from './contentReqCss/ContentReqCss.css'
 import ParamComp from './Formparam/Example'
 
 let uuid = 1;
-let outKeyVals = {};
-outKeyVals.$h = {};
-outKeyVals.$b = {};
-outKeyVals.$q = {};
-outKeyVals.$p = {};
-outKeyVals.$in = {};
+var outKeyVals = {};
+outKeyVals.$h = [];
+outKeyVals.$b = [];
+outKeyVals.$q = [];
+outKeyVals.$p = [];
+outKeyVals.$in = [];
 // outKeyVals.$resB = {};
-outKeyVals.$resB1 = {};
-outKeyVals.$resB2 = {};
-outKeyVals.$resB3 = {};
-outKeyVals.$resB4 = {};
-outKeyVals.$resB5 = {};
-outKeyVals.$resB6 = {};
-outKeyVals.$resB7 = {};
-outKeyVals.$resB8 = {};
-outKeyVals.$resB9 = {};
-outKeyVals.$resB10 = {};
+outKeyVals.$resB1 = [];
+outKeyVals.$resB2 = [];
+outKeyVals.$resB3 = [];
+outKeyVals.$resB4 = [];
+outKeyVals.$resB5 = [];
+outKeyVals.$resB6 = [];
+outKeyVals.$resB7 = [];
+outKeyVals.$resB8 = [];
+outKeyVals.$resB9 = [];
+outKeyVals.$resB10 = [];
 
 let keyVals = {}; 
 class paramsComponent extends Component {
@@ -53,41 +53,55 @@ class paramsComponent extends Component {
     });
   }
 
+  deepCopy = (source) => {
+    var result ={};
+    for(let key in source){
+      result[key]=typeof source[key] === 'object'?this.deepCopy(source[key]): source[key];
+    }
+    return result;
+  } 
+
 //将k值传进来，以及paramform的值
-  paramCompChange = (paramform) => {
-    const tagsign = this.props.tagsign;
+  paramCompChange = (paramform, keyindex, tagsign) => {
+    console.log(parseInt(keyindex), tagsign ," 传给Formparam的keyindex的值")
+    console.log(outKeyVals.$h, "Formparams中接收到的值")
+    console.log(paramform, "paramform的值")
+    // const tagsign = this.props.tagsign;
+
     if(tagsign == "$h"){
-      outKeyVals.$h = Object.assign(outKeyVals.$h, paramform);
+      console.log(tagsign, "当tagsign为$q时，是否也执行")
+      outKeyVals.$h[parseInt(keyindex)] = this.deepCopy(paramform);
+      console.log(outKeyVals.$h, "Formparams里$h的值");
     }else if(tagsign == "$q"){
-      outKeyVals.$q = Object.assign(outKeyVals.$q, paramform);
+      outKeyVals.$q[parseInt(keyindex)] = this.deepCopy(paramform);
     }else if(tagsign == "$b"){
-      outKeyVals.$b = Object.assign(outKeyVals.$b, paramform);
+      outKeyVals.$b[parseInt(keyindex)] = this.deepCopy(paramform);
     }else if(tagsign == "$p"){
-      outKeyVals.$p = Object.assign(outKeyVals.$p, paramform);
+      outKeyVals.$p[parseInt(keyindex)] = this.deepCopy(paramform);
     }else if(tagsign == "$in"){
-      outKeyVals.$in = Object.assign(outKeyVals.$in, paramform);
+      outKeyVals.$in[parseInt(keyindex)] = this.deepCopy(paramform);
     }else if(tagsign == "$resB" && this.props.thekey !== undefined){
       // outKeyVals.$resB = Object.assign(outKeyVals.$resB, paramform);
       if(this.props.thekey == 1){
-        outKeyVals.$resB1 = Object.assign(outKeyVals.$resB1, paramform)
+       outKeyVals.$resB1[parseInt(keyindex)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 2){        
-        outKeyVals.$resB2 = Object.assign(outKeyVals.$resB2, paramform);
+        outKeyVals.$resB2[parseInt(keyindex)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 3){        
-        outKeyVals.$resB3 = Object.assign(outKeyVals.$resB3, paramform);
+        outKeyVals.$resB3[parseInt(keyindex)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 4){        
-        outKeyVals.$resB4 = Object.assign(outKeyVals.$resB4, paramform);
+        outKeyVals.$resB4[parseInt(keyindex)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 5){        
-        outKeyVals.$resB5 = Object.assign(outKeyVals.$resB5, paramform);
+        outKeyVals.$resB5[parseInt(keyindex)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 6){        
-        outKeyVals.$resB6 = Object.assign(outKeyVals.$resB6, paramform);
+        outKeyVals.$resB6[parseInt(keyindex)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 7){        
-        outKeyVals.$resB7 = Object.assign(outKeyVals.$resB7, paramform);
+        outKeyVals.$resB7[parseInt(keyindex)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 8){        
-        outKeyVals.$resB8 = Object.assign(outKeyVals.$resB8, paramform);
+        outKeyVals.$resB8[parseInt(keyindex)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 9){        
-        outKeyVals.$resB9 = Object.assign(outKeyVals.$resB9, paramform);
+        outKeyVals.$resB9[parseInt(keyindex)] = this.deepCopy(paramform);
       }else if(this.props.thekey == 10){        
-        outKeyVals.$resB10 = Object.assign(outKeyVals.$resB10, paramform);
+        outKeyVals.$resB10[parseInt(keyindex)] = this.deepCopy(paramform);
       }
     }
     this.props.formParamsVal(outKeyVals);    
@@ -108,7 +122,7 @@ class paramsComponent extends Component {
         <div key={k}>
           <Row>
             <Col span={22}>
-              <ParamComp clearTag={this.props.clearTag} onParamCompChange={this.paramCompChange}/>
+              <ParamComp tagsign={this.props.tagsign} keyindex={k} clearTag={this.props.clearTag} onParamCompChange={this.paramCompChange}/>
             </Col>
             <Col span={1}>
               <Icon

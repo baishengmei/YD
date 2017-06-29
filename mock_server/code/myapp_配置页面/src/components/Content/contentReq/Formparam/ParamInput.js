@@ -18,7 +18,7 @@ class paramInput extends Component {
 		}else{
 			
 			// console.log(clearState, "clearState状态")
-			this.props.onChangeInput(e.target.value);
+			this.props.onChangeInput(e.target.value, this.props.tagsign);
 		}		
 	}
 

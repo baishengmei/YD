@@ -15,6 +15,8 @@ import ObjBe from './ObjBe'
 //paramObj对象的key有type、value、value1、itemNum、contentType
 let paramObj = {};
 let paramKey2ValObj = {};//paramObj对象的key所对应的value对象
+let k2key = {};//用于保存k值和key值得对应，避免input修改前后的值均被保存
+let tagsignE;
 class paramComp extends Component {
 	constructor(props) {
 		super(props);
@@ -34,13 +36,13 @@ class paramComp extends Component {
 	valEq = (val) => {
 		const tag = "value";
 		this.val2obj(val, paramKey2ValObj, tag);
-		this.props.onParamCompChange(paramObj);
+		this.props.onParamCompChange(paramObj, this.props.keyindex, tagsignE);
 	}
 
 	//将value组件值，保存到对象中
 	val2obj = (val, obj, tag)=> {
 		obj[tag] = val;
-		this.props.onParamCompChange(paramObj);
+		this.props.onParamCompChange(paramObj, this.props.keyindex, tagsignE);
 	}
 
 	// 第一级参数定义为数组/对象范围时，对应的value布局
@@ -165,7 +167,7 @@ class paramComp extends Component {
 			}
 			delete paramKeyObj.value1;
 			delete paramKeyObj.itemNum;
-			this.props.onParamCompChange(paramObj);
+			this.props.onParamCompChange(paramObj, this.props.keyindex, tagsignE);
 		}else if(/^objBe$/.test(k[1])){
 			console.log("changeSel:对象自定义", k);
 			this.setState({
@@ -178,13 +180,18 @@ class paramComp extends Component {
 		}
 	}
 
-	changeInput = (val)=>{
+	changeInput = (val, tagsign)=>{
+		tagsignE = tagsign;
 		for(var key in paramObj){
 			delete paramObj[key];
 		}
+
 		//val为相应的key值
 		paramObj[val] = {};
 		paramKey2ValObj = paramObj[val];
+
+		// console.log(paramObj, "k2key的值")
+
 		if(this.isEmptyObject(paramObj) == true){
 			this.setState({
 				disabled: true,
@@ -213,7 +220,7 @@ class paramComp extends Component {
 		return (
 			<div>
 				<Col span={3}>
-	            	<ParamInput clearTag={this.props.clearTag} placevalue="key" onChangeInput={this.changeInput} />
+	            	<ParamInput tagsign={this.props.tagsign} keyindex={this.props.keyindex} clearTag={this.props.clearTag} placevalue="key" onChangeInput={this.changeInput} />
 	            </Col>
 	            <Col span={19}>
 	            	<Row>
