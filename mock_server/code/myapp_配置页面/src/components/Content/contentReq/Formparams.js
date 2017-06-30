@@ -63,10 +63,6 @@ class paramsComponent extends Component {
 
 //将k值传进来，以及paramform的值
   paramCompChange = (paramform, keyindex, tagsign) => {
-    console.log(parseInt(keyindex), tagsign ," 传给Formparam的keyindex的值")
-    console.log(outKeyVals.$h, "Formparams中接收到的值")
-    console.log(paramform, "paramform的值")
-    // const tagsign = this.props.tagsign;
 
     if(tagsign == "$h"){
       console.log(tagsign, "当tagsign为$q时，是否也执行")

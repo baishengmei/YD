@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {Component} from 'react'
 import ReHeader from "./contentReq/ReHeader"
 import ReqContent from './contentReq/ReqContent'
 
-class ContentReq extends React.Component {
+class ContentReq extends Component {
 
 	reqContentData = (value) => {
 		this.props.onContentReq(value);

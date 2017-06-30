@@ -21,7 +21,6 @@ class ReqContent extends Component {
 			$G: {}//constraint
 		}
 	}
-
 	getUrl = (value) => {
 		this.setState({
 			$u: value
@@ -50,7 +49,6 @@ class ReqContent extends Component {
 			this.props.onReqContent(this.state);
 		})
 	}
-
 	getP = (value) => {
 		this.setState({
 			$h: value.$h,
@@ -59,9 +57,21 @@ class ReqContent extends Component {
 		}, () => {
 			this.props.onReqContent(this.state);
 		})
-		console.log(this.state, "header-->ReqContent.js")
 	}
-
+	componentWillReceiveProps (nextProps) {
+    	if (nextProps.clearTag) {
+    	  	this.setState({
+    	  		$u: "",//url
+				$c: "",//contentType
+				$m: "",//method
+				$h: {},//header
+				$q: {},//query
+				$b: {},//body
+				$G: {}//constraint
+    	  	});
+    	  	// this.props.onChangeInput(this.state.paraminput, this.props.tagsign);
+    	}
+  	}
 	render() {
 		const clearTag = this.props.clearTag;
 		return ( 			

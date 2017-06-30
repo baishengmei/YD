@@ -26,14 +26,12 @@ class MockContent extends Component {
         sendAjax: false
       }       
   }
-
   error = (errMsg) => {
     Modal.error({
       title: 'this is a warning message!',
       content: 'Please input the legal '+ `${errMsg}` + "!"
     })
   }
-
   //点击request中的保存按钮，调用的函数
   reSave = () => {
     //判断提交的表单是否有必填项未填写
@@ -62,7 +60,9 @@ class MockContent extends Component {
             clearForm: true
           })
 
-          const params = {
+          console.log(this.state.reqVal, "再次传值时的reqVal的值")
+
+          let params = {
             ruleName: this.state.rulename,
             projectName: this.state.projname,
             request: this.state.reqVal,
@@ -75,13 +75,16 @@ class MockContent extends Component {
             dataType: 'json',
             data: Object.assign({}, params),
             success: data => {
-              console.log(data);
               console.log("succeed!")
               this.setState({
                 clearForm: false,
                 rulename: "",
                 projname: "",
                 reqVal: {},
+                resVal: {},
+              }, () => {
+                params = {};
+                console.log(this.state.reqVal, "请求结束，置空reqVal后的值")
               })
             },
             error: err => {
@@ -89,6 +92,7 @@ class MockContent extends Component {
               this.setState({
                 clearForm: false,
                 reqVal: {},
+                resVal: {},
                 rulename: "",
                 projname: "",
               })
@@ -101,7 +105,6 @@ class MockContent extends Component {
     }  
     console.log("req的值：", this.state.reqVal, "res的值:", this.state.resVal,)
   }
-
   //将规则名/项目组名传给该组件，并将值更新到state中。
   submitSave = (rulename, projname) => {
     this.setState({
@@ -109,7 +112,6 @@ class MockContent extends Component {
       projname: projname
     })
   }
-
   contentReqVal = (value) => {
     this.setState({
       reqVal: value
@@ -117,7 +119,6 @@ class MockContent extends Component {
       // console.log(this.state.reqVal, "请求数据")
     })
   }
-
   contentResVal = (value) => {
     this.setState({
       resVal: value
@@ -125,7 +126,6 @@ class MockContent extends Component {
       // console.log(this.state.resVal,"响应数据")
     })
   }
-
   render() {
     return (
       <div className={s.content}>
