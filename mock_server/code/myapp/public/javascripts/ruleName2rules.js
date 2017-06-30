@@ -159,10 +159,6 @@ var ruleName2rules = {
 		"$q": {
 			"$query": "queryString"
 		},
-		"$hash": {
-			"$hashx": "hashString"
-		},
-		// },
 
 		//constrRes：response中的条件与响应
 		"constrRes": [{

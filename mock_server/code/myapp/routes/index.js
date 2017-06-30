@@ -24,12 +24,12 @@ router.use(function(req, res, next) {
 	reqb = req.body || "";
 
 	if (url2ruleName[requ]) {
-		var rule; //url对应的mock规则
+		var rule; //url对应的mock规则(或者是规则名对应的mock规则)
 		rule = ruleName2rules[url2ruleName[requ]];
 		//$m,$u,$b,$h,$hash,$c,$p分别指mock规则中的method，url，body，header，hash，contentT，parameters
 		function contrC(rule) {
 			return new Promise(function(res, rej) {
-				if (rule.$c == reqc) {
+				if (rule.$c == reqc || rule.$c == undefined || rule.$c == "") {
 					res(rule);
 				} else {
 					rej(new Error("The content-type is wrong！"));
@@ -38,7 +38,7 @@ router.use(function(req, res, next) {
 		}
 		function contrM(ret) {
 			return new Promise(function(res, rej) {
-				if (ret.$m.toUpperCase() == reqm) {
+				if (ret.$m.toUpperCase() == reqm || rule.$m == undefined || rule.$m == "") {
 					res(ret);
 				} else {
 					rej(new Error("The method is wrong！"));

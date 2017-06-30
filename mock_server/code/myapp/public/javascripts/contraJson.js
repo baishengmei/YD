@@ -2,6 +2,7 @@ module.exports = contraJson;
 
 //整数可以指定值，也可以设置整数的取值范围
 // var errMsg;
+//如果$h/$b等为undefined时，ruleJsonLength == 0，那么会return true
 function contraJson(rulJson, resJson){
 	var ruleJsonLength;
 	ruleJsonLength = getJsonLength(rulJson);
