@@ -123,7 +123,7 @@ class MockContent extends Component {
     this.setState({
       resVal: value
     }, () => {
-      // console.log(this.state.resVal,"响应数据")
+      console.log(this.state.resVal,"响应数据")
     })
   }
   render() {
