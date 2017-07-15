@@ -61,6 +61,15 @@ class contentres extends React.Component {
 		this.props.onContentRes(resDate);
 	}
 
+	componentWillReceiveProps (nextProps) {
+	    if (nextProps.clearTag) {
+	      this.setState({
+	      	keys:[1]
+	      });
+	      resDate = [];
+	    }
+	}
+
 	render() {
 
   		const keys = this.state.keys;

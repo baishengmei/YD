@@ -76,6 +76,8 @@ var ruleName2rules = {
 		//constrRes：response中的条件与响应
 		"constrRes": [{
 			"condition": "$G1",
+			"$sc": "200",
+			"$c": "application/x-www-form-urlencoded"
 			"response": {
 				//成绩，且整数部分取值介于60~100之间，小数部分保留小数位数介于1~2	
 				"score": {

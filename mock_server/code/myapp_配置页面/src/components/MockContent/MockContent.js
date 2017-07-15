@@ -21,7 +21,7 @@ class MockContent extends Component {
         rulename: "",
         projname: "",
         reqVal: {},
-        resVal: {},
+        resVal: [{'$sc':'200'}],
         clearForm: false,
         sendAjax: false
       }       
@@ -81,9 +81,10 @@ class MockContent extends Component {
                 rulename: "",
                 projname: "",
                 reqVal: {},
-                resVal: {},
+                resVal: [{'$sc':'200'}],
               }, () => {
-                params = {};
+                // params = {};
+                console.log(this.state.clearForm, "clearForm的值 在MockContent.js中")
                 console.log(this.state.reqVal, "请求结束，置空reqVal后的值")
               })
             },
@@ -92,7 +93,7 @@ class MockContent extends Component {
               this.setState({
                 clearForm: false,
                 reqVal: {},
-                resVal: {},
+                resVal: [{'$sc':'200'}],
                 rulename: "",
                 projname: "",
               })
@@ -116,7 +117,7 @@ class MockContent extends Component {
     this.setState({
       reqVal: value
     }, () => {
-      // console.log(this.state.reqVal, "请求数据")
+      console.log(this.state.reqVal, "请求数据")
     })
   }
   contentResVal = (value) => {
