@@ -4,7 +4,7 @@ var DB_CONN_STR = 'mongodb://localhost:27017/mockserver'; // 数据库为 mockse
 /* eslint no-param-reassign: 0 */
 export default async(req, res) => {
 
-	let url2ruleName = {};
+	// let url2ruleName = {};
 	let ruleName2rules = {};
 	let reqB = {};
   let reqH = {};
@@ -43,8 +43,8 @@ export default async(req, res) => {
   reqH = isUndefined(body.request.$h);
   reqQ = isUndefined(body.request.$q);
 	//将接收到的body数据进行格式处理，保存成待保存的数据格式,实际保存的url链接为"项目组名/url"
-	url2ruleName["/" + body.projectName + "/" +body.request.$u] = body.ruleName;
-	ruleName2rules[body.ruleName] = {
+	ruleName2rules["/" + body.projectName + "/" +body.request.$u] = {
+    "rulename": body.ruleName,
 		"reqc": body.request.$c,
 		"reqm": body.request.$m,
 		"reqb": reqB || {},
@@ -54,22 +54,22 @@ export default async(req, res) => {
 
   //用于保存约束条件
   if(body.request.$G == undefined){
-    ruleName2rules[body.ruleName]["reqG1"] = "";
+    ruleName2rules["/" + body.projectName + "/" +body.request.$u]["G1"] = "";
   }else{
     for(let i in body.request.$G){
-      ruleName2rules[body.ruleName][i.substring(1)] = body.request.$G[i];
+      ruleName2rules["/" + body.projectName + "/" +body.request.$u][i.substring(1)] = body.request.$G[i];
     }
   }
 
   //用于将配置页面的响应部分传给node后端
   response = body.response.notempty();
   for(let i=0; i<response.length; i++){
-    ruleName2rules[body.ruleName]['constrRes'] = [];
-    ruleName2rules[body.ruleName]['constrRes'][i] = {};
-    ruleName2rules[body.ruleName]['constrRes'][i]['condition'] = response[i]['$i'];
-    ruleName2rules[body.ruleName]['constrRes'][i]['ressc'] = response[i]['$sc'];
-    ruleName2rules[body.ruleName]['constrRes'][i]['resc'] = response[i]['$c'];
-    ruleName2rules[body.ruleName]['constrRes'][i]['response'] = response[i]['response'];
+    ruleName2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'] = [];
+    ruleName2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i] = {};
+    ruleName2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i]['condition'] = response[i]['$i'];
+    ruleName2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i]['ressc'] = response[i]['$sc'];
+    ruleName2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i]['resc'] = response[i]['$c'];
+    ruleName2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i]['response'] = response[i]['response'];
   }
 
   //将rules和names出入到数据库
@@ -77,7 +77,7 @@ export default async(req, res) => {
     //连接到表 site
     let collection = db.collection('rules_site');
     //插入数据
-    collection.insert({'keypath': url2ruleName["/" + body.projectName + "/" +body.request.$u], 'value':ruleName2rules[body.ruleName]}, function(err, result) { 
+    collection.insert({'keypath': "/" + body.projectName + "/" +body.request.$u, 'value':ruleName2rules["/" + body.projectName + "/" +body.request.$u]}, function(err, result) { 
         if(err)
         {
             console.log('Error:'+ err);
@@ -85,27 +85,11 @@ export default async(req, res) => {
         }
         callback(result);
     });
-  }  
-  let insertNames = function(db, callback) {  
-    //连接到表 site
-    let collection = db.collection('names_site');
-    //插入数据
-    collection.insert({'keypath':"/" + body.projectName + "/" +body.request.$u, 'value': url2ruleName["/" + body.projectName + "/" +body.request.$u]}, function(err, result) { 
-        if(err)
-        {
-            console.log('Error:'+ err);
-            return;
-        }
-        callback(result);
-    });
-  }  
+  }
   MongoClient.connect(DB_CONN_STR, function(err, db) {
       console.log("连接成功！");
+      db.collection('rules_site').find({'keypath': })
       insertRules(db, function(result) {
-          console.log(result);
-          db.close();
-      });
-      insertNames(db, function(result) {
           console.log(result);
           db.close();
       });

@@ -25,18 +25,14 @@ export default async(req, res) => {
     let collection = db.collection('names_site');
     // 查询数据
     collection.find({'keypath':requrl.substring(5)},function(error, cursor){
-      // console.log(cursor.cmd.query.keypath, 'xxxxxxxxxxxxxxxxxxxxxxxxx')
-      // console.log(cursor.cmd.ReadRreference.options, 'yyyyyyyyyyyyyyyyyyy')
       cursor.each(function(error,doc){
-        let temp = 0;
         if(doc){
           if (doc.addTime) {
             console.log("addTime: "+doc.addTime);
           }
           dbNames.push(doc);
           callback(doc);
-          temp = 1;
-        }else if(dbNames == []){
+        }else if(dbNames.length <= 0){
           console.log("该URL不存在！")
         }//当doc存在时，总是执行两次，第二次为null，故而无论有无doc，均提示该URL不存在！
       });   
@@ -45,15 +41,14 @@ export default async(req, res) => {
 
   MongoClient.connect(DB_CONN_STR, function(err, db) {
     selectUrl2name(db, function(result) {
-      console.log(result, '233333333333333333333')
       db.collection('rules_site').find({'keypath': result.value}, function(error, cursor){
         cursor.each(function(error, doc){
           if (doc){
             dbRules.push(doc);
             rule = doc.value;
             console.log(rule, "docdocdocdocdoc");
-          }else if(dbRules == []){
-            console.log("该规则不存在！")
+          }else if(dbRules.length <= 0){
+            console.log("该规则不存在！");//这里要改成res.send方法，返回前端，ret=0，那么则提示该规则不存在
           }
         })
       })
