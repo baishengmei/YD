@@ -12,6 +12,10 @@ export default async(req, res) => {
   let response;//用于保存response的数据
   const method = req.method.toUpperCase();
   const body = req.body;
+
+  let dbProj2Names = [];
+  let dbUrl2Rules = [];
+
   //传送过来的body中$b/$p/$h等均保存在一个数组中，该函数将其转化为对象的格式
 	function paramsCh(bphq) {
 		var xobj = {};
@@ -73,6 +77,17 @@ export default async(req, res) => {
   }
 
   //将rules和names出入到数据库
+  let insertNames = function(db, callback) {
+    let collection = db.collection('names_site');
+    console.log(collection, "zzzzzzzzzzzzzz")
+    collection.insert({'keyProj': body.projectName, 'keyName': body.ruleName}, function(err, result) {
+      if(err) {
+        console.log('Error_name:' + err);
+        return;
+      }
+      callback(result);
+    })
+  }
   let insertRules = function(db, callback) {  
     //连接到表 site
     let collection = db.collection('rules_site');
@@ -82,30 +97,76 @@ export default async(req, res) => {
     collection.insert({'keypath': keypathVal, 'value':url2rules[keypathVal]}, function(err, result) { 
         if(err)
         {
-            console.log('Error:'+ err);
+            console.log('Error_rule:'+ err);
             return;
         }
         callback(result);
     });
   }
-  MongoClient.connect(DB_CONN_STR, function(err, db) {
-      console.log("连接成功！");
-      //keypath的值
-      let keypathVal = "/" + body.projectName + "/" +body.request.$u;
-      //数据库查询是否存在当前保存的url，如果存在则更新，如果不存在则保存，更新的方式是：先删除，后插入，当然这里也可以采用update的方式进行更新
-      db.collection('rules_site').find({'keypath': keypathVal}, function(err, cursor){
-        cursor.each(function(error,doc){
-          if(doc){
-            db.collection('rules_site').remove({'keypath': keypathVal});
+  MongoClient.connect(DB_CONN_STR, function(err, db) 
+  {
+    let resStatusMsg = {
+      "url": "The url has already existed!",
+      "name": "The rulename has already existed!",
+      "success": "Succeed!"
+    };
+    let MsgTag;
+    let keypathVal = "/" + body.projectName + "/" +body.request.$u;
+    db.collection('names_site').find({'keyProj': body.projectName}, function(err, cursor){
+      cursor.each(function(error, doc){
+        if(doc) {
+          dbProj2Names.push(doc);
+          if(doc.keyName == body.ruleName){
+            MsgTag = "name";
+            // db.close();
+            // res.status(200).send({status:`The rulename has already existed!`});
+          }else{
+            db.collection('rules_site').find({'keypath': keypathVal}, function(err, cursor){
+              cursor.each(function(error,doc){
+                if(doc){
+                  console.log(doc, 'kkkkkkkkkkkkkkkkkkkkkkk')
+                  // db.collection('rules_site').remove({'keypath': keypathVal});
+                  dbUrl2Rules.push(doc);
+                  MsgTag = "url";
+                  // db.close();
+                  // res.status(200).send({status:`The url has already existed!`});                  
+                }else if(dbUrl2Rules.length <= 0){
+                  insertNames(db, function(result) {
+                    console.log("插入到mongodb的names_site的新记录：", result);
+                  })
+                  insertRules(db, function(result) {
+                    console.log("插入到mongodb中的新记录：", result);
+                    
+                  });
+                  MsgTag = "success";
+                  // db.close();
+                  // res.status(200).send({status: "succeed2!"});
+                }
+              }); 
+            })
+            // insertRules(db, function(result) {
+            //   console.log("插入到mongodb中的新记录：", result);
+            //   db.close();
+            // });
+            // res.status(200).send({status: "succeed!"});
           }
-        }); 
+          // dbProj2Names.push(doc);
+        }else if(dbProj2Names.length <=0){
+          insertNames(db, function(result) {
+            console.log("插入到mongodb的names_site的新记录：", result);
+          })
+          insertRules(db, function(result) {
+            console.log("插入到mongodb中的新记录：", result);           
+          });
+          MsgTag = "success";
+          // db.close();
+          // res.status(200).send({status: "succeed!"});
+        }
       })
-      insertRules(db, function(result) {
-          console.log(result);
-          db.close();
-      });
+    })
+    db.close();
+    res.status(200).send({status: MsgTag});
   });
   
-	res.status(200).send({status: "succeed!"});
-	console.log(url2rules,"url2rules的值");
+
 };

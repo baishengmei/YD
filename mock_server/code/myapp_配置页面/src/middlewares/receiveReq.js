@@ -20,10 +20,10 @@ export default async(req, res) => {
   let dbNames = [];
   let dbRules = [];
 
-  let selectUrl2name = function(db, callback) { 
+  let selectUrl2rules = function(db, callback) { 
    //连接到表 
-    let collection = db.collection('names_site');
-    // 查询数据
+    let collection = db.collection('rules_site');
+    // 查询数据 requrl.substring(5)的目的是因为访问url中存在test字段，需要先去掉后再与数据库url对比，如/test/xinzhixuan/url_one
     collection.find({'keypath':requrl.substring(5)},function(error, cursor){
       cursor.each(function(error,doc){
         if(doc){
@@ -40,20 +40,24 @@ export default async(req, res) => {
   }
 
   MongoClient.connect(DB_CONN_STR, function(err, db) {
-    selectUrl2name(db, function(result) {
-      db.collection('rules_site').find({'keypath': result.value}, function(error, cursor){
-        cursor.each(function(error, doc){
-          if (doc){
-            dbRules.push(doc);
-            rule = doc.value;
-            console.log(rule, "docdocdocdocdoc");
-          }else if(dbRules.length <= 0){
-            console.log("该规则不存在！");//这里要改成res.send方法，返回前端，ret=0，那么则提示该规则不存在
-          }
-        })
-      })
+    selectUrl2rules(db, function(result) {
+      console.log(result, 'zzzzzzzzzzzzzzzz');
+      delete result.rulename;
       db.close();
     });
   });
+
+  function contrC(rule) {
+    return new Promise(function(res, rej) {
+      if (rule.$c == reqc || rule.$c == undefined || rule.$c == "") {
+        res(rule);
+      } else {
+        rej(new Error("The content-type is wrong！"));
+      }
+    })
+  }
+  function contrx(rule){
+    console.log("okok1222222222222222222222222")
+  }
 	res.status(200).send({status: "succeed!123456778"});
 };

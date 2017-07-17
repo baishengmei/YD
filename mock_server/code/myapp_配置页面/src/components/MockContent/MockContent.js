@@ -75,7 +75,7 @@ class MockContent extends Component {
             dataType: 'json',
             data: Object.assign({}, params),
             success: data => {
-              console.log("succeed!")
+              console.log("请求返回内容", data)
               this.setState({
                 clearForm: false,
                 rulename: "",
@@ -84,8 +84,8 @@ class MockContent extends Component {
                 resVal: [{'$sc':'200'}],
               }, () => {
                 // params = {};
-                console.log(this.state.clearForm, "clearForm的值 在MockContent.js中")
-                console.log(this.state.reqVal, "请求结束，置空reqVal后的值")
+                // console.log(this.state.clearForm, "clearForm的值 在MockContent.js中")
+                // console.log(this.state.reqVal, "请求结束，置空reqVal后的值")
               })
             },
             error: err => {
@@ -117,14 +117,14 @@ class MockContent extends Component {
     this.setState({
       reqVal: value
     }, () => {
-      console.log(this.state.reqVal, "请求数据")
+      // console.log(this.state.reqVal, "请求数据")
     })
   }
   contentResVal = (value) => {
     this.setState({
       resVal: value
     }, () => {
-      console.log(this.state.resVal,"响应数据")
+      // console.log(this.state.resVal,"响应数据")
     })
   }
   render() {
