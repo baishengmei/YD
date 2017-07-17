@@ -20,6 +20,10 @@ class ContentNameform extends Component {
     this.setState({
       contentnameInput: event.target.value
     }, () => {
+      console.log(this.props.clearTag,"clearTag in ContentName.js")
+      this.props.form.setFieldsValue({
+        rulename: this.state.contentnameInput
+      })
       this.props.onSubmitSave(this.state.contentnameInput, this.state.contentnameSel);
     })
   }

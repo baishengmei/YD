@@ -10,6 +10,7 @@ import errorHandler from './middlewares/errorHandler';
 // import loginHandler from './middlewares/loginHandler';
 import logoutHandler from './middlewares/logoutHandler';
 import saveRules from './middlewares/saveRules';
+import receiveReq from './middlewares/receiveReq';
 import serverRender from './middlewares/serverRender';
 import routes from './routes';
 import apiHandler from './api';
@@ -101,14 +102,15 @@ if (__DEV__) {
 /**
  * Register API middleware
  */
-app.use('/api', auth.api, apiHandler);
+// app.use('/api', auth.api, apiHandler);
 
 /**
  * Register login page and login auth midddleware
  */
 // app.use('/login', loginHandler);
-app.get('/logout', logoutHandler);
+// app.get('/logout', logoutHandler);
 app.use('/saverules', saveRules);
+app.use('/test/*', receiveReq);
 
 /**
  * Register server-side rendering middleware

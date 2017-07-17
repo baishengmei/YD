@@ -38,12 +38,12 @@ class inputComponentOnly extends Component {
     }
     if(thevalue !== undefined){
       this.props.form.setFieldsValue({
-        input: thevalue
+        input: 200
       });
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps (nextProps) {200
     if (nextProps.clearTag) {
       this.props.form.resetFields();
     }

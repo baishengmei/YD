@@ -49,16 +49,25 @@ class contentres extends React.Component {
   		return result;
   	} 
 	ContentRes = (value, k) => {
-		resDate[k] = value;
-		resB = this.deepCopy(resDate[k])
-		for(let i in resDate[k]){
+		resDate[k-1] = value;
+		resB = this.deepCopy(resDate[k-1])
+		for(let i in resDate[k-1]){
 			if(i.toString().match(/^\$\w+(\d+)$/) !== null && i.toString().match(/^\$\w+(\d+)$/)[1] !== k){				
-				delete resDate[k][i];
+				delete resDate[k-1][i];
 			}
 		}
-		resDate[k][`$resB${k}`] = this.deepCopy(resB[`$resB${k}`]);
-		delete resDate[k].cutoff;
+		resDate[k-1][`$resB${k}`] = this.deepCopy(resB[`$resB${k}`]);
+		delete resDate[k-1].cutoff;
 		this.props.onContentRes(resDate);
+	}
+
+	componentWillReceiveProps (nextProps) {
+	    if (nextProps.clearTag) {
+	      this.setState({
+	      	keys:[1]
+	      });
+	      resDate = [];
+	    }
 	}
 
 	render() {
