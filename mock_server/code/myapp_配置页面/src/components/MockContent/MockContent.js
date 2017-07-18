@@ -29,24 +29,31 @@ class MockContent extends Component {
   error = (errMsg) => {
     Modal.error({
       title: 'this is a warning message!',
-      content: 'Please input the legal '+ `${errMsg}` + "!"
+      content: errMsg,
     })
+  }
+  success = (errMsg) => {
+    const modal = Modal.success({
+      title: 'Succeed!',
+      // content: 'Succeed!',
+    });
+    setTimeout(() => modal.destroy(), 1000);
   }
   //点击request中的保存按钮，调用的函数
   reSave = () => {
     //判断提交的表单是否有必填项未填写
     if(this.state.rulename == ""){
-      this.error("Rule Name");
+      this.error("Please input the legal Rule Name!");
       this.setState({
         sendAjax: false
       })
     }else if(this.state.projname == ""){
-      this.error("Project Name");
+      this.error("Please input the legal Project Name!");
       this.setState({
         sendAjax: false
       })
     }else if(this.state.reqVal.$u == undefined || (/^\w+/.test(this.state.reqVal.$u) == false)){
-      this.error("URL");
+      this.error("Please input the legal URL");
       this.setState({
         sendAjax: false
       })
@@ -75,7 +82,14 @@ class MockContent extends Component {
             dataType: 'json',
             data: Object.assign({}, params),
             success: data => {
-              console.log("请求返回内容", data)
+              console.log("请求返回内容", data.status)
+              if(data.status == "The rulename has already existed!"){
+                this.error("The rulename has already existed!");  
+              }else if(data.status == 'The url has already existed!'){
+                this.error('The url has already existed!');
+              }else if(data.status == 'succeed!'){
+                this.success(data.status);
+              }
               this.setState({
                 clearForm: false,
                 rulename: "",
@@ -124,7 +138,7 @@ class MockContent extends Component {
     this.setState({
       resVal: value
     }, () => {
-      // console.log(this.state.resVal,"响应数据")
+      console.log(this.state.resVal,"响应数据")
     })
   }
   render() {

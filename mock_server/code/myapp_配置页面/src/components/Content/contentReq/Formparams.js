@@ -103,6 +103,28 @@ class paramsComponent extends Component {
     this.props.formParamsVal(outKeyVals);    
   }
 
+  componentWillReceiveProps (nextProps) {
+      if (nextProps.clearTag) {
+        outKeyVals = {};
+        outKeyVals.$h = [];
+        outKeyVals.$b = [];
+        outKeyVals.$q = [];
+        outKeyVals.$p = [];
+        outKeyVals.$in = [];
+        // outKeyVals.$resB = {};
+        outKeyVals.$resB1 = [];
+        outKeyVals.$resB2 = [];
+        outKeyVals.$resB3 = [];
+        outKeyVals.$resB4 = [];
+        outKeyVals.$resB5 = [];
+        outKeyVals.$resB6 = [];
+        outKeyVals.$resB7 = [];
+        outKeyVals.$resB8 = [];
+        outKeyVals.$resB9 = [];
+        outKeyVals.$resB10 = [];
+      }
+  }
+
   render() {
 
     const { getFieldDecorator, getFieldValue } = this.props.form;

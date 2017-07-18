@@ -9,12 +9,14 @@ export default async(req, res) => {
 	let reqB = {};
   let reqH = {};
   let reqQ = {};
-  let response;//用于保存response的数据
+  let response;//用于保存rules中response的数据
   const method = req.method.toUpperCase();
   const body = req.body;
 
   let dbProj2Names = [];
   let dbUrl2Rules = [];
+
+  let respIndb = [];//将rules中的response数据保存到数据库中对应的变量值
 
   //传送过来的body中$b/$p/$h等均保存在一个数组中，该函数将其转化为对象的格式
 	function paramsCh(bphq) {
@@ -68,12 +70,36 @@ export default async(req, res) => {
   //用于将配置页面的响应部分传给node后端
   response = body.response.notempty();
   for(let i=0; i<response.length; i++){
+    let resB = [];
     url2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'] = [];
     url2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i] = {};
     url2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i]['condition'] = response[i]['$i'];
     url2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i]['ressc'] = response[i]['$sc'];
     url2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i]['resc'] = response[i]['$c'];
-    url2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i]['response'] = response[i]['response'];
+    url2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i]['response'] = [];
+    //获取到response中$resB字符串，便于在对象中访问或设置该key的值
+    for(let k in response[i]){
+      if(k.match(/^\$resB\d*$/) !== null){
+        resB.push(k.match(/^\$resB\d*$/)[0]);
+      }
+    }
+    if(response[i][resB[0]] !== undefined){
+      url2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i]['response'] = copyArr(response[i][resB[0]]);
+    }else{
+      url2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i]['response'] = [];
+    }
+    respIndb.push(url2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'][i]);
+  }
+
+  url2rules["/" + body.projectName + "/" +body.request.$u]['constrRes'] = copyArr(respIndb);
+
+  //数组深拷贝
+  function copyArr(arr) {
+    let res = []
+    for (let i = 0; i < arr.length; i++) {
+     res.push(arr[i])
+    }
+    return res
   }
 
   //将rules和names入到数据库
@@ -114,7 +140,6 @@ export default async(req, res) => {
 
           if(doc) {
             dbProj2Names.push(doc);
-            // if(doc.keyName == body.ruleName){
               db.close();
               res.status(200).send({status:`The rulename has already existed!`});
 
@@ -134,7 +159,7 @@ export default async(req, res) => {
                         insertRules(db, function(result) {
                           // console.log("插入到mongodb中的新记录：", result);
                           db.close();
-                          res.status(200).send({status: "succeed2!"});
+                          res.status(200).send({status: "succeed!"});
                         });
                       })
                     }                  

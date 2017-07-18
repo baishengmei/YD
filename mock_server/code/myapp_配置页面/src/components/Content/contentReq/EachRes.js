@@ -129,6 +129,26 @@ class EachRes extends Component {
 		}	
 	}
 
+	componentWillReceiveProps (nextProps) {
+	    if (nextProps.clearTag) {
+	      this.setState({
+	      	$i: "",
+	      	$sc: '200',
+	      	$c: "",
+	      	$resB1: {},
+			$resB2: {},
+			$resB3: {},
+			$resB4: {},
+			$resB5: {},
+			$resB6: {},
+			$resB7: {},
+			$resB8: {},
+			$resB9: {},
+			$resB10: {}
+	      });
+	    }
+	}
+
 	delBtn = () => {
 		const k = this.props.keyindex;
 		this.props.tapRemove(k);

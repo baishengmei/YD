@@ -14,6 +14,7 @@ class contentres extends React.Component {
 		super(props);
 		this.state = {
 			keys: [1],
+			resDate: [],
 		}
 	}
 	
@@ -58,15 +59,20 @@ class contentres extends React.Component {
 		}
 		resDate[k-1][`$resB${k}`] = this.deepCopy(resB[`$resB${k}`]);
 		delete resDate[k-1].cutoff;
-		this.props.onContentRes(resDate);
+		this.setState({
+			resDate: resDate
+		}, () => {
+			this.props.onContentRes(this.state.resDate);
+		})
+		
 	}
 
 	componentWillReceiveProps (nextProps) {
 	    if (nextProps.clearTag) {
 	      this.setState({
-	      	keys:[1]
+	      	keys:[1],
+	      	resDate: []
 	      });
-	      resDate = [];
 	    }
 	}
 
