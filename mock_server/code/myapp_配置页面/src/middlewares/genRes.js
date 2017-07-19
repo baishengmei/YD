@@ -13,9 +13,13 @@ var arr = {
 // console.log("结果:"+genJson(arr));
 module.exports = genJson;
 
-function genJson(res) {
-	if (typeof(res) == "object" && Object.prototype.toString.call(res).toLowerCase() == "[object object]" && !res.length) {
+function genJson(resArr) {
+	let res = {};	
+	if (Object.prototype.toString.call(resArr) == '[object Array]') {
 		var retRes={};
+		for(let i=0, len=resArr.length; i<len; i++){
+			Object.assign(res, resArr[i])
+		}
 		for (var obj in res) {
 			if(typeof(res[obj])=="object" && Object.prototype.toString.call(res[obj]).toLowerCase()=="[object object]" && !res[obj].length){
 				if(!res[obj].type){
@@ -30,7 +34,7 @@ function genJson(res) {
 							retRes[obj] = genRegex(value);
 							break;
 
-						case "string":
+						case "str":
 							retRes[obj] = genString(value);
 							break;
 
@@ -46,7 +50,7 @@ function genJson(res) {
 							retRes[obj] = genFloat(res[obj].value1, value);
 							break;
 
-						case "boolean":
+						case "bool":
 							retRes[obj] = genBoolean(value);
 							break;
 
@@ -130,8 +134,10 @@ function genFloat(value1, value) {
 function genBoolean(value) {
 	if (value == "") {
 		return Mock.mock('@boolean');
-	} else if (value == true || value == false) {
-		return value;
+	} else if (value == "true") {
+		return true;
+	}else if(value == "false") {
+		return false;
 	}
 }
 

@@ -36,55 +36,56 @@ function contraJson(rulJson, resJson){
 					switch(type)
 					{
 						case "regex":
-						contraRegex(value, resJson[obj]);
+						if(contraRegex(value, resJson[obj]) == false) {return false};
 						break;
 
 						case "string":
-						contraString(value, resJson[obj]);
+						if(contraString(value, resJson[obj]) == false) {return false};
 						break;
 
 						case "enum":
-						contraEnum(value, resJson[obj]);
+						if(contraEnum(value, resJson[obj]) == false) {return false};
 						break;
 
 						case "int":
-						contraInt(value, resJson[obj]);
+						if(contraInt(value, resJson[obj]) == false) {return false};
 						break;
 						//小数部分的取值
 						case "float":
 						//value1是指小数部分的取值
-						contraFloat(rulJson[obj].value1, value, resJson[obj]);
+						if(contraFloat(rulJson[obj].value1, value, resJson[obj]) == false) {return false};
 						break;
 						//如果不选择，则boolean保存为空。
 						case "boolean":
-						contraBoolean(value, resJson[obj]);
+						if(contraBoolean(value, resJson[obj]) == false) {return false};
 						break;
 
 						case "email":
-						contraEmail(resJson[obj]);
+						if(contraEmail(resJson[obj]) == false) {return false};
 						break;
 
-						case "object": contraJson(value, resJson[obj]);
+						case "object": if(contraJson(value, resJson[obj]) == false) {return false};
 						break;
 
-						case "ip": contraIp(resJson[obj]);
+						case "ip": if(contraIp(resJson[obj]) == false) {return false};
 						break;
 
-						case "url": contraUrl(resJson[obj]);
+						case "url": if(contraUrl(resJson[obj]) == false) {return false};
 						break;
 						////一级选择date类型，二级选择time/date/date-time类型，三级指定值或留空
-						case "thedate": contraDate(value, resJson[obj], rulJson[obj].contentType);
+						case "thedate": if(contraDate(value, resJson[obj], rulJson[obj].contentType) == false){return false;};
 						break;
 
-						case "address": contraAddress(value, resJson[obj], rulJson[obj].contentType);
+						case "address": if(contraAddress(value, resJson[obj], rulJson[obj].contentType) == false) {return false};
 						break;
 
-						case "array": contraArray(value, resJson[obj]);
+						case "array": if(contraArray(value, resJson[obj]) == false) {return false};
 						break;		
 
 						case undefined:
 						if(resJson[obj] !== rulJson[obj]){
-							throw new Error("The "+resJson[obj]+" is not match!");
+							return false;
+							// throw new Error("The "+resJson[obj]+" is not match!");
 						}
 						break;
 
@@ -94,6 +95,8 @@ function contraJson(rulJson, resJson){
 			}
 			if(temp == ruleJsonLength){
 				return true; 
+			}else {
+				return false;
 			}	
 		}else{
 			throw new Error("The req-param " +resJson+ " isn't legal Json type!")
@@ -107,7 +110,8 @@ function contraInt(value, obj){
 	if(toString.apply(value) === '[object Array]'){
 		try{
 			if(obj<value[0] || obj>value[1]){
-				throw new Error("The req-param " +obj+ " isn't legal integer type!");
+				return false;
+				// throw new Error("The req-param " +obj+ " isn't legal integer type!");
 			}
 		}catch(err){
 			console.log(new Error(err));
@@ -115,7 +119,8 @@ function contraInt(value, obj){
 	}else if ((typeof value=='number') && (value.constructor==Number) && (value%1==0)){
 	
 		if((value) !== obj){
-			throw new Error("The req-param " +obj+ " isn't legal integer type!");
+			return false;
+			// throw new Error("The req-param " +obj+ " isn't legal integer type!");
 		}
 	}
 }
@@ -125,11 +130,13 @@ function contraFloat(value1, value, obj){
 	obj = decQuotation(12.4, obj);
 	if((typeof value=='number') && (value.constructor==Number)){
 		if(value !== obj){
-			throw new Error("The req-param " +obj+ " isn't legal float type!");
+			return false;
+			// throw new Error("The req-param " +obj+ " isn't legal float type!");
 		}
 	}else if ((toString.apply(value) === '[object Array]') && (toString.apply(value1) === '[object Array]')){
 		if(obj<value[0] || obj>value[1] || (obj.toString().split('.')[0].length)<value1[0] || (obj.toString().split('.')[0].length)>value1[1]){
-			throw new Error("The req-param " +obj+ " isn't legal float type!");
+			return false;
+			// throw new Error("The req-param " +obj+ " isn't legal float type!");
 		}
 	}
 }
@@ -138,10 +145,12 @@ function contraBoolean(value, obj){
 	obj = decQuotation(true, obj);
 	if(value == ""){
 		if(obj !== true && obj !== false){
-			throw new Error("The req-param " +obj+ " isn't legal Boolean type!")
+			return false;
+			// throw new Error("The req-param " +obj+ " isn't legal Boolean type!")
 		}
 	}else if(value !== obj){
-		throw new Error("The req-param " +obj+ " isn't legal Boolean type!");
+		return false;
+		// throw new Error("The req-param " +obj+ " isn't legal Boolean type!");
 	}
 }
 //可以指定数组值，则对比若不完全一致则不相等。也可以指定每一项的类型(每一项的类型相同)为int、float、array、object
@@ -151,15 +160,17 @@ function contraArray(value, obj){
 		for(var i=0, len=obj.length; i<len; i++){
 			if((typeof value[i]=='number') && (value[i].constructor==Number)){
 				if(obj[i].replace(/(^\s*)|(\s*$)/g, "") !== value[i].toString().replace(/(^\s*)|(\s*$)/g, "")){
-					throw new Error("The req-param " +obj+ " isn't legal Array type!");
+					return false;
+					// throw new Error("The req-param " +obj+ " isn't legal Array type!");
 				}
 			}else if(typeof(value[i]) == "object" && Object.prototype.toString.call(value[i]).toLowerCase() == "[object object]" && !value[i].length){
-				contraJson(value[i], obj[i]);
+				if(contraJson(value[i], obj[i]) == false) {return false};
 			}else if(Object.prototype.toString.call(value[i])=='[object Array]'){
-				contraArray(value[i], obj[i]);
+				if(contraArray(value[i], obj[i]) == false) {return false};
 			}else if((typeof value[i]=='string')&&(value[i].constructor==String)){
 				if(obj[i].replace(/(^\s*)|(\s*$)/g, "") !== value[i].replace(/(^\s*)|(\s*$)/g, "")){
-					throw new Error("The req-param "+obj+" isn't legal Array type!");
+					return false;
+					// throw new Error("The req-param "+obj+" isn't legal Array type!");
 				}
 			}
 			
@@ -182,17 +193,20 @@ function contraArray(value, obj){
 }
 function contraRegex(value, obj){
 	if(!value.test(obj)){
-		throw new Error("The req-param " +obj+ " isn't legal Regex type!")
+		return false;
+		// throw new Error("The req-param " +obj+ " isn't legal Regex type!")
 	}
 }
 function contraString(value, obj){
 	if(toString.apply(value) === '[object Array]'){
 		if(eval('/^\\w\{'+ value[0]+','+value[1]+'\}$/').test(obj) == false){
-		throw new Error("The req-param " +obj+ " isn't legal String type!");
+			return false;
+		// throw new Error("The req-param " +obj+ " isn't legal String type!");
 		}
 	}else if ((typeof value=='string')&&(value.constructor==String)){
 		if(value !== obj){
-			throw new Error("The req-param " +obj+ " isn't legal String type!");
+			return false;
+			// throw new Error("The req-param " +obj+ " isn't legal String type!");
 		}
 	}
 }
@@ -211,48 +225,60 @@ function contraEnum(value, obj){
 		}
 		
 		if(flag !== obj.split(',').length){
-			throw new Error("The req-param " +obj+ " isn't legal Enum type!")
+			return false;
+			// throw new Error("The req-param " +obj+ " isn't legal Enum type!")
 		}
 	}
 }
 function contraEmail(obj){
 	if(/[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/.test(obj) == false){
-		throw new Error("The req-param " +obj+ " isn't legal Email type!");
+		return false;
+		// throw new Error("The req-param " +obj+ " isn't legal Email type!");
 	}
 }
 function contraIp(obj){
 	if(obj.split('.').length == 4){
 		obj.split('.').forEach(function(item){
 			if(!(/^\d+$/.test(item)) || parseInt(item)<0 || parseInt(item)>255){
-				throw new Error("The req-param " +obj+ " isn't legal Ip type!");
+				return false;
+				// throw new Error("The req-param " +obj+ " isn't legal Ip type!");
 			}
 		})
 	}else{
-		throw new Error("The req-param " +obj+ " isn't legal Ip type!");
+		return false;
+		// throw new Error("The req-param " +obj+ " isn't legal Ip type!");
 	}
 	
 }
 function contraUrl(obj){
 	if(/^(\w+):(\/\/)\w+(\.)\w+/.test(obj) == false){
-		throw new Error("The req-param " +obj+ " isn't legal Url type!");
+		return false;
+		// throw new Error("The req-param " +obj+ " isn't legal Url type!");
 	}
 }
 function contraDate(value, obj, contentType){
+	//obj为实际请求中的对应的参数；value和contentType为规则中对应的value字段及contentType字段
 	switch (contentType)
 	{
 		case "date":
 		if(/\d{4}-\d{2}-\d{2}/.test(obj) == false){
-			throw new Error("The req-param " +obj+ " isn't legal data type!");
+			return false;
+			// throw new Error("The req-param " +obj+ " isn't legal data type!");
 		}
 		break;
 		case "time":
 		if(/\d{2}:\d{2}:\d{2}/.test(obj) == false){
-			throw new Error("The req-param " +obj+ " isn't legal time type!");
+			return false;
+			// throw new Error("The req-param " +obj+ " isn't legal time type!");
 		}
 		break;
 		case "date_time":
-		if(/\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(obj) == false){
-			throw new Error("The req-param " +obj+ " isn't legal data_time type!");
+		if(obj == undefined){
+			return false;
+			// throw new Error("The req-param doesn't exist in the real requset!");
+		}else if(/\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(obj) == false){
+			return false;
+			// throw new Error("The req-param " +obj+ " isn't legal data_time type!");
 		}
 		break;
 	}
@@ -261,11 +287,13 @@ function contraDate(value, obj, contentType){
 function contraAddress(value, obj, contentType){
 	if(contentType == "region" || contentType == "country" || contentType == "city" || contentType == "province"){
 		if(/^[\u4e00-\u9fa5]+$/.test(obj) == false){
-			throw new Error("The req-param " +obj+ " isn't legal Address type!");
+			return false;
+			// throw new Error("The req-param " +obj+ " isn't legal Address type!");
 		}
 	}else if(contentType == "zip"){
 		if(/^\d{6}$/.test(obj) == false){
-			throw new Error("The req-param " +obj+ " isn't legal Address type!");
+			return false;
+			// throw new Error("The req-param " +obj+ " isn't legal Address type!");
 		}
 	}
 }

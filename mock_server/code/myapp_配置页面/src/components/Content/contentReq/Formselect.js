@@ -30,7 +30,7 @@ class formselect extends React.Component {
 
 		const formOptions = optval.split(",").map((val, i) => {
         	return (
-        		<Option key={val} value={val.toUpperCase()}>{val.toUpperCase()}</Option>
+        		<Option key={val} value={val}>{val}</Option>
         	)
       	})
 
