@@ -131,7 +131,7 @@ class MockContent extends Component {
     this.setState({
       reqVal: value
     }, () => {
-      // console.log(this.state.reqVal, "请求数据")
+      console.log(this.state.reqVal.$b, "请求数据")
     })
   }
   contentResVal = (value) => {

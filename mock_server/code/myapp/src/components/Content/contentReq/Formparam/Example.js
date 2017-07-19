@@ -34,13 +34,15 @@ class paramComp extends Component {
 
 	//当第一级参数定义为“等于”类型时，value组件的传值函数
 	valEq = (val) => {
+		//val为第一级下拉框对应的value值；
 		const tag = "value";
 		this.val2obj(val, paramKey2ValObj, tag);
-		this.props.onParamCompChange(paramObj, this.props.keyindex, tagsignE);
+		// this.props.onParamCompChange(paramObj, this.props.keyindex, tagsignE);
 	}
 
 	//将value组件值，保存到对象中
 	val2obj = (val, obj, tag)=> {
+		//val为第一级下拉框对应的value值，obj为{type: "neum", value: "apple, bananna"},tag为value字符串
 		obj[tag] = val;
 		this.props.onParamCompChange(paramObj, this.props.keyindex, tagsignE);
 	}
@@ -103,6 +105,7 @@ class paramComp extends Component {
 	}
 
 	transType = (k, paramKeyObj) => {
+		//k, paramKeyObj分别是指下拉框相关的值，如：['bool', 'boolF']，{ type:"bool", value:"false" }
 		if(/\w+Eq$/.test(k[1])){
 			console.log("changeSel:等於");
 			this.setState({
@@ -181,6 +184,7 @@ class paramComp extends Component {
 	}
 
 	changeInput = (val, tagsign)=>{
+		//val, tagsign分别是每一项的key的值和标签值，如"name", $b
 		tagsignE = tagsign;
 		for(var key in paramObj){
 			delete paramObj[key];
@@ -189,8 +193,6 @@ class paramComp extends Component {
 		//val为相应的key值
 		paramObj[val] = {};
 		paramKey2ValObj = paramObj[val];
-
-		// console.log(paramObj, "k2key的值")
 
 		if(this.isEmptyObject(paramObj) == true){
 			this.setState({

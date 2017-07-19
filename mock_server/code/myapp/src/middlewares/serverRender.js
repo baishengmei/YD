@@ -20,10 +20,10 @@ export default (routes, isLogin = true) => async (req, res, next) => {
       }
     });
 
-    store.dispatch(setRuntimeVariable({
-      name: 'initalNow',
-      value: Date.now(),
-    }));
+    // store.dispatch(setRuntimeVariable({
+    //   name: 'initalNow',
+    //   value: Date.now(),
+    // }));
 
     const css = new Set();
 
@@ -54,7 +54,7 @@ export default (routes, isLogin = true) => async (req, res, next) => {
     }
 
     const data = {
-      description: '有道智选发布系统',
+      description: 'MockServer系统',
       keywords,
       ...route
     };

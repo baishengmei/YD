@@ -33,8 +33,7 @@ class ArrBe extends Component {
 		const tag = "value";
 		const paramObj = this.props.paramObj;
 		obj[tagg] = val;
-		this.val2obj(arrBe, paramObj, tag)
-		console.log(arrBe, "ddddddxxxxxxxxxazzzzzzzzz")
+		this.val2obj(arrBe, paramObj, tag);
 	}
 
 	val2obj = (val, obj, tag) => {

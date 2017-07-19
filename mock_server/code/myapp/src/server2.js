@@ -2,18 +2,12 @@ import path from 'path';
 import express from 'express';
 import session from 'express-session';
 import bodyParser from 'body-parser';
-// import compression from 'compression';
 import auth from './middlewares/auth';
-import accessId from './middlewares/accessId';
-import { access, response } from './middlewares/log';
 import errorHandler from './middlewares/errorHandler';
-// import loginHandler from './middlewares/loginHandler';
-import logoutHandler from './middlewares/logoutHandler';
 import saveRules from './middlewares/saveRules';
 import receiveReq from './middlewares/receiveReq';
 import serverRender from './middlewares/serverRender';
 import routes from './routes';
-import apiHandler from './api';
 import { nodePort } from './config';
 
 const app = express();
@@ -47,7 +41,7 @@ const cacheAge = 1 * 365 * 24 * 60 * 60 * 1000;
  */
 app.use(session({
   secret: `labuladuo.${Math.random()}`,
-  name: 'YOUDAO_ZHIXUAN_AUTHID',
+  name: 'MOCK_SERVER_AUTHID',
   resave: false, // 即使 session 没有被修改，也保存 session 值，默认为 true
   rolling: true, // 每次请求都更新cookie expires
   saveUninitialized: false,
@@ -59,56 +53,19 @@ app.use(session({
 }));
 
 /**
- * Register log middleware
- */
-app.use(accessId);
-app.use(access);
-app.use(response);
-
-/**
- * compression middleware
- * compression default gzip with html, css, js or json
- *
- * The main implementation detail is to make sure that
- * the app.use call for compress is before any other middlewares
- * (there are a few exceptions like logging).
- *
- */
-// app.use(compression({
-//   filter: req => (req.originalUrl || req.url).indexOf('api') === -1
-// }));
-
-/**
  * Register static middleware
  */
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: cacheAge }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
-//
-// Authentication
-// -----------------------------------------------------------------------------
-// app.use(expressJwt({
-//   secret: auth.jwt.secret,
-//   credentialsRequired: false,
-//   getToken: req => req.cookies.id_token,
-// }));
-
 if (__DEV__) {
   app.enable('trust proxy');
 }
 
 /**
- * Register API middleware
- */
-// app.use('/api', auth.api, apiHandler);
-
-/**
  * Register login page and login auth midddleware
  */
-// app.use('/login', loginHandler);
-// app.get('/logout', logoutHandler);
 app.use('/saverules', saveRules);
 app.use('/test/*', receiveReq);
 

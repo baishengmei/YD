@@ -63,7 +63,7 @@ class paramsComponent extends Component {
 
 //将k值传进来，以及paramform的值
   paramCompChange = (paramform, keyindex, tagsign) => {
-
+    //paramform为当前输入的项（key-value为一项）的值，比如header有三个参数，指的是当前操作的参数对象（当前的key-value）
     if(tagsign == "$h"){
       console.log(tagsign, "当tagsign为$q时，是否也执行")
       outKeyVals.$h[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
