@@ -32,6 +32,7 @@ class ArrBe extends Component {
 
 	//将value组件值，保存到对象中
 	val2obj = (val, obj, tag)=> {
+		console.log(this.state.datatype, '5666666666666666666666666666')
 		const tagE = "value";
 		//val为第二级及多级下拉框对应的value值，obj为{type: "neum", value: "apple, bananna"},tag为value字符串
 		if(tag !== "noTag"){
@@ -40,17 +41,21 @@ class ArrBe extends Component {
 		// obj[tag] = val;
 		//当为小数范围时，若配置页面未写入整数部分或小数部分时，会添加默认值
 		if(this.state.datatype.trim() == "flBe"){
-			if((arrBeVal.value1 !== "" || arrBeVal.value1 !== undefined) && (arrBeVal.value == "" || arrBeVal.value == undefined)){
+			if((arrBeVal.value == "" || arrBeVal.value == undefined)){
 				arrBeVal.value = [-Math.pow(10, 6), Math.pow(10,6)];
-			}else if((Object.values(paramObj)[0]["value"] !== "" || Object.values(paramObj)[0]["value"] !== undefined) && (Object.values(paramObj)[0]["value1"] == "" || Object.values(paramObj)[0]["value1"] == undefined)){
-				arrBeVal.value = [0, 6];
+			}else if((arrBeVal.value1 == "" || arrBeVal.value1 == undefined)){
+				arrBeVal.value1 = [0, 6];
 			}
 		}else if(this.state.datatype.trim() == "arrBe"){//党委数组自定义时，若项数未定义，则设置默认值
 			if((arrBeVal.itemNum == "" ||arrBeVal.itemNum == undefined)){
 				arrBeVal.itemNum = [-Math.pow(10, 6), Math.pow(10,6)];
 			}
+		}else if(this.state.datatype.trim() !== "arrBe"){
+			delete arrBeVal.itemNum;
 		}
-		this.props.toVal2Obj(arrBe, this.props.paramObj, tagE);
+		// this.props.toVal2Obj(arrBeVal, this.props.paramObj, tagE);
+		this.props.toVal2Obj(arrBeVal, arrBe, tagE);
+		
 	}
 
 
@@ -84,7 +89,7 @@ class ArrBe extends Component {
 		}
 	}
 
-	// 第一级参数定义为数组/对象范围时，对应的value布局
+	// 第一级参数定义为数组、对象范围时，对应的value布局
 	DynamicFormArrObj = (k) => {
 		switch(k){
 			case "arrBe":
@@ -107,29 +112,34 @@ class ArrBe extends Component {
 	}
 
 	changeSel = (k) => {
-		arrBe = this.deepCopy(this.props.paramObj);//当arrBe改变时，this.props.paramObj也随着改变了
+		// arrBe = this.deepCopy(this.props.paramObj);//当arrBe改变时，this.props.paramObj也随着改变了
+		arrBe = this.props.paramObj;
 		arrBe.value = {};//当参数类型为数组自定义时，value对应的对象用arrBe.value来表示
-		arrBeVal = arrBe;		
+		arrBeVal = arrBe.value;		
 		this.transType(k, arrBeVal)		
 	}
 
-	transType = (k, paramKeyObj) => {
+	transType = (k, paramKeyObj) => {		
 		const tagE = "value";
 		//k, paramKeyObj分别是指下拉框相关的值，如：['bool', 'boolF']，{ type:"bool", value:"false" }
 		if(/\w+Eq$/.test(k[1])){
 			this.setState({
 				datatype: "Eq",
-			})
-			paramKeyObj.type = k[0];
+			}, () => {
+				paramKeyObj.type = k[0];
 			delete paramKeyObj.value1;
 			delete paramKeyObj.itemNum;
 			delete paramKeyObj.contentType;
+			console.log(this.state.datatype, 'dddddddddddddddddddddddddddddddddd Eq');//下拉框显示存在延迟一步的情况；
+			})
+
+			
 		}else if(/^intBe$|^strBe$/.test(k[1])){
 			//注意：：：这里实际并没有引入中文的情况，如若添加，可在此加入
 			this.setState({
 				datatype: "iscBe"
-			})
-			if(k[0]=="str"){
+			}, () => {
+				if(k[0]=="str"){
 				paramKeyObj.type = "string"
 			}else{
 				paramKeyObj.type = k[0];
@@ -137,26 +147,35 @@ class ArrBe extends Component {
 			delete paramKeyObj.value1;
 			delete paramKeyObj.itemNum;
 			delete paramKeyObj.contentType;
+			console.log(this.state.datatype, 'dddddddddddddddddddddddddddddddddd intBe strBe');//下拉框显示存在延迟一步的情况；
+			})
+			
 		}else if(/^floatBe$/.test(k[1])){
 			this.setState({
 				datatype: "flBe"
-			})
-			paramKeyObj.type = k[0];
+			}, () => {
+				paramKeyObj.type = k[0];
 			delete paramKeyObj.itemNum;
 			delete paramKeyObj.contentType;
+			console.log(this.state.datatype, 'dddddddddddddddddddddddddddddddddd floatBe');//下拉框显示存在延迟一步的情况；
+			})
+			
 		}else if(/^arrBe$/.test(k[1])){
 			this.setState({
 				datatype: "arrBe"
-			})
-			paramKeyObj.type = k[0];
+			}, () => {
+				paramKeyObj.type = k[0];
 			delete paramKeyObj.value1;
 			delete paramKeyObj.contentType;
+			console.log(this.state.datatype, 'dddddddddddddddddddddddddddddddddd arrBe');//下拉框显示存在延迟一步的情况；
+			})
+			
 		}else if(/^bool$|^email$|^ip$|^url$|^address$|^thedate$/.test(k[0])){
 			//注意，当为bool时，是需要传value值得，其他项不需要
 			this.setState({
 				datatype: "non"
-			})
-			paramKeyObj.type = k[0];
+			}, () => {
+				paramKeyObj.type = k[0];
 			if(paramKeyObj.type == "bool"){
 				if(k[1].substring(k[1].length-1) == "T"){
 					paramKeyObj.value = "true";
@@ -175,16 +194,23 @@ class ArrBe extends Component {
 			}
 			delete paramKeyObj.value1;
 			delete paramKeyObj.itemNum;
-			this.props.toVal2Obj(paramKeyObj, this.props.paramObj, tagE);
+			// this.props.toVal2Obj(paramKeyObj, this.props.paramObj, tagE);
+			this.props.toVal2Obj(paramKeyObj, arrBe, tagE);
+console.log(this.state.datatype, 'dddddddddddddddddddddddddddddddddd bool/email/ip/url');//下拉框显示存在延迟一步的情况；
+			})
+			
 		}else if(/^objBe$/.test(k[1])){
 			this.setState({
 				datatype: "objBe"
-			})
-			paramKeyObj.type=k[0];
+			}, () => {
+				paramKeyObj.type=k[0];
 			delete paramKeyObj.value1;
 			delete paramKeyObj.itemNum;
 			delete paramKeyObj.contentType;
+			console.log(this.state.datatype, 'dddddddddddddddddddddddddddddddddd objBe');//下拉框显示存在延迟一步的情况；
+		})			
 		}
+		
 	}
 
 	deepCopy = (source) => {
