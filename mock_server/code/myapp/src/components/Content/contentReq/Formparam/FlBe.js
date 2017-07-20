@@ -92,7 +92,7 @@ class FlBe extends Component {
 				// }
 				this.val2obj(this.state.flBeDeci, paramObj, tag);
 			})
-		}	
+		}
 	}
 
 	valBeFde_2 = (val) => {
@@ -108,14 +108,14 @@ class FlBe extends Component {
 		}else{
 			this.setState({
 				clearInput: false,
-				flBeDeci: [this.state.flBeDeci[1], val],
+				flBeDeci: [this.state.flBeDeci[0], val],
 			}, () => {
 				// for(let i in paramObj){
 				// 	this.val2obj(this.state.flBeDeci, paramObj[i], tag);
 				// }
 				this.val2obj(this.state.flBeDeci, paramObj, tag);
 			})
-		}	
+		}
 	}
 
 	val2obj = (val, obj, tag) => {

@@ -9,6 +9,7 @@ import FlBe from './FlBe'
 // import ObjBe from './objBe'
 
 let arrBe = {};//当type为arr时，和type处于同一级的value所对应的对象
+let arrBeVal = {};//arrBe.value == arrBeVal
 class ArrBe extends Component {
 
 	constructor(props) {
@@ -17,30 +18,43 @@ class ArrBe extends Component {
 			datatype: "",
 		}
 	}
-	//传入三个参数，分别是value值(val)，存值对象(obj)，key值(tag)
+	//传入三个参数，分别是value值(val)，存值对象(obj)，key值(tag)。用于项数值传递
 	arrtoVal2Obj = (val, obj, tag) => {
-		this.props.toVal2Obj(val, obj, tag)
-	}
-
-	valEq = ( val) => {
-		const tag = "value";
-		const paramObj = this.props.paramObj;
-		arrBe.value = val;
-		this.val2obj(arrBe, paramObj, tag);
-	}
-
-	val2objBe = (val, obj, tagg) => {
-		const tag = "value";
-		const paramObj = this.props.paramObj;
-		obj[tagg] = val;
-		this.val2obj(arrBe, paramObj, tag);
-	}
-
-	val2obj = (val, obj, tag) => {
 		this.props.toVal2Obj(val, obj, tag);
 	}
 
-	// 第一级参数定义为除了数组/对象外的其他数据类型时，如regex、float、int、日期、时间等，对应的value布局
+	valEq = (val) => {
+		//val为第一级下拉框对应的value值；
+		const tag = "value";
+		this.val2obj(val, arrBeVal, tag);
+		// this.props.onParamCompChange(paramObj, this.props.keyindex, tagsignE);
+	}
+
+	//将value组件值，保存到对象中
+	val2obj = (val, obj, tag)=> {
+		const tagE = "value";
+		//val为第二级及多级下拉框对应的value值，obj为{type: "neum", value: "apple, bananna"},tag为value字符串
+		if(tag !== "noTag"){
+			obj[tag] = val;
+		}
+		// obj[tag] = val;
+		//当为小数范围时，若配置页面未写入整数部分或小数部分时，会添加默认值
+		if(this.state.datatype.trim() == "flBe"){
+			if((arrBeVal.value1 !== "" || arrBeVal.value1 !== undefined) && (arrBeVal.value == "" || arrBeVal.value == undefined)){
+				arrBeVal.value = [-Math.pow(10, 6), Math.pow(10,6)];
+			}else if((Object.values(paramObj)[0]["value"] !== "" || Object.values(paramObj)[0]["value"] !== undefined) && (Object.values(paramObj)[0]["value1"] == "" || Object.values(paramObj)[0]["value1"] == undefined)){
+				arrBeVal.value = [0, 6];
+			}
+		}else if(this.state.datatype.trim() == "arrBe"){//党委数组自定义时，若项数未定义，则设置默认值
+			if((arrBeVal.itemNum == "" ||arrBeVal.itemNum == undefined)){
+				arrBeVal.itemNum = [-Math.pow(10, 6), Math.pow(10,6)];
+			}
+		}
+		this.props.toVal2Obj(arrBe, this.props.paramObj, tagE);
+	}
+
+
+// 第二及更多级时参数定义为除了数组/对象外的其他数据类型时，如regex、float、int、日期、时间等，对应的value布局
 	DynamicFormSome = (k) => {
 		switch(k){
 			case "Eq":
@@ -49,14 +63,14 @@ class ArrBe extends Component {
 			case "iscBe":
 			return (
 				<div>
-					<IscBe tips="默认:-10^6 ~ 10^6" toVal2Obj={this.val2objBe} paramObj={arrBe} tag="value" />
+					<IscBe tips="默认:-10^6 ~ 10^6" toVal2Obj={this.val2obj} paramObj={arrBeVal} tag="value" />
 				</div>
 			)
 			break;
 			case "flBe":
 			return (
 				<div>
-					<FlBe toVal2Obj={this.val2obj} toVal2Obj={this.val2objBe} paramObj={arrBe} />
+					<FlBe toVal2Obj={this.val2obj} toVal2Obj={this.val2obj} paramObj={arrBeVal} />
 				</div>
 			)
 			break;
@@ -70,19 +84,20 @@ class ArrBe extends Component {
 		}
 	}
 
+	// 第一级参数定义为数组/对象范围时，对应的value布局
 	DynamicFormArrObj = (k) => {
 		switch(k){
 			case "arrBe":
 			return (
 				<div>
-					<ArrBe toVal2Obj={this.val2objBe} paramObj={arrBe} />
+					<ArrBe toVal2Obj={this.val2obj} paramObj={arrBeVal} />
 				</div>
 			)
 			break;
 			case "objBe":			
 			return (
 				<div>
-					<ObjBe toVal2Obj={this.val2objBe} paramObj={arrBe} />
+					<ObjBe toVal2Obj={this.val2obj} paramObj={arrBeVal} />
 				</div>
 			)
 			break;
@@ -92,12 +107,16 @@ class ArrBe extends Component {
 	}
 
 	changeSel = (k) => {
-		this.transType(k, arrBe)		
+		arrBe = this.deepCopy(this.props.paramObj);//当arrBe改变时，this.props.paramObj也随着改变了
+		arrBe.value = {};//当参数类型为数组自定义时，value对应的对象用arrBe.value来表示
+		arrBeVal = arrBe;		
+		this.transType(k, arrBeVal)		
 	}
 
 	transType = (k, paramKeyObj) => {
+		const tagE = "value";
+		//k, paramKeyObj分别是指下拉框相关的值，如：['bool', 'boolF']，{ type:"bool", value:"false" }
 		if(/\w+Eq$/.test(k[1])){
-			console.log("changeSel_2:等於");
 			this.setState({
 				datatype: "Eq",
 			})
@@ -106,7 +125,6 @@ class ArrBe extends Component {
 			delete paramKeyObj.itemNum;
 			delete paramKeyObj.contentType;
 		}else if(/^intBe$|^strBe$/.test(k[1])){
-			console.log("changeSel_2:整數、str和中文的范围", k);
 			//注意：：：这里实际并没有引入中文的情况，如若添加，可在此加入
 			this.setState({
 				datatype: "iscBe"
@@ -120,7 +138,6 @@ class ArrBe extends Component {
 			delete paramKeyObj.itemNum;
 			delete paramKeyObj.contentType;
 		}else if(/^floatBe$/.test(k[1])){
-			console.log("changeSel_2:小数范围", k);
 			this.setState({
 				datatype: "flBe"
 			})
@@ -128,7 +145,6 @@ class ArrBe extends Component {
 			delete paramKeyObj.itemNum;
 			delete paramKeyObj.contentType;
 		}else if(/^arrBe$/.test(k[1])){
-			console.log("changeSel_2:数组自定义", k);
 			this.setState({
 				datatype: "arrBe"
 			})
@@ -137,7 +153,6 @@ class ArrBe extends Component {
 			delete paramKeyObj.contentType;
 		}else if(/^bool$|^email$|^ip$|^url$|^address$|^thedate$/.test(k[0])){
 			//注意，当为bool时，是需要传value值得，其他项不需要
-			console.log("changeSel_2:bool/email/ip/url/address/thedate", k)
 			this.setState({
 				datatype: "non"
 			})
@@ -160,8 +175,8 @@ class ArrBe extends Component {
 			}
 			delete paramKeyObj.value1;
 			delete paramKeyObj.itemNum;
+			this.props.toVal2Obj(paramKeyObj, this.props.paramObj, tagE);
 		}else if(/^objBe$/.test(k[1])){
-			console.log("changeSel_2:对象自定义", k);
 			this.setState({
 				datatype: "objBe"
 			})
@@ -171,6 +186,15 @@ class ArrBe extends Component {
 			delete paramKeyObj.contentType;
 		}
 	}
+
+	deepCopy = (source) => {
+	    let result ={};
+	    for(let key in source){
+	      result[key]=typeof source[key] === 'object'?this.deepCopy(source[key]): source[key];
+	    }
+	    return result;
+	}
+
 
 	render() {
 

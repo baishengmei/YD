@@ -43,7 +43,30 @@ class paramComp extends Component {
 	//将value组件值，保存到对象中
 	val2obj = (val, obj, tag)=> {
 		//val为第一级下拉框对应的value值，obj为{type: "neum", value: "apple, bananna"},tag为value字符串
+		//旨在解决bool、地址、时间、url、ip情况下tag表示的问题
+		// if(tag !== "noTag"){
+		// 	obj[tag] = val;
+		// }
 		obj[tag] = val;
+		//当为小数范围时，若配置页面未写入整数部分或小数部分时，会添加默认值
+		if(this.state.datatype.trim() == "flBe"){
+			if((Object.values(paramObj)[0]["value1"] !== "" || Object.values(paramObj)[0]["value1"] !== undefined) && (Object.values(paramObj)[0]["value"] == "" || Object.values(paramObj)[0]["value"] == undefined)){
+				// Object.values(paramObj)[0].value == [-Math.pow(10, 6), Math.pow(10,6)];//不知道为什么该方法不能添加value属性
+				for(let i in paramObj){
+					paramObj[i].value = [-Math.pow(10, 6), Math.pow(10,6)];
+				}
+			}else if((Object.values(paramObj)[0]["value"] !== "" || Object.values(paramObj)[0]["value"] !== undefined) && (Object.values(paramObj)[0]["value1"] == "" || Object.values(paramObj)[0]["value1"] == undefined)){
+				for(let i in paramObj){
+					paramObj[i].value1 = [0, 6];
+				}
+			}
+		}else if(this.state.datatype.trim() == "arrBe"){//党委数组自定义时，若项数未定义，则设置默认值
+			if((Object.values(paramObj)[0]["itemNum"] == "" || Object.values(paramObj)[0]["itemNum"] == undefined)){
+				for(let i in paramObj){
+					paramObj[i].itemNum = [-Math.pow(10, 6), Math.pow(10,6)];
+				}
+			}
+		}
 		this.props.onParamCompChange(paramObj, this.props.keyindex, tagsignE);
 	}
 
@@ -85,7 +108,7 @@ class paramComp extends Component {
 			case "flBe":
 			return (
 				<div>
-					<FlBe toVal2Obj={this.val2obj} toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} />
+					<FlBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} />
 				</div>
 			)
 			break;
@@ -107,7 +130,6 @@ class paramComp extends Component {
 	transType = (k, paramKeyObj) => {
 		//k, paramKeyObj分别是指下拉框相关的值，如：['bool', 'boolF']，{ type:"bool", value:"false" }
 		if(/\w+Eq$/.test(k[1])){
-			console.log("changeSel:等於");
 			this.setState({
 				datatype: "Eq",
 			})
@@ -116,7 +138,6 @@ class paramComp extends Component {
 			delete paramKeyObj.itemNum;
 			delete paramKeyObj.contentType;
 		}else if(/^intBe$|^strBe$/.test(k[1])){
-			console.log("changeSel:整數、str和中文的范围", k);
 			//注意：：：这里实际并没有引入中文的情况，如若添加，可在此加入
 			this.setState({
 				datatype: "iscBe"
@@ -130,7 +151,6 @@ class paramComp extends Component {
 			delete paramKeyObj.itemNum;
 			delete paramKeyObj.contentType;
 		}else if(/^floatBe$/.test(k[1])){
-			console.log("changeSel:小数范围", k);
 			this.setState({
 				datatype: "flBe"
 			})
@@ -138,7 +158,6 @@ class paramComp extends Component {
 			delete paramKeyObj.itemNum;
 			delete paramKeyObj.contentType;
 		}else if(/^arrBe$/.test(k[1])){
-			console.log("changeSel:数组自定义", k);
 			this.setState({
 				datatype: "arrBe"
 			})
@@ -147,7 +166,6 @@ class paramComp extends Component {
 			delete paramKeyObj.contentType;
 		}else if(/^bool$|^email$|^ip$|^url$|^address$|^thedate$/.test(k[0])){
 			//注意，当为bool时，是需要传value值得，其他项不需要
-			console.log("changeSsel:bool/email/ip/url/address/thedate", k)
 			this.setState({
 				datatype: "non"
 			})
@@ -172,7 +190,6 @@ class paramComp extends Component {
 			delete paramKeyObj.itemNum;
 			this.props.onParamCompChange(paramObj, this.props.keyindex, tagsignE);
 		}else if(/^objBe$/.test(k[1])){
-			console.log("changeSel:对象自定义", k);
 			this.setState({
 				datatype: "objBe"
 			})

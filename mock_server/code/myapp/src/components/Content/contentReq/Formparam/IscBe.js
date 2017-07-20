@@ -31,6 +31,7 @@ class IscBe extends Component {
 		if(/^\d+$/.test(val) == false && val !== ""){
 			this.setState({
 				clearInput: true,
+				iscBe:[-Math.pow(10, 6), this.state.iscBe[1]]
 			}, () => {
 				this.error("Your input isn't integer!");
 			})
@@ -50,6 +51,7 @@ class IscBe extends Component {
 		if(/^\d+$/.test(val) == false && val !== ""){
 			this.setState({
 				clearInput: true,
+				iscBe: [this.state.iscBe[0], Math.pow(10,6)]
 			}, () => {
 				this.error("Your input isn't integer!");
 			})
