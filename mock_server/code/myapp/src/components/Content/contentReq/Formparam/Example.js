@@ -17,6 +17,8 @@ let paramObj = {};
 let paramKey2ValObj = {};//paramObj对象的key所对应的value对象
 let k2key = {};//用于保存k值和key值得对应，避免input修改前后的值均被保存
 let tagsignE;
+let flag = 0; //解决多级数组时，修改编辑框的值后，会保留修改前的值，并将修改后值，保存为修改前值得子值得情况
+let flat = 0;
 class paramComp extends Component {
 	constructor(props) {
 		super(props);
@@ -76,7 +78,7 @@ class paramComp extends Component {
 			case "arrBe":
 			return (
 				<div>
-					<ArrBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} />
+					<ArrBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} flag={flag} flat={flat} />
 				</div>
 			)
 			break;
