@@ -8,59 +8,76 @@ import ParamSel from './ParamSel'
 import FlBe from './FlBe'
 // import ObjBe from './objBe'
 
-let arrBe = {};//是一个对象，包含属性type：arr
+let arrBe = {};//当type为arr时，和type处于同一级的value所对应的对象
+let arrBeVal = {};//arrBe.value == arrBeVal
+let flag = 0;
+let flat = 0;
+let linshi = {};
+
 class ArrBe extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			datatype: "",
-			selDisabled: true
 		}
-	}
-
-	postVal = (val, tag) => {
-		this.props.postVal(val, tag);
+		flat += 1;
 	}
 	//传入三个参数，分别是value值(val)，存值对象(obj)，key值(tag)。用于项数值传递
 	arrtoVal2Obj = (val, obj, tag) => {
-		if(val!==undefined && val!=="" && val.length!==0){
-			this.setState({
-				selDisabled: false
-			}, () => {
-				obj[tag] = val;
-				arrBe = this.deepCopy(obj);
-				this.props.postVal(obj, this.props.arrTag);
-			})
-		}
-		
+		this.props.toVal2Obj(val, obj, tag);
 	}
 
 	valEq = (val) => {
 		//val为第一级下拉框对应的value值；
 		const tag = "value";
-		arrBe.value = val;
-		this.props.postVal(arrBe, this.props.arrTag+1);
+		this.val2obj(val, arrBeVal, tag);
+		// this.props.onParamCompChange(paramObj, this.props.keyindex, tagsignE);
 	}
 
 	//将value组件值，保存到对象中
 	val2obj = (val, obj, tag)=> {
+		const tagE = "value";
 		//val为第二级及多级下拉框对应的value值，obj为{type: "neum", value: "apple, bananna"},tag为value字符串
 		if(tag !== "noTag"){
 			obj[tag] = val;
 		}
-
-		if(this.state.datatype.trim() == "flBe"){
-			if(obj.value == "" || obj.value == undefined){
-				obj.value = [-Math.pow(10, 6), Math.pow(10,6)];
+		// obj[tag] = val;
+		//当为小数范围时，若配置页面未写入整数部分或小数部分时，会添加默认值
+		if(val.type == undefined){
+			if(this.state.datatype.trim() == "flBe"){
+				if((arrBeVal.value == "" || arrBeVal.value == undefined)){
+					arrBeVal.value = [-Math.pow(10, 6), Math.pow(10,6)];
+				}else if((arrBeVal.value1 == "" || arrBeVal.value1 == undefined)){
+					arrBeVal.value1 = [0, 6];
+				}
+			}else if(this.state.datatype.trim() == "arrBe"){//当为数组自定义时，若项数未定义，则设置默认值
+				if((arrBeVal.itemNum == "" ||arrBeVal.itemNum == undefined)){
+					arrBeVal.itemNum = [-Math.pow(10, 6), Math.pow(10,6)];
+				}
+			}else if(this.state.datatype.trim() !== "arrBe"){
+				delete arrBeVal.itemNum;
 			}
+			this.props.toVal2Obj(arrBeVal, arrBe, tagE);
+		}else {
+			if(val.type.trim() == "flBe"){
+				if((arrBeVal.value == "" || arrBeVal.value == undefined)){
+					arrBeVal.value = [-Math.pow(10, 6), Math.pow(10,6)];
+				}else if((arrBeVal.value1 == "" || arrBeVal.value1 == undefined)){
+					arrBeVal.value1 = [0, 6];
+				}
+			}else if(val.type.trim() == "arr"){//党委数组自定义时，若项数未定义，则设置默认值
+				if((arrBeVal.itemNum == "" ||arrBeVal.itemNum == undefined)){
+					arrBeVal.itemNum = [-Math.pow(10, 6), Math.pow(10,6)];
+				}
+			}else if(val.type.trim() !== "arr"){
+				delete arrBeVal.itemNum;
+			}
+			this.props.toVal2Obj(arrBeVal, arrBe, tagE);
 		}
-		this.props.postVal(obj, this.props.arrTag+1);
+		console.log(arrBeVal, arrBe, '第80行');		
 	}
 
-	componentDidMount() {
-		arrBe = this.deepCopy(this.props.paramObj);
-	}
 
 	// 第二及更多级时参数定义为除了数组/对象外的其他数据类型时，如regex、float、int、日期、时间等，对应的value布局
 	DynamicFormSome = (k) => {
@@ -71,14 +88,14 @@ class ArrBe extends Component {
 			case "iscBe":
 			return (
 				<div>
-					<IscBe tips="默认:-10^6 ~ 10^6" toVal2Obj={this.val2obj} paramObj={arrBe} tag="value" />
+					<IscBe tips="默认:-10^6 ~ 10^6" toVal2Obj={this.val2obj} paramObj={arrBeVal} tag="value" />
 				</div>
 			)
 			break;
 			case "flBe":
 			return (
 				<div>
-					<FlBe toVal2Obj={this.val2obj} toVal2Obj={this.val2obj} paramObj={arrBe} />
+					<FlBe toVal2Obj={this.val2obj} toVal2Obj={this.val2obj} paramObj={arrBeVal} />
 				</div>
 			)
 			break;
@@ -98,7 +115,7 @@ class ArrBe extends Component {
 			case "arrBe":
 			return (
 				<div>
-					<ArrBe toVal2Obj={this.val2obj} paramObj={arrBe} arrTag={this.props.arrTag+1} postVal={this.postVal}/>
+					<ArrBe toVal2Obj={this.val2obj} paramObj={arrBeVal} flag={flag} flat={flat} arrTag={this.props.arrTag+1}/>
 				</div>
 			)
 			break;
@@ -115,12 +132,38 @@ class ArrBe extends Component {
 	}
 
 	changeSel = (k) => {
-		arrBe = {};
-		arrBe = this.transType(k, {});
+		// arrBe = this.deepCopy(this.props.paramObj);//当arrBe改变时，this.props.paramObj也随着改变了
+		arrBe = this.props.paramObj;
+
+		if(flat-1 !== flag){
+			delete arrBe.type;
+			if(arrBe.value !== undefined){
+				delete arrBe.value;
+				delete this.props.paramObj.value;
+			}
+			if(arrBe.contentType !== undefined){
+				delete arrBe.contentType;
+			}
+			if(arrBe.value1 !== undefined){
+				delete arrBe.value1;
+			}
+			this.transType(k, arrBe);			
+		}else {
+			arrBe.value = {};//当参数类型为数组自定义时，value对应的对象用arrBe.value来表示
+			arrBeVal = arrBe.value;
+			this.transType(k, arrBeVal)
+		}
+		flag += 1;
 	}
 
-	transType = (k, obj) => {	
-		var paramKeyObj = this.deepCopy(obj);		
+	transType = (k, paramKeyObj) => {	
+		linshi = this.deepCopy(arrBe);	
+		if(flat-1 !== flag){
+			arrBe = this.deepCopy(linshi);
+			flag -= 1;
+		}
+		const tagE = "value";
+		//k, paramKeyObj分别是指下拉框相关的值，如：['bool', 'boolF']，{ type:"bool", value:"false" }
 		if(/\w+Eq$/.test(k[1])){
 			this.setState({
 				datatype: "Eq",
@@ -163,7 +206,6 @@ class ArrBe extends Component {
 				paramKeyObj.type = k[0];
 				delete paramKeyObj.value1;
 				delete paramKeyObj.contentType;
-				// this.props.postVal(paramKeyObj, this.props.arrTag+1);
 			})
 			
 		}else if(/^bool$|^email$|^ip$|^url$|^address$|^thedate$/.test(k[0])){
@@ -190,7 +232,8 @@ class ArrBe extends Component {
 				}
 				delete paramKeyObj.value1;
 				delete paramKeyObj.itemNum;
-				this.props.postVal(paramKeyObj, this.props.arrTag+1);
+				// this.props.toVal2Obj(paramKeyObj, this.props.paramObj, tagE);
+				this.props.toVal2Obj(paramKeyObj, arrBe, tagE);
 			})
 			
 		}else if(/^objBe$/.test(k[1])){
@@ -203,9 +246,17 @@ class ArrBe extends Component {
 				delete paramKeyObj.contentType;
 			})			
 		}
-		return paramKeyObj;
 		
 	}
+
+	deepCopy = (source) => {
+	    let result ={};
+	    for(let key in source){
+	      result[key]=typeof source[key] === 'object'?this.deepCopy(source[key]): source[key];
+	    }
+	    return result;
+	}
+
 
 	render() {
 
@@ -226,7 +277,7 @@ class ArrBe extends Component {
 						</Col>
 					
 						<Col span={5}>
-							<ParamSel paramseldisabled={this.state.selDisabled}  onChangeSel={this.changeSel}/>
+							<ParamSel paramseldisabled={false}  onChangeSel={this.changeSel}/>
 						</Col>
 						<Col span={15}>
 		                  {this.DynamicFormSome(this.state.datatype)}
@@ -241,15 +292,6 @@ class ArrBe extends Component {
 			</div>
 		)
 	}
-
-	deepCopy = (source) => {
-	    let result ={};
-	    for(let key in source){
-	      result[key]=typeof source[key] === 'object'?this.deepCopy(source[key]): source[key];
-	    }
-	    return result;
-	}
-
 }
 
 export default withStyles(s)(ArrBe);

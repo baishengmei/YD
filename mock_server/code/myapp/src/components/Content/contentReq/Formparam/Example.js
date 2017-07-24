@@ -9,7 +9,7 @@ import ParamInput from './ParamInput'
 import ParamSel from './ParamSel'
 import IscBe from './IscBe'
 import FlBe from './FlBe'
-import ArrBe from './ArrBe'
+import ArrBe2 from './ArrBe2'
 import ObjBe from './ObjBe'
 
 //paramObj对象的key有type、value、value1、itemNum、contentType
@@ -17,8 +17,9 @@ let paramObj = {};
 let paramKey2ValObj = {};//paramObj对象的key所对应的value对象
 let k2key = {};//用于保存k值和key值得对应，避免input修改前后的值均被保存
 let tagsignE;
-let flag = 0; //解决多级数组时，修改编辑框的值后，会保留修改前的值，并将修改后值，保存为修改前值得子值得情况
-let flat = 0;
+// let flag = 0; //解决多级数组时，修改编辑框的值后，会保留修改前的值，并将修改后值，保存为修改前值得子值得情况.
+// let flat = 0;
+let arrTag = 1; //用于标注当前数组自定义处于第几级别
 class paramComp extends Component {
 	constructor(props) {
 		super(props);
@@ -78,7 +79,7 @@ class paramComp extends Component {
 			case "arrBe":
 			return (
 				<div>
-					<ArrBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} flag={flag} flat={flat} />
+					<ArrBe2 toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} arrTag={arrTag}/>
 				</div>
 			)
 			break;

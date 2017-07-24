@@ -6,7 +6,7 @@ const Option = Select.Option
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
 import s from './contentReqCss/ContentReqCss.css'
 // import ParamComp from './Formparams/ParamComp'
-import ParamComp from './Formparam/Example'
+import ParamComp from './Formparam/ParamComp'
 
 let uuid = 1;
 var outKeyVals = {};
@@ -41,6 +41,7 @@ class paramsComponent extends Component {
     form.setFieldsValue({
       keys: keys.filter(key => key !== k),
     });
+    console.log(keys, "dssssssssssss")
   }
 
   add = () => {
@@ -65,9 +66,7 @@ class paramsComponent extends Component {
   paramCompChange = (paramform, keyindex, tagsign) => {
     //paramform为当前输入的项（key-value为一项）的值，比如header有三个参数，指的是当前操作的参数对象（当前的key-value）
     if(tagsign == "$h"){
-      console.log(tagsign, "当tagsign为$q时，是否也执行")
       outKeyVals.$h[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
-      console.log(outKeyVals.$h, "Formparams里$h的值");
     }else if(tagsign == "$q"){
       outKeyVals.$q[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
     }else if(tagsign == "$b"){

@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Row, Col, Icon, Modal } from "antd"
+import { Row, Col, Icon } from "antd"
 import { Form, Input, Cascader } from 'antd'
 const FormItem = Form.Item
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
@@ -7,489 +7,293 @@ import s from '../contentReqCss/ContentReqCss.css'
 import { options, allOptionItems } from '../Utilsvari'
 import ParamInput from './ParamInput'
 import ParamSel from './ParamSel'
+import IscBe from './IscBe'
+import FlBe from './FlBe'
+import ArrBe from './ArrBe'
+import ObjBe from './ObjBe'
 
-let uuid = 1;
+//paramObj对象的key有type、value、value1、itemNum、contentType
 let paramObj = {};
+let paramKey2ValObj = {};//paramObj对象的key所对应的value对象
+let k2key = {};//用于保存k值和key值得对应，避免input修改前后的值均被保存
+let tagsignE;
+let arrAttr = [];//用于存放参数类型为数组自定义时，子组件传过来的值保存到的数组；
+let arrAttrObj = {};//当参数类型为数组时，子组件传来的值首先保存到数组中，最后保存到该对象中；
+let arrTag = 0; //用于标注当前数组自定义处于第几级别
 class paramComp extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
-			datatype: 0,
-			indexTemp: [1]
+			disabled: true,
+			datatype: "",
+			indexTemp: [1],
+			clearTag: false,
 		}
 	}
 
-	remove = (k) => {
-	    const indexTemp = this.state.indexTemp;
-	    if (indexTemp.length === 1) {
-	      return;
-	    };
-	    const arrindexTemp = [];
-	    for(let temp=1; temp<=indexTemp.length-1; temp++){
-	      arrindexTemp.push(temp);
-	    }
-	    this.setState({
-	      indexTemp: arrindexTemp,
-	    });
-  	}
-
-	add = () => {
-	    // uuid++;
-	    const indexTemp = this.state.indexTemp;
-	    uuid = indexTemp.length +1;
-	    const nextindexTemp = indexTemp.concat(uuid);
-	    this.setState({
-	      indexTemp: nextindexTemp
-	    });
-
+	componentDidUpdate(prevProps, prevState) {
+		// console.log(paramObj, "组件刷新后显示componentDidUpdate")
 	}
 
+	//当第一级参数定义为“等于”类型时，value组件的传值函数
+	valEq = (val) => {
+		//val为第一级下拉框对应的value值；
+		const tag = "value";
+		this.val2obj(val, paramKey2ValObj, tag);
+	}
 
-// 第一级参数定义为数组/对象范围时，对应的value布局
+	//将value组件值，保存到对象中
+	val2obj = (val, obj, tag)=> {
+		//val为第一级下拉框对应的value值，obj为{type: "neum", value: "apple, bananna"},tag为value字符串
+		//旨在解决bool、地址、时间、url、ip情况下tag表示的问题
+		// if(tag !== "noTag"){
+		// 	obj[tag] = val;
+		// }
+		obj[tag] = val;
+		//当为小数范围时，若配置页面未写入整数部分或小数部分时，会添加默认值
+		if(this.state.datatype.trim() == "flBe"){
+			if((Object.values(paramObj)[0]["value1"] !== "" || Object.values(paramObj)[0]["value1"] !== undefined) && (Object.values(paramObj)[0]["value"] == "" || Object.values(paramObj)[0]["value"] == undefined)){
+				// Object.values(paramObj)[0].value == [-Math.pow(10, 6), Math.pow(10,6)];//不知道为什么该方法不能添加value属性
+				for(let i in paramObj){
+					paramObj[i].value = [-Math.pow(10, 6), Math.pow(10,6)];
+				}
+			}else if((Object.values(paramObj)[0]["value"] !== "" || Object.values(paramObj)[0]["value"] !== undefined) && (Object.values(paramObj)[0]["value1"] == "" || Object.values(paramObj)[0]["value1"] == undefined)){
+				for(let i in paramObj){
+					paramObj[i].value1 = [0, 6];
+				}
+			}
+		}else if(this.state.datatype.trim() == "arrBe"){//党委数组自定义时，若项数未定义，则设置默认值
+			if((Object.values(paramObj)[0]["itemNum"] == "" || Object.values(paramObj)[0]["itemNum"] == undefined)){
+				for(let i in paramObj){
+					paramObj[i].itemNum = [-Math.pow(10, 6), Math.pow(10,6)];
+				}
+			}
+		}
+		this.props.onParamCompChange(paramObj, this.props.keyindex, tagsignE);
+	}
+
+	postVal = (val, tag) => {
+		if(tag < arrAttr.length){
+			if(val.type == 'arr' && val.itemNum !== undefined){
+				arrAttr[tag] = this.deepCopy(val);
+			}else {
+				arrAttr[tag] = this.deepCopy(val);
+				arrAttr = arrAttr.slice(0, tag+1);
+			}
+		}else if(tag == arrAttr.length){
+			arrAttr[tag] = this.deepCopy(val);
+		}
+		arrAttrObj = this.arr2obj(arrAttr, arrAttrObj);
+		for(let i in paramObj){
+			paramObj[i] = this.deepCopy(arrAttrObj);
+		}
+		this.props.onParamCompChange(paramObj, this.props.keyindex, tagsignE);
+	}
+
+	//当参数类型为数组自定义时，将数组类型转为对象；
+	arr2obj = (arr, x) => {
+	    for(var i=arr.length-1; i>0; i--){
+	        var obj = {};
+	        if(i == arr.length-1){
+	            obj.value = this.deepCopy(arr[i]);
+	        }else{
+	            obj.value = this.deepCopy(x);
+	        }
+	        x = Object.assign(x, arr[i-1], obj);
+	    }
+	    return x;
+	}
+
+	deepCopy = (source) => {
+	    var result ={};
+	    for(let key in source){
+	      result[key]=typeof source[key] === 'object'?this.deepCopy(source[key]): source[key];
+	    }
+	    return result;
+	}
+
+	// 第一级参数定义为数组/对象范围时，对应的value布局
 	DynamicFormArrObj = (k) => {
 		switch(k){
 			case "arrBe":
 			return (
 				<div>
-					<Row>
-						<Col span={3} offset={1}>
-							<div className={s.arrLabel}>项数：</div>
-						</Col>
-						<Col span={4}>
-							<ParamInput placevalue="min"/>
-						</Col>
-						<Col span={1}>~</Col>
-						<Col span={4}>
-							<ParamInput placevalue="max"/>
-						</Col>
-						<Col className={s.noteTips}>(array项数)</Col>
-					</Row>
-					<Row>
-						<Row>
-							<Col span={3} offset={1}>
-								<div className={s.arrLabel}>子项：</div>
-							</Col>
-						
-							<Col span={5}>
-								<ParamSel onChangeSel={this.changeSel2} />
-							</Col>
-							<Col span={15}>
-			                  <div>{this.DynamicFormSome(this.state.datatype2)}</div>
-			                </Col>
-		                </Row>
-		                <Row>
-		                	<Col span={19} offset={4}>
-		               			{this.DynamicFormArrObj2(this.state.datatype2)}
-		               		</Col>
-		                </Row>
-					</Row>
+					<ArrBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} arrTag={arrTag} postVal={this.postVal}/>
 				</div>
 			)
 			break;
-			case "objBe":
-			{const indexTemp = this.state.indexTemp;
-		    const inFormParam = indexTemp.map((k, index) => {
-		      return (
-		        <div key={k}>
-					<Row>
-						<Col span={3} offset={1}>
-							<ParamInput placevalue="key"/>
-						</Col>
-						<Col span={18}>
-							<Row>
-				                <Col span={5}>
-				                  	<ParamSel onChangeSel={this.changeSel2}/>		                  
-				                </Col>
-				                <Col span={19}>
-				                  <div>{this.DynamicFormSome(this.state.datatype2)}</div>
-				                </Col>
-			               	</Row>
-			               	<Row>
-				               	<Col span={19}>
-				               		{this.DynamicFormArrObj2(this.state.datatype2)}
-				               	</Col>
-			               	</Row>
-						</Col>
-						<Col span={1}>
-				            <Icon
-				                className={s.dynamic_delete_button}
-				                type="minus-circle-o"
-				                onClick={() => this.remove(k)}
-				              />
-			            	</Col>
-			            <Col span={1}>
-			            	<Icon className={s.dynamic_plus_button}
-			                	type="plus-circle-o"
-			                	onClick={this.add.bind(this)}
-			              	/>
-			            </Col>
-					</Row>
-					
-				</div>
-		      )
-		    })
-			return (
-				<div>{inFormParam}</div>
-			)}
-			break;
-			default:
-			return;
-		}
-	}
-// 为了避免出现死循环，当第二级参数定义框内容为数组/对象时，value的布局
-	DynamicFormArrObj2 = (k) => {
-
-		switch(k){
-			case "arrBe":
+			case "objBe":			
 			return (
 				<div>
-					<Row>
-						<Col span={3} offset={1}>
-							<div className={s.arrLabel}>项数：</div>
-						</Col>
-						<Col span={4}>
-							<ParamInput placevalue="min"/>
-						</Col>
-						<Col span={1}>~</Col>
-						<Col span={4}>
-							<ParamInput placevalue="max"/>
-						</Col>
-						<Col className={s.noteTips}>(array项数)</Col>
-					</Row>
-					<Row>
-						<Row>
-							<Col span={3} offset={1}>
-								<div className={s.arrLabel}>子项：</div>
-							</Col>
-						
-							<Col span={5}>
-								<ParamSel onChangeSel={this.changeSel3} />
-							</Col>
-							<Col span={15}>
-			                  <div>{this.DynamicFormSome(this.state.datatype3)}</div>
-			                </Col>
-		                </Row>
-		                <Row>
-		                	<Col span={19} offset={4}>
-		               			
-		               		</Col>
-		                </Row>
-					</Row>
+					<ObjBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} />
 				</div>
 			)
-			break;
-			case "objBe":
-			{const indexTemp = this.state.indexTemp;
-		    const inFormParam = indexTemp.map((k, index) => {
-		      return (
-		        <div key={k}>
-					<Row>
-						<Col span={3} offset={1}>
-							<ParamInput placevalue="key"/>
-						</Col>
-						<Col span={18}>
-							<Row>
-				                <Col span={5}>
-				                  	<ParamSel onChangeSel={window["changeSel2"+k]}/>		                  
-				                </Col>
-				                <Col span={19}>
-				                  <div>{this.DynamicFormSome(this.state.window["datatype2_"+k])}</div>
-				                </Col>
-			               	</Row>
-			               	<Row>
-				               	<Col span={19}>
-				               		
-				               	</Col>
-			               	</Row>
-						</Col>
-						<Col span={1}>
-				            <Icon
-				                className={s.dynamic_delete_button}
-				                type="minus-circle-o"
-				                onClick={() => this.remove(k)}
-				              />
-			            	</Col>
-			            <Col span={1}>
-			            	<Icon className={s.dynamic_plus_button}
-			                	type="plus-circle-o"
-			                	onClick={this.add.bind(this)}
-			              	/>
-			            </Col>
-					</Row>					
-				</div>
-		      )
-		    })
-			return (
-				<div>{inFormParam}</div>
-			)}
 			break;
 			default:
 			return;
 		}
 	}
-// 第一级参数定义为除了数组/对象外的其他数据类型时，如regex、float、int、日期、时间等，对应的value布局
-	DynamicFormSome = (k) => {
 
+	// 第一级参数定义为除了数组/对象外的其他数据类型时，如regex、float、int、日期、时间等，对应的value布局
+	DynamicFormSome = (k) => {
 		switch(k){
 			case "Eq":
-			return (<Col span={5}><ParamInput placevalue="value"/></Col>)
+			return (<Col span={5}><ParamInput placevalue="value" onChangeInput={this.valEq} /></Col>)
 			break;
 			case "iscBe":
 			return (
 				<div>
-					<Col span={3}>
-						<ParamInput placevalue="min"/>
-					</Col>
-					<Col span={1}>~</Col>
-					<Col span={3}>
-						<ParamInput placevalue="max"/>
-					</Col>
+					<IscBe tips="默认:-10^6 ~ 10^6" toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} tag="value" />
 				</div>
 			)
 			break;
 			case "flBe":
 			return (
-				<Col>
-					<Row>
-						<Col span={3}>
-							<ParamInput placevalue="min"/>
-						</Col>
-						<Col span={1}>~</Col>
-						<Col span={3}>
-							<ParamInput placevalue="max"/>
-						</Col>
-						<Col className={s.noteTips}>(整数部分范围)</Col>
-					</Row>
-					<Row>
-						<Col span={3}>
-							<ParamInput placevalue="min"/>
-						</Col>
-						<Col span={1}>~</Col>
-						<Col span={3}>
-							<ParamInput placevalue="max"/>
-						</Col>
-						<Col className={s.noteTips}>(小数部分范围)</Col>
-					</Row>
-				</Col>
+				<div>
+					<FlBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} />
+				</div>
 			)
 			break;
 			case "arrBe":
-			return (
-				<div></div>
-			)
-			break;
 			case "non":
-			return (
-				<div></div>
-			)
-			break;
 			case "objBe":
 			return (
-				<Col>
-					
-				</Col>
+				<Col></Col>
 			)
 			break;
 		}
 	}
 
-//第一级参数定义变化时，设置this.state.datatype。
+	//第一级参数定义变化时，设置this.state.datatype。
 	changeSel = (k) => {
+		this.transType(k, paramKey2ValObj);
+	}
 
-		// console.log(this.isEmptyObject(paramObj), "ddddddddddddd")
-		// if(this.isEmptyObject(paramObj) == true){
-		// 	this.error();
-		// 	console.log("modal is succeed!");
-		// 	return false;
-		// }
-
+	transType = (k, paramKeyObj) => {
+		//k, paramKeyObj分别是指下拉框相关的值，如：['bool', 'boolF']，{ type:"bool", value:"false" }
 		if(/\w+Eq$/.test(k[1])){
-			console.log("changeSel:等於");
 			this.setState({
-				datatype: "Eq"
+				datatype: "Eq",
 			})
-		}else if(/^intBe$|^strBe$|^chineseBe$/.test(k[1])){
-			console.log("changeSel:整數、str和中文的范围");
+			paramKeyObj.type = k[0];
+			delete paramKeyObj.value1;
+			delete paramKeyObj.itemNum;
+			delete paramKeyObj.contentType;
+		}else if(/^intBe$|^strBe$/.test(k[1])){
+			//注意：：：这里实际并没有引入中文的情况，如若添加，可在此加入
 			this.setState({
 				datatype: "iscBe"
 			})
+			if(k[0]=="str"){
+				paramKeyObj.type = "string"
+			}else{
+				paramKeyObj.type = k[0];
+			}
+			delete paramKeyObj.value1;
+			delete paramKeyObj.itemNum;
+			delete paramKeyObj.contentType;
 		}else if(/^floatBe$/.test(k[1])){
-			console.log("changeSel:小数范围");
 			this.setState({
 				datatype: "flBe"
 			})
+			paramKeyObj.type = k[0];
+			delete paramKeyObj.itemNum;
+			delete paramKeyObj.contentType;
 		}else if(/^arrBe$/.test(k[1])){
-			console.log("changeSel:数组范围");
 			this.setState({
 				datatype: "arrBe"
 			})
+			paramKeyObj.type = k[0];
+			delete paramKeyObj.value1;
+			delete paramKeyObj.contentType;
 		}else if(/^bool$|^email$|^ip$|^url$|^address$|^thedate$/.test(k[0])){
+			//注意，当为bool时，是需要传value值得，其他项不需要
 			this.setState({
 				datatype: "non"
 			})
+			paramKeyObj.type = k[0];
+			if(paramKeyObj.type == "bool"){
+				if(k[1].substring(k[1].length-1) == "T"){
+					paramKeyObj.value = "true";
+				}else if(k[1].substring(k[1].length-1) == "F"){
+					paramKeyObj.value = "false";
+				}else {
+					paramKeyObj.value = "";
+				}	
+				delete paramKeyObj.contentType;		
+			}else if(paramKeyObj.type == "address" || paramKeyObj.type == "thedate"){
+				paramKeyObj.contentType = k[1];
+				delete paramKeyObj.value;
+			}else{
+				delete paramKeyObj.value;
+				delete paramKeyObj.contentType;
+			}
+			delete paramKeyObj.value1;
+			delete paramKeyObj.itemNum;
+			this.props.onParamCompChange(paramObj, this.props.keyindex, tagsignE);
 		}else if(/^objBe$/.test(k[1])){
-			console.log("changeSel:对象范围");
 			this.setState({
 				datatype: "objBe"
 			})
+			paramKeyObj.type=k[0];
+			delete paramKeyObj.value1;
+			delete paramKeyObj.itemNum;
+			delete paramKeyObj.contentType;
 		}
 	}
 
-	changeSel2 = (k) => {
-		if(/\w+Eq$/.test(k[1])){
-			console.log("changeSel2:等於");
-			this.setState({
-				datatype2: "Eq",
-			})
-		}else if(/^intBe$|^strBe$|^chineseBe$/.test(k[1])){
-			console.log("changeSel2:整數、str和中文的范围");
-			this.setState({
-				datatype2: "iscBe",
-			})
-		}else if(/^floatBe$/.test(k[1])){
-			console.log("changeSel2:小数范围");
-			this.setState({
-				datatype2: "flBe"
-			})
-		}else if(/^arrBe$/.test(k[1])){
-			console.log("changeSel2:数组范围");
-			this.setState({
-				datatype2: "arrBe"
-			})
-		}else if(/^bool$|^email$|^ip$|^url$|^address$|^thedate$/.test(k[0])){
-			this.setState({
-				datatype2: "non"
-			})
-		}else if(/^objBe$/.test(k[1])){
-			console.log("changeSel2:对象范围");
-			this.setState({
-				datatype2: "objBe"
-			})
-		}
-	}
-
-	changeSel21 = (k) => {
-		console.log("changeSel21:select.value", k[1]);
-		if(/\w+Eq$/.test(k[1])){
-			console.log("changeSel21:等於");
-			this.setState({
-				datatype2_1: "Eq"
-			})
-		}else if(/^intBe$|^strBe$|^chineseBe$/.test(k[1])){
-			console.log("changeSel21:整數、str和中文的范围");
-			this.setState({
-				datatype2_1: "iscBe"
-			})
-		}else if(/^floatBe$/.test(k[1])){
-			console.log("changeSel21:小数范围");
-			this.setState({
-				datatype2_1: "flBe"
-			})
-		}else if(/^arrBe$/.test(k[1])){
-			console.log("changeSel21:数组范围");
-			this.setState({
-				datatype2_1: "arrBe"
-			})
-		}else if(/^bool$|^email$|^ip$|^url$|^address$|^thedate$/.test(k[0])){
-			this.setState({
-				datatype2_1: "non"
-			})
-		}else if(/^objBe$/.test(k[1])){
-			console.log("changeSel21:对象范围");
-			this.setState({
-				datatype2_1: "objBe"
-			})
-		}
-	}
-
-	changeSel22 = (k) => {
-		if(/\w+Eq$/.test(k[1])){
-			console.log("changeSel22:等於");
-			this.setState({
-				datatype2_2: "Eq",
-			})
-		}else if(/^intBe$|^strBe$|^chineseBe$/.test(k[1])){
-			console.log("changeSel22:整數、str和中文的范围");
-			this.setState({
-				datatype2_2: "iscBe",
-			})
-		}else if(/^floatBe$/.test(k[1])){
-			console.log("changeSel22:小数范围");
-			this.setState({
-				datatype2_2: "flBe"
-			})
-		}else if(/^arrBe$/.test(k[1])){
-			console.log("changeSel22:数组范围");
-			this.setState({
-				datatype2_2: "arrBe"
-			})
-		}else if(/^bool$|^email$|^ip$|^url$|^address$|^thedate$/.test(k[0])){
-			this.setState({
-				datatype2_2: "non"
-			})
-		}else if(/^objBe$/.test(k[1])){
-			this.setState({
-				datatype2_2: "objBe"
-			})
-		}
-	}
-	
-	changeSel3 = (k) => {
-		if(/\w+Eq$/.test(k[1])){
-			console.log("changeSel3:等於");
-			this.setState({
-				datatype3: "Eq"
-			})
-		}else if(/^intBe$|^strBe$|^chineseBe$/.test(k[1])){
-			console.log("changeSel3:整數、str和中文的范围");
-			this.setState({
-				datatype3: "iscBe"
-			})
-		}else if(/^floatBe$/.test(k[1])){
-			console.log("changeSel3:小数范围");
-			this.setState({
-				datatype3: "flBe"
-			})
-		}else if(/^arrBe$/.test(k[1])){
-			console.log("changeSel3:数组范围");
-			this.setState({
-				datatype3: "arrBe"
-			})
-		}else if(/^bool$|^email$|^ip$|^url$|^address$|^thedate$/.test(k[0])){
-			this.setState({
-				datatype3: "non"
-			})
-		}
-	}
-
-	changeInput = (val)=>{
+	changeInput = (val, tagsign)=>{
+		//val, tagsign分别是每一项的key的值和标签值，如"name", $b
+		tagsignE = tagsign;
 		for(var key in paramObj){
 			delete paramObj[key];
 		}
+
 		//val为相应的key值
 		paramObj[val] = {};
-		// console.log("key值：",val)
+		paramKey2ValObj = paramObj[val];
+
+		if(this.isEmptyObject(paramObj) == true){
+			this.setState({
+				disabled: true,
+				datatype: "",
+				clearTag: true
+			})
+		}else{
+			this.setState({
+				disabled: false,
+				clearTag: false,
+			})
+		}
 	}
+
+	componentWillReceiveProps (nextProps) {
+    	if (nextProps.clearTag) {
+    	  this.setState({
+    	  	disabled: true,
+    	  	datatype: ""
+    	  })
+    	}
+  	}
 
 	render() {
 		const { getFieldDecorator, getFieldValue } = this.props.form;
 		return (
 			<div>
 				<Col span={3}>
-	            	<ParamInput placevalue="key" onChangeInput={this.changeInput}/>
+	            	<ParamInput tagsign={this.props.tagsign} keyindex={this.props.keyindex} clearTag={this.props.clearTag} placevalue="key" onChangeInput={this.changeInput} />
 	            </Col>
 	            <Col span={19}>
 	            	<Row>
 		                <Col span={5}>
-		                  	<ParamSel keyval={paramObj} onChangeSel={this.changeSel}/>		                  
+		                  	<ParamSel clearTag={this.props.clearTag || this.state.clearTag} paramseldisabled={this.state.disabled} onChangeSel={this.changeSel}/>		                  
 		                </Col>
 		                <Col span={17}>
 		                  <div>{this.DynamicFormSome(this.state.datatype)}</div>
 		                </Col>
 	               	</Row>
 	               	<Row>
-		               	<Col span={19}>
+		               	<Col span={24}>
 		               		{this.DynamicFormArrObj(this.state.datatype)}
 		               	</Col>
 	               	</Row>
@@ -497,6 +301,20 @@ class paramComp extends Component {
             </div>
 		)
 	}
+
+	//判断对象是否为空
+	isEmptyObject = (e) => {  
+	    let t;  
+	    for (t in e) {
+	    	if(t.trim()=="" || t==undefined){
+	    		return !0;
+	    	}else{
+	    		return !1;
+	    	}
+	    }
+	    return !0  
+	} 
+	
 }
 const ParamComp = Form.create()(paramComp);
 export default withStyles(s)(ParamComp);
