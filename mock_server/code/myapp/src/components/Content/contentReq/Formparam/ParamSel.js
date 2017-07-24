@@ -23,7 +23,7 @@ class ParamSel extends Component {
 			dyanmicVal: value,
 		}, () => {
 			this.props.onChangeSel(this.state.dyanmicVal);
-		})   ;console.log(value)
+		});
 	}
 
 	componentWillReceiveProps (nextProps) {

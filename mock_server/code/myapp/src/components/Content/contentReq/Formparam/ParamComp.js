@@ -118,7 +118,7 @@ class paramComp extends Component {
 			case "arrBe":
 			return (
 				<div>
-					<ArrBe toVal2Obj={this.val2obj} paramObj={paramKey2ValObj} arrTag={arrTag} postVal={this.postVal}/>
+					<ArrBe paramObj={paramKey2ValObj} arrTag={arrTag} postVal={this.postVal}/>
 				</div>
 			)
 			break;

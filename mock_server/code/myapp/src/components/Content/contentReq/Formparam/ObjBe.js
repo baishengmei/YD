@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
 import s from '../contentReqCss/ContentReqCss.css'
 import { Row, Col, Icon } from 'antd'
-// import FormParams from '../FormParams'
+import FFormP from '../FormParams'
 
 let uuid = 1;
 let objBe = {};//value所对应的对象
@@ -11,9 +11,9 @@ class ObjBe extends Component {
 
 	getO = (value) => {
 		const tag = "value";
-		const paramObj = this.props.paramObj;
-		console.log(value.$in)
-		this.val2obj(value.$in, paramObj, tag);
+		// const paramObj = this.props.paramObj;
+		console.log(value.$in, "dddddddddddddddddddddddd")
+		// this.val2obj(value.$in, paramObj, tag);
 	}
 
 	val2obj = (val, obj, tag) => {
@@ -23,7 +23,7 @@ class ObjBe extends Component {
 	render() {
 	    return (
 	    	<div>
-	    		// <FormParams tag="" name="" formParamsVal={this.getO} tagsign="$in"/>
+	    		<FFormP clearTag={this.props.clearTag} name="" tagsign="$in" tag="" formParamsVal={this.getO} />
 	    	</div>
 	    )
 	}

@@ -32,16 +32,19 @@ class paramsComponent extends Component {
   constructor() {
     super();
   }
-  remove = (k) => {
+
+  remove = (k, tagsign) => {
     const { form } = this.props;
-    const keys = form.getFieldValue('keys');
+    let keys = form.getFieldValue('keys');
     if (keys.length === 1) {
       return;
-    }
+    }   
+    outKeyVals[tagsign][parseInt(k)-1] = {};
+    this.props.formParamsVal(outKeyVals);
     form.setFieldsValue({
-      keys: keys.filter(key => key !== k),
+      keys: keys = keys.filter(key => key !== k)
     });
-    console.log(keys, "dssssssssssss")
+     
   }
 
   add = () => {
@@ -62,7 +65,7 @@ class paramsComponent extends Component {
     return result;
   } 
 
-//将k值传进来，以及paramform的值
+  //将k值传进来，以及paramform的值
   paramCompChange = (paramform, keyindex, tagsign) => {
     //paramform为当前输入的项（key-value为一项）的值，比如header有三个参数，指的是当前操作的参数对象（当前的key-value）
     if(tagsign == "$h"){
@@ -99,7 +102,12 @@ class paramsComponent extends Component {
         outKeyVals.$resB10[eval(parseInt(keyindex)-1)] = this.deepCopy(paramform);
       }
     }
-    this.props.formParamsVal(outKeyVals);    
+    for(let i in outKeyVals){
+      if(outKeyVals[i].length !== 0){
+        outKeyVals[i] = this.setDefault(outKeyVals[i], this.props.form.getFieldValue('keys'));
+      }
+    }
+    this.props.formParamsVal(outKeyVals); 
   }
 
   componentWillReceiveProps (nextProps) {
@@ -124,6 +132,36 @@ class paramsComponent extends Component {
       }
   }
 
+  //将数组中每一项应该均有值，将undefined值，设置默认值；
+  setDefault = (arr, keys) => {
+    for(let i=0; i<keys.length; i++){
+      if(arr[keys[i]] == undefined){
+        arr[keys[i]] = {};
+      }
+    }
+    return arr;
+  }
+
+  //判断某个值是否为空对象
+  isEmptyObject = (e) => {
+    if(Object.prototype.toString.call(e).toLowerCase()=="[object object]"){         
+      let t; 
+      for (t in e) {
+        if(t.trim()=="" || t==undefined){
+          return !0;
+        }else{
+          return !1;
+        }
+      }
+      return !0 
+    }else {
+      return !1; 
+    }
+}
+
+
+
+
   render() {
 
     const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -139,14 +177,14 @@ class paramsComponent extends Component {
         <div key={k}>
           <Row>
             <Col span={22}>
-              <ParamComp tagsign={this.props.tagsign} keyindex={k} clearTag={this.props.clearTag} onParamCompChange={this.paramCompChange}/>
+              <ParamComp tagsign={this.props.tagsign} keyindex={k} clearTag={this.props.clearTag} onParamCompChange={this.paramCompChange} />
             </Col>
             <Col span={1}>
               <Icon
                 className={s.dynamic_delete_button}
                 type="minus-circle-o"
                 disabled={keys.length === 1}
-                onClick={() => this.remove(k)}
+                onClick={() => this.remove(k, this.props.tagsign)}
               />
             </Col>
             <Col span={1}>

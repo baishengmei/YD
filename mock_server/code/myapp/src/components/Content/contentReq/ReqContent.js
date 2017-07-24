@@ -56,7 +56,6 @@ class ReqContent extends Component {
 			$b: value.$b
 		}, () => {
 			this.props.onReqContent(this.state);
-			console.log(value, "ddddddddddddddddddddddddddddddddddddd")
 		})
 	}
 	
