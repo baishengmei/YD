@@ -28,6 +28,7 @@ outKeyVals.$resB9 = [];
 outKeyVals.$resB10 = [];
 
 let keyVals = {}; 
+let noEmptyObjArr = {};//传给父组件的对象中$h/$b等属性对应的value数组中，删除空对象后存值到该对象，并将其传给父组件
 class paramsComponent extends Component {
   constructor() {
     super();
@@ -40,7 +41,14 @@ class paramsComponent extends Component {
       return;
     }   
     outKeyVals[tagsign][parseInt(k)-1] = {};
-    this.props.formParamsVal(outKeyVals);
+
+    noEmptyObjArr = this.deepCopy(outKeyVals)
+    for(let i in noEmptyObjArr){
+      noEmptyObjArr[i] = this.copyArr(this.delEmptyObj(noEmptyObjArr[i]));
+    }
+    this.props.formParamsVal(noEmptyObjArr);
+    noEmptyObjArr = {};
+    // this.props.formParamsVal(outKeyVals);
     form.setFieldsValue({
       keys: keys = keys.filter(key => key !== k)
     });
@@ -56,14 +64,6 @@ class paramsComponent extends Component {
       keys: nextKeys,
     });
   }
-
-  deepCopy = (source) => {
-    var result ={};
-    for(let key in source){
-      result[key]=typeof source[key] === 'object'?this.deepCopy(source[key]): source[key];
-    }
-    return result;
-  } 
 
   //将k值传进来，以及paramform的值
   paramCompChange = (paramform, keyindex, tagsign) => {
@@ -107,7 +107,15 @@ class paramsComponent extends Component {
         outKeyVals[i] = this.setDefault(outKeyVals[i], this.props.form.getFieldValue('keys'));
       }
     }
-    this.props.formParamsVal(outKeyVals); 
+
+    // 删除outKeyVals中每一项对应的value中的空对象，但是执行有误；
+    noEmptyObjArr = this.deepCopy(outKeyVals)
+    for(let i in noEmptyObjArr){
+      noEmptyObjArr[i] = this.copyArr(this.delEmptyObj(noEmptyObjArr[i]));
+    }
+    this.props.formParamsVal(noEmptyObjArr);
+    noEmptyObjArr = {};
+    // this.props.formParamsVal(outKeyVals); 
   }
 
   componentWillReceiveProps (nextProps) {
@@ -157,10 +165,53 @@ class paramsComponent extends Component {
     }else {
       return !1; 
     }
-}
+  }
 
+  //对象深拷贝
+  deepCopy = (source) => {
+    var result ={};
+    for(let key in source){
+          if(Object.prototype.toString.call(source[key]).toLowerCase() == "[object array]") {
+               result[ key ] = this.copyArr(source[key]);
+          }else if( Object.prototype.toString.call(source[key]).toLowerCase() == "[object object]"){
+               result[key] = this.deepCopy(source[key]);
+          }else {
+               result[key] = source[key];
+          }
+    }
+    return result;
+  }
 
+  //将数组中项为空对象的值删除
+  delEmptyObj = (arr) => {
+    var newArr = [];
+    for(let i=0; i<arr.length; i++){
+      if(arr[i] !== undefined && this.isEmptyObject(arr[i])==false){
+        newArr = newArr.concat(arr[i]);
+      }
+    }
+    return newArr;
+  }
 
+  // delEmptyObj = (arr) => {
+  //   for(let i=0; i<arr.length; i++){
+  //     if(arr[i] == undefined){
+  //       arr.splice(i, 1);
+  //     }else if(this.isEmptyObject(arr[i])){
+  //       arr.splice(i,1);
+  //     }
+  //   }
+  //   return arr;
+  // }
+
+  //数组深拷贝
+  copyArr = (arr) => {
+    let res = [];
+    for (let i = 0; i < arr.length; i++) {
+     res.push(arr[i])
+    }
+    return res;
+  }
 
   render() {
 
