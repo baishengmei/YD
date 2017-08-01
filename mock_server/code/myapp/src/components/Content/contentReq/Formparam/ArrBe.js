@@ -6,9 +6,10 @@ import { Row, Col, Modal } from 'antd'
 import IscBe from './IscBe'
 import ParamSel from './ParamSel'
 import FlBe from './FlBe'
-// import ObjBe from './objBe'
+import ObjBe from './objBe'
 
 let arrBe = {};//是一个对象，包含属性type：arr
+let objValFirst = {};
 class ArrBe extends Component {
 
 	constructor(props) {
@@ -105,7 +106,7 @@ class ArrBe extends Component {
 			case "objBe":			
 			return (
 				<div>
-					<ObjBe toVal2Obj={this.val2obj} paramObj={arrBeVal} />
+					<ObjBe toVal2Obj={this.val2obj} paramObj={arrBe} />
 				</div>
 			)
 			break;
@@ -201,6 +202,7 @@ class ArrBe extends Component {
 				delete paramKeyObj.value1;
 				delete paramKeyObj.itemNum;
 				delete paramKeyObj.contentType;
+				objValFirst = this.deepCopy(paramKeyObj);
 			})			
 		}
 		return paramKeyObj;

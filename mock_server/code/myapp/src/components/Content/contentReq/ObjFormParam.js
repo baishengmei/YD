@@ -5,7 +5,7 @@ const FormItem = Form.Item
 const Option = Select.Option
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
 import s from './contentReqCss/ContentReqCss.css'
-import ParamComp from './Formparam/ParamComp'
+import ParamComp from './Formparam/ParamComp2'
 
 let uuid = 1;
 var outKeyVals = {};

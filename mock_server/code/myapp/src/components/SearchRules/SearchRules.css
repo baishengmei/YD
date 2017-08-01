@@ -1,0 +1,44 @@
+/*父组件中的样式*/
+.searchRules {
+	margin-left: 142px;
+    margin-right: 142px;
+    height: 100%;
+    padding-top: 80px;
+}
+
+/*查询条件组件的样式*/
+.searchif {
+	width: 100%;
+	height: 80px;
+}
+.projname {
+	float: left;
+	width: 380px;
+	/*width: 26%;*/
+}
+.rulename {
+	float: left;
+	width: 380px;
+	/*width: 26%;*/
+}
+.searchBtn {
+	float: left;
+	margin-left: 30px;
+}
+/*@media screen and (max-width: 500px) {
+    .projname {
+		float: left;
+		width: 40%;
+	}
+	.rulename {
+		float: left;
+		width: 40%;
+	}
+	.searchBtn {
+		float: left;
+		margin-left: 30px;
+	}
+}*/
+
+
+/*查询结果组件的样式*/

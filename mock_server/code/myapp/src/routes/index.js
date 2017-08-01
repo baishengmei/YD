@@ -3,6 +3,7 @@ import Layout from '../components/Layout';
 import home from './home';
 import adManagement from './adManagement';
 import notFound from './notFound';
+import searchRules from './searchRules.js';
 
 let prevRouteName = '';
 
@@ -20,6 +21,7 @@ export default {
       })
     },
     home,
+    searchRules,
     // adManagement,
     notFound
   ],

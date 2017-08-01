@@ -1,10 +1,10 @@
-import React, { Component, PropTypes } from 'react';
-import { Form, Select, Input } from 'antd'
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import { Row, Col } from 'antd'
+import React, { Component, PropTypes } from 'react'
+import { Form, Select, Input, Row, Col } from 'antd'
+import withStyles from 'isomorphic-style-loader/lib/withStyles'
+import s from './ContentName.css'
+
 const FormItem = Form.Item;
 const Option = Select.Option;
-import s from './ContentName.css'
 
 class ContentNameform extends Component {
 

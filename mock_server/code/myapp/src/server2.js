@@ -7,6 +7,7 @@ import errorHandler from './middlewares/errorHandler';
 import saveRules from './middlewares/saveRules';
 import receiveReq from './middlewares/receiveReq';
 import serverRender from './middlewares/serverRender';
+import searchRules from './middlewares/searchRules';
 import routes from './routes';
 import { nodePort } from './config';
 
@@ -68,6 +69,7 @@ if (__DEV__) {
  */
 app.use('/saverules', saveRules);
 app.use('/test/*', receiveReq);
+app.use('/mockserver/getdatafrommongod/*', searchRules);
 
 /**
  * Register server-side rendering middleware
