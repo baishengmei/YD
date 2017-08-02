@@ -24,13 +24,7 @@ export default async(req, res) => {
     whereStr = {"keypath": reg, "value.rulename": body.rulename};
   }
 
-
-var v = "bl";
-var re =new RegExp("^\\d+" + v + "$","gim");
-
-
-
-  console.log("whereStr的值：", whereStr);
+  // console.log("whereStr的值：", whereStr);
   //查询数据库内容无Id
   const whereNoId = {_id: 0};
 
@@ -50,7 +44,7 @@ var re =new RegExp("^\\d+" + v + "$","gim");
   MongoClient.connect(DB_CONN_STR, function(err, db) {
     selectData(whereStr, db, function(result) {
       db.close();
-      console.log(result, '111111');
+      // console.log(result, '111111');
       res.status(200).send(result);
     });
   });
