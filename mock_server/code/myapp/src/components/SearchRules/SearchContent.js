@@ -44,7 +44,7 @@ class SearchContent extends Component {
 				      		// console.log(record, 'dsdssssssss')
 				      		localStorage.setItem("keypath", "/"+record.projname+"/"+record.url);
 				      		localStorage.setItem("allrules", JSON.stringify(this.props.allRules));
-					      	const detailUrl = `${window.location.origin}/showdetailrules?keypath=/${record.projname}/${record.url}endkeypath`;
+					      	// const detailUrl = `${window.location.origin}/showdetailrules?keypath=/${record.projname}/${record.url}endkeypath`;
 					      	// console.log(detailUrl,"aaa");
 					      	// console.log(this.props.allRules, '所有规则')
 					      	window.open(`${window.location.origin}/showdetailrules`);
