@@ -49,9 +49,11 @@
     margin-right: 142px;
     height: 100%;
     padding-top: 80px;
+    padding-bottom: 120px;
 }
 .table {
 	border: 1px solid #D5D5D5;
+	width: 100%;
 }
 .tr {
 	box-sizing: border-box;
@@ -64,12 +66,26 @@
 }
 .tdd1{
 	font-weight: bolder !important;
-	font-size: 18px !important;
+	font-size: 16px !important;
 	color: #000;
-	width: 160px;
+	/*width: 260px;*/
+	width: 18%;
 	text-align: right;
 }
 .tdd2 {
-	min-width: 500px;
+	width: 82%;
+	font-size: 14px;
+	/*min-width: 500px;*/
 	text-align: center;
+}
+.showDetairulesTitle {
+	font-size: 20px;
+	color: #3F48CC;
+	margin-top: 32px;
+	margin-bottom: 2px;
+	border: 1px solid #D5D5D5;
+	padding: 10px;
+	text-align: center;
+	background-color: #B2B2BC;
+	/*background: */
 }

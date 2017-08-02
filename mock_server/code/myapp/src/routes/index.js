@@ -4,7 +4,8 @@ import home from './home';
 import adManagement from './adManagement';
 import notFound from './notFound';
 import searchRules from './searchRules.js';
-import showDetailRules from './showDetailRules.js'
+import showDetailRules from './showDetailRules.js';
+import creatProjName from './creatProjName';
 
 let prevRouteName = '';
 
@@ -24,6 +25,7 @@ export default {
     home,
     searchRules,
     showDetailRules,
+    creatProjName,
     // adManagement,
     notFound
   ],

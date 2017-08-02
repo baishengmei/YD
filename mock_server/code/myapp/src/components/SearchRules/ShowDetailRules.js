@@ -16,6 +16,7 @@ class ShowDetailRules extends Component {
 		super(props);
 		this.state = {
 			oneRuleReqArr: [{a:1}, {b:2}],
+			constrRes: [],
 		}
 	}
 
@@ -28,28 +29,42 @@ class ShowDetailRules extends Component {
 
 	getOneDetailRule = (keypath) => {
 		allRules = JSON.parse(localStorage.getItem('allrules'));
-		// console.log(allRules, '打印接收到的所有规则');
 		for(let i=0, len=allRules.length; i<len; i++){
 			if(allRules[i].keypath == keypath){
 				oneRule = allRules[i];
 			}
 		}
-
+		console.log(oneRule, '打印接收到的所有规则');
 		oneRuleReq = {};
-    	oneRuleReq = Object.assign(oneRuleReq, {Url:oneRule.keypath, Method:oneRule.value.reqm, "Header":oneRule.value.reqh, "Query":oneRule.value.reqq, "ContentType":oneRule.value.reqc, "Body":oneRule.value.reqb});
+		const reqHeader = this.changeToStr(oneRule.value.reqh);
+		const reqQuery = this.changeToStr(oneRule.value.reqq);
+		const reqBody = this.changeToStr(oneRule.value.reqb);
+		const constrRes = oneRule.value.constrRes;
+    	oneRuleReq = Object.assign(oneRuleReq, {Url:oneRule.keypath, Method:oneRule.value.reqm, "Header":reqHeader, "Query":reqQuery, "ContentType":oneRule.value.reqc, "Body":reqBody});
     	let saveG = [];
-    	for(let i in oneRule.value){
-    		if(/^G\d+$/.test(i)) {
+    	for(let i in oneRule.value){    		
+    		if(/^G\d+$/.test(i)) {    			
     			saveG.push({[i]: oneRule.value[i]});            			
     		}
     	}
+    	// console.log(saveG, "打印该项中的每一个值");
     	oneRuleReq = Object.assign(oneRuleReq, {Constraint: saveG});
     	oneRuleReqArr = Object.entries(oneRuleReq);
     	console.log(oneRuleReqArr, '打印出请求数组;sdkfa;')
     	this.setState({
     		oneRuleReqArr: oneRuleReqArr,
+    		constrRes: constrRes,
     	})
 	}
+
+	//将rules中的reqh、reqq等，其值为对象时，进行JSON.stringify转化
+	 changeToStr = (val) => {
+	 	if(Object.prototype.toString.call(val).toLowerCase()=="[object object]"){
+	 		return JSON.stringify(val);
+	 	}else {
+	 		return val;
+	 	}
+	 }
 
 	isEmptyObject = (e) => {
      	if(Object.prototype.toString.call(e).toLowerCase()=="[object object]"){         
@@ -75,6 +90,25 @@ class ShowDetailRules extends Component {
 		}
 	}
 
+	showResRuleItems = (resConstrRes) => {
+		const resItems = resConstrRes.map((k, index) => {
+			let oneConstrRes = {};
+			let oneConstrResArr = [];
+			const resBody = this.changeToStr(k.response);
+			oneConstrRes = Object.assign(oneConstrRes, {"响应条件": k.condition, "Status Code": k.ressc, "Content-type": k.resc, "Body": resBody});
+			oneConstrResArr = Object.entries(oneConstrRes);
+			const oneResItems = this.ruleItems(oneConstrResArr);
+			return (
+				<table className={s.table}>
+					<tbody>
+						{oneResItems}
+					</tbody>					
+				</table>
+			)
+		})
+		return resItems;
+	}
+
 	ruleItems = (reqorresArr) => {
 		const reqorresItems = reqorresArr.map((k, index) => { 
 			let value = this.isEmptyObject(k[1])?"":k[1];
@@ -96,33 +130,20 @@ class ShowDetailRules extends Component {
 	}
 
 	render() {
-
-		// const reqItems = this.state.oneRuleReqArr.map((k, index) => { 
-		// 	let value = this.isEmptyObject(k[1])?"":k[1];
-		// 	if(Object.prototype.toString.call(value).toLowerCase()=="[object array]"){
-		// 		value = JSON.stringify(value);
-		// 	}
-	 //      	return (
-	 //      		<tr className={s.tr} k={k[0]}>
-	 //      			<td className={s.tdd1}>
-	 //      				<span>{k[0]}:</span>
-	 //      			</td>
-	 //      			<td className={s.tdd2}>
-	 //      				<span>{value}</span>
-	 //      			</td>
-	 //      		</tr>
-	 //      	)
-	 //    })
-
 	    return (
 		    <div className={s.showdetailrules}>
-		      	<div>Request</div>
-		      	<table className={s.table}>
-		      		<tbody>
-		      			{this.ruleItems(this.state.oneRuleReqArr)}
-		      		</tbody>
-		      	</table>
-		      	<div>Response</div>
+		    	<div>
+		    		<div className={s.showDetairulesTitle}>Request</div>
+			      	<table className={s.table}>
+			      		<tbody>
+			      			{this.ruleItems(this.state.oneRuleReqArr)}
+			      		</tbody>
+			      	</table>
+		    	</div>
+		      	<div>
+		      		<div className={s.showDetairulesTitle}>Response</div>
+			      	{this.showResRuleItems(this.state.constrRes)}
+		      	</div>
 		      	
 		    </div>
 	    )
