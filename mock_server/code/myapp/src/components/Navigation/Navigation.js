@@ -1,45 +1,52 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { Menu, Icon } from 'antd';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import $ from 'jquery'
 import s from './Navigation.css';
-import Link from '../Link';
 
-const tabs = [{
-  name: '首页',
-  path: '/home',
-}, {
-  name: '推广管理',
-  path: '/adManagement',
-}, {
-  name: '数据报表',
-  path: '/dataReport'
-}, {
-  name: '账户管理',
-  path: '/account'
-}];
+class Navigation extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      current: "createRule",
+    }
+  }
 
-function Navigation({ path }) {
-  return (
-    <section className={`${s.root} root`} role='navigation'>
-      <div className={s.container}>
-        <div className={s.tabs}>
-          {tabs.map(tab => (
-            <Link
-              key={tab.path}
-              className={path.startsWith(tab.path) ? `${s.tab} ${s.active}` : s.tab}
-              to={tab.path}
-            >
-              {tab.name}
-            </Link>
-          ))}
-        </div>
+  handleClick = (e) => {
+    console.log('click ', e);
+    this.setState({
+      current: e.key,
+    });
+  }
+
+  
+  render() {
+    return (
+      <div className={s.navbar}>
+      <Menu
+        onClick={this.handleClick}
+        selectedKeys={[this.state.current]}
+        mode="horizontal"
+        theme="light"
+      >
+        <Menu.Item key="createRule">
+          <a href="/" rel="noopener noreferrer">首页-创建规则</a>
+        </Menu.Item>
+        <Menu.Item key="createProjname">
+          <a href="/createprojectname" rel="noopener noreferrer">创建项目组</a>
+        </Menu.Item>
+        <Menu.Item key="searchRule">
+          <a href="searchrules" rel="noopener noreferrer">规则查询</a>
+        </Menu.Item>
+        
+        <Menu.Item key="detailRule">
+          <a href="showdetailrules" rel="noopener noreferrer">规则详情</a>
+        </Menu.Item>
+      </Menu>
       </div>
-    </section>
-  );
-}
+    );
+  }
 
-Navigation.propTypes = {
-  path: React.PropTypes.string.isRequired
-};
+}
 
 export default withStyles(s)(Navigation);

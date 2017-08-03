@@ -78,6 +78,8 @@
 	/*min-width: 500px;*/
 	text-align: center;
 }
+
+/*创建项目组名*/
 .showDetairulesTitle {
 	font-size: 20px;
 	color: #3F48CC;
@@ -88,4 +90,19 @@
 	text-align: center;
 	background-color: #B2B2BC;
 	/*background: */
+}
+
+.createbtn {
+	text-align: right;
+}
+
+.createbtn Button{
+	width: 8em;
+}
+.inputname {
+	margin-top: 36px;
+	height: 86px;
+}
+.inputname Input {
+	height: 3em;
 }

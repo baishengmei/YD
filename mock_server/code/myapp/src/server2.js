@@ -10,6 +10,7 @@ import serverRender from './middlewares/serverRender';
 import searchRules from './middlewares/searchRules';
 import delRules from './middlewares/delRules';
 import getOneRule from './middlewares/getOneRule';
+import saveProjname from './middlewares/saveProjname';
 import routes from './routes';
 import { nodePort } from './config';
 
@@ -74,6 +75,7 @@ app.use('/test/*', receiveReq);
 app.use('/mockserver/getdatafrommongod', searchRules);
 app.use('/mockserver/deldatafrommongod', delRules);
 app.use('/mockserver/getonedetailrule', getOneRule);
+app.use('/mockserver/createprojname', saveProjname);
 
 /**
  * Register server-side rendering middleware

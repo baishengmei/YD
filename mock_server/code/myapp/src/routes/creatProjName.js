@@ -1,5 +1,5 @@
 import React from 'react';
-import CreatProjName from '../components/SearchRules/CreatProjName.js';
+import CreatProjName from '../components/SearchRules/CreateProjName.js';
 
 export default {
 

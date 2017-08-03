@@ -6,6 +6,7 @@ import React, { Component, PropTypes, Children } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Layout.css';
 import Header from '../../containers/Header';
+import Navigation from '../Navigation';
 
 class Layout extends Component {
   static propTypes = {
@@ -22,6 +23,7 @@ class Layout extends Component {
     return (
       <div>
         <Header />
+        <Navigation />
         {Children.only(this.props.children)}
       </div>
     );
