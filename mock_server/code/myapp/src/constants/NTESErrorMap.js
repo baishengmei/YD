@@ -1,7 +1,7 @@
 /**
  * 错误代码及其代表意义定义参考如下两个网址
  * 1. outfox wiki
- * https://dev.corp.youdao.com/outfoxwiki/AccountProject/UrsDocs
+ * https://dev.corp.yoouuddaaoo.com/outfoxwiki/AccountProject/UrsDocs
  *
  * 2. 最新 URS 官网文档
  * https://ursdoc.hz.netease.com/urs-doc/docs/index.php?t=urs-api-v3&md=login&#1.3. 登录认证（服务器端，返回值）
