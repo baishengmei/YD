@@ -38,7 +38,7 @@ npm install -g yarn
 如果是第一次部署工程，执行下面命令：
 
 ```shell
-$ git clone sa_gitlab@gitlab.corp.youdao.com:webfront-ad/mock_server.git
+$ git clone sa_gitlab@gitlab.corp.yoouuddaaoo.com:webfront-ad/mock_server.git
 $ cd mock_server/code/myapp
 $ yarn install
 $ yarn start:test(windows)
