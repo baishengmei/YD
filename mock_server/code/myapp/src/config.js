@@ -4,7 +4,7 @@ const test = 'test';
 const env = process.env.NODE_ENV || pro;
 
 // 智选未登录首页地址
-const indexPage = 'http://zhixuan.youdao.com';
+const indexPage = 'http://zhixuan.yoouuddaaoo.com';
 
 /**
  * 参数说明：
@@ -21,19 +21,19 @@ const indexPage = 'http://zhixuan.youdao.com';
  */
 const environment = {
   [test]: {
-    nodeHost: 'zx.youdao.com:3000',
+    nodeHost: 'zx.yoouuddaaoo.com:3000',
     nodePort: 5000,
-    javaHost: 'nb080x.corp.youdao.com:10017'
+    javaHost: 'nb080x.corp.yoouuddaaoo.com:10017'
   },
   [dev]: {
-    nodeHost: 'zx.youdao.com:3000',
+    nodeHost: 'zx.yoouuddaaoo.com:3000',
     nodePort: 5000,
-    javaHost: 'nb080x.corp.youdao.com:10017'
+    javaHost: 'nb080x.corp.yoouuddaaoo.com:10017'
   },
   [pro]: {
-    nodeHost: 'zx.youdao.com:5000',
+    nodeHost: 'zx.yoouuddaaoo.com:5000',
     nodePort: 5000,
-    javaHost: 'nb269x.corp.youdao.com:10017'
+    javaHost: 'nb269x.corp.yoouuddaaoo.com:10017'
   }
 }[env];
 
