@@ -29,7 +29,7 @@ const context = {
     let username = '';
     cookies.forEach((s) => {
       const t = s.replace(/^\s+|\s+$/g, '').split('=');
-      if (t[0] === 'YOUDAO_YEX_EMAIL') {
+      if (t[0] === 'YOOUUDDAAOO_YEX_EMAIL') {
         username = t[1];
       }
     });
