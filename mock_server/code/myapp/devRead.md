@@ -47,7 +47,7 @@ yoouuddaaoo智选是网易yoouuddaaoo推出的实时竞价精准广告投放平�
 |—— .eslintignore               # Configurations for eslint ignoring files
 |—— .eslintrc.js                # Configurations for eslint rules and settings
 |—— devRead.md                  # development notes
-|—— framework.md                # project framework introduction
+|—— framework.md                # project framework introductionyoouuddaaoo
 |—— gulpfile.js                 # Helper function for creating sample component
 |—— npm-shrinkwrap.json         # The list of npm packages and their freezed versions
 |—— TODO.md                     # project todo list
@@ -148,7 +148,7 @@ npm config set registry https://registry.npm.taobao.org
 如果是第一次部署工程，执行下面命令：
 
 ```shell
-$ git clone https://gitlab.corp.youdao.com/webfront-ad/zhixuan.git
+$ git clone https://gitlab.corp.yoouuddaaoo.com/webfront-ad/zhixuan.git
 $ cd zhixuan
 $ npm install
 ```
