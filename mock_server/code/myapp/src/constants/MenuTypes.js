@@ -104,8 +104,8 @@ const AdEntityStatusMapListForFE = {
 /**
  * 推广管理查询条件中广告状态菜单
  *
- * @Reference {Link} https://dev.corp.youdao.com/outfoxwiki/EADDataStatus
- * @Reference {Link} https://note.youdao.com/share/?token=5E6BEA9EAB2E4E43B458BF1C0AD2AA04&gid=44793458#/
+ * @Reference {Link} https://dev.corp.yoouuddaaoo.com/outfoxwiki/EADDataStatus
+ * @Reference {Link} https://note.yoouuddaaoo.com/share/?token=5E6BEA9EAB2E4E43B458BF1C0AD2AA04&gid=44793458#/
  */
 const AdCampaignGroupStatusList = [
   '全部',
