@@ -1,6 +1,6 @@
-## Youdao DSP Publish System（新智选）开发文档
+## Yoouuddaaoo DSP Publish System（新智选）开发文档
 
-有道智选是网易有道推出的实时竞价精准广告投放平台。目前的智选系统使用java web技术开发的，系统比较老旧，易用性和用户体验低，且开发维护成本较高。为了解决以上的问题，决定使用前后端分离将现有系统进行重构，重新设计 UI 和用户交互，改善系统易用性，提高用户体验。该项目使用 [React Starter Kit](https://github.com/kriasoft/react-starter-kit/tree/feature/redux) 生成，里面包含了诸多当前较新的技术。
+yoouuddaaoo智选是网易yoouuddaaoo推出的实时竞价精准广告投放平台。目前的智选系统使用java web技术开发的，系统比较老旧，易用性和用户体验低，且开发维护成本较高。为了解决以上的问题，决定使用前后端分离将现有系统进行重构，重新设计 UI 和用户交互，改善系统易用性，提高用户体验。该项目使用 [React Starter Kit](https://github.com/kriasoft/react-starter-kit/tree/feature/redux) 生成，里面包含了诸多当前较新的技术。
 
 ### 项目结构
 
@@ -167,24 +167,24 @@ npm install
 ```js
 var environment = {
   [test]: {
-    nodeHost: 'zx.youdao.com:3000',
+    nodeHost: 'zx.yoouuddaaoo.com:3000',
     nodePort: 5000,
-    javaHost: 'qt106x.corp.youdao.com:19500' // 'nb269x.corp.youdao.com:10017'
+    javaHost: 'qt106x.corp.yoouuddaaoo.com:19500' // 'nb269x.corp.yoouuddaaoo.com:10017'
   },
   [dev]: {
-    nodeHost: 'zx.youdao.com:3000',
+    nodeHost: 'zx.yoouuddaaoo.com:3000',
     nodePort: 5000,
-    javaHost: 'qt106x.corp.youdao.com:19500' // 'nb269x.corp.youdao.com:10017'
+    javaHost: 'qt106x.corp.yoouuddaaoo.com:19500' // 'nb269x.corp.yoouuddaaoo.com:10017'
   },
   [pro]: {
-    nodeHost: 'zx.youdao.com:5000',
+    nodeHost: 'zx.yoouuddaaoo.com:5000',
     nodePort: 5000,
-    javaHost: 'nb269x.corp.youdao.com:10017'
+    javaHost: 'nb269x.corp.yoouuddaaoo.com:10017'
   }
 }[env];
 ```
 
-- nodeAsHost： 上线后网站对外服务的域名，如 `zhixuan.youdao.com`。
+- nodeAsHost： 上线后网站对外服务的域名，如 `zhixuan.yoouuddaaoo.com`。
 - nodePort： node 服务的启动端口。
 - javaHost： node 对应的 java 服务接口的 Host。
 
@@ -202,11 +202,11 @@ $ npm run build
 npm start > ../logs/server-`date +%Y%m%d`.log 2>&1 &
 ```
 
-然后配置下域名`zhixuan.youdao.com`。
+然后配置下域名`zhixuan.yoouuddaaoo.com`。
 
 如果上线多台服务，nginx需要按照ip分流，即某ip要固定分流到某台server上。
 
-浏览器中访问 [http://zhixuan.youdao.com](http://zhixuan.youdao.com)。
+浏览器中访问 [http://zhixuan.yoouuddaaoo.com](http://zhixuan.yoouuddaaoo.com)。
 
 #### 如何调试
 
@@ -218,7 +218,7 @@ $ npm start
 
 默认源码不进行压缩，如果需要压缩，只需要添加`-- --release`参数即可。
 
-浏览器中访问 [http://zhixuan.youdao.com:3000/](http://zhixuan.youdao.com:3000/)，配置下本地host映射即可。
+浏览器中访问 [http://zhixuan.yoouuddaaoo.com:3000/](http://zhixuan.yoouuddaaoo.com:3000/)，配置下本地host映射即可。
 
 ### 备注
 
