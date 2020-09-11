@@ -45,7 +45,7 @@
     "moment": "^2.18.1",
     "mongodb": "^2.2.30",
     "morgan": "^1.7.0",
-    "node-fetch": "^1.6.3",
+    "node-fetch": "^2.6.1",
     "normalize.css": "^5.0.0",
     "on-finished": "^2.3.0",
     "pretty-error": "^2.0.2",
